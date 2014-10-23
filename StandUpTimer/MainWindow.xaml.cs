@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shell;
 
 namespace StandUpTimer
 {
@@ -18,6 +19,8 @@ namespace StandUpTimer
             this.Top = Properties.Settings.Default.Top;
 
             InitializeComponent();
+
+            TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)

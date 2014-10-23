@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shell;
 using System.Windows.Threading;
 using StandUpTimer.Annotations;
 
@@ -60,6 +61,7 @@ namespace StandUpTimer
         {
             OnPropertyChanged("RemainingTimeToChangeAsString");
             OnPropertyChanged("RemainingTimeToChangeInPercent");
+            OnPropertyChanged("TimeOfLegInFraction");
         }
 
         public void StartTimer()
@@ -94,6 +96,17 @@ namespace StandUpTimer
                            : 0.0;
             }
         }
+
+        public double TimeOfLegInFraction
+        {
+            get
+            {
+                var remainingTimeToChange = model.ChangeTime.Subtract(DateTime.Now);
+
+                return model.CurrentLeg.Subtract(remainingTimeToChange).TotalSeconds / model.CurrentLeg.TotalSeconds;
+            }
+        }
+        
 
         public string CurrentImage
         {

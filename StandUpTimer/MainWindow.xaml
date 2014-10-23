@@ -12,6 +12,10 @@
         MouseLeave="MainWindow_OnMouseLeave"
         Style="{StaticResource ShakeDatAss}">
 
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressValue="{Binding TimeOfLegInFraction}"/>
+    </Window.TaskbarItemInfo>
+    
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close"
                         Executed="CloseCommandHandler"/>
