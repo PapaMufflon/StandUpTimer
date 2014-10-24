@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="24px" height="24px" viewBox="0.5 24.5 24 24" enable-background="new 0.5 24.5 24 24" xml:space="preserve">
+<circle cx="10.5" cy="42.5" r="2"/>
+<circle cx="4.5" cy="36.5" r="2"/>
+<circle cx="20.5" cy="30.5" r="2"/>
+<line fill="none" stroke="#000000" stroke-width="4" stroke-miterlimit="10" x1="4.5" y1="36.5" x2="10.5" y2="42.5"/>
+<line fill="none" stroke="#000000" stroke-width="4" stroke-miterlimit="10" x1="10.5" y1="42.5" x2="20.5" y2="30.5"/>
+</svg>

@@ -103,14 +103,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\close-button.png" />
-    <Resource Include="Images\OK-button.png" />
     <Resource Include="Images\sitting.png" />
     <Resource Include="Images\standing.png" />
     <Resource Include="Images\walking.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Next-button.png" />
+    <Resource Include="Images\icon_15425.png" />
+    <Resource Include="Images\icon_5650.png" />
+    <Resource Include="Images\icon_5847.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icon_73419.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

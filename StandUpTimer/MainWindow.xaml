@@ -30,7 +30,7 @@
                         Command="ApplicationCommands.Close"
                         Style="{StaticResource FadeOutStyle}"
                         Template="{StaticResource ImageButton}">
-                    <Image Source="Images\close-button.png" />
+                    <Image Source="Images\icon_15425.png" />
                 </Button>
 
                 <Grid>
@@ -92,7 +92,7 @@
                     Style="{StaticResource FadeOutStyle}"
                     Template="{StaticResource ImageButton}"
                     Command="{Binding SkipCommand}">
-                <Image Source="Images\Next-button.png" />
+                <Image Source="Images\icon_5650.png" />
             </Button>
 
             <Button HorizontalAlignment="Center"
@@ -100,7 +100,7 @@
                     Visibility="{Binding OkButtonVisibility}"
                     Template="{StaticResource ImageButton}"
                     Command="{Binding OkCommand}">
-                <Image Source="Images\OK-button.png" />
+                <Image Source="Images\icon_73419.png" />
             </Button>
         </Grid>
     </DockPanel>
