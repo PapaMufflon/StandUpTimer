@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Shell;
 using System.Windows.Threading;
 using StandUpTimer.Annotations;
 

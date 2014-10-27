@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ICanSkip.cs" />
+    <Compile Include="InverseVisibilityConverter.cs" />
     <Compile Include="SkipCommand.cs" />
     <Compile Include="StandUpModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -110,7 +111,6 @@
   <ItemGroup>
     <Resource Include="Images\icon_15425.png" />
     <Resource Include="Images\icon_5650.png" />
-    <Resource Include="Images\icon_5847.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icon_73419.png" />
