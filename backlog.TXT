@@ -1,12 +1,6 @@
-- continuous delivery with one (double) click
-  - create nuget package automatically with correct version number
-  - build in build script...
- 
 - test update
 
 - icon
-
-- icons in kreis
 
 - bilder schöner
  
