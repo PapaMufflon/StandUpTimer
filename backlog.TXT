@@ -1,0 +1,7 @@
+- continuous delivery with one (double) click
+  - create nuget package automatically with correct version number
+  - build in build script...
+ 
+- test update
+ 
+- other path than lan-path to deploy to

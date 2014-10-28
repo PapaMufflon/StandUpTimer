@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
+using Squirrel;
 
 namespace StandUpTimer
 {
@@ -23,8 +24,13 @@ namespace StandUpTimer
             TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
         }
 
-        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        private async void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
+            using (var mgr = new UpdateManager(@"Y:\Austausch\tw\StandUpTimer", "StandUpTimer", FrameworkVersion.Net45))
+            {
+                await mgr.UpdateApp();
+            }
+
             SaveWindowPosition();
         }
 
