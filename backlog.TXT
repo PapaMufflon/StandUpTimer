@@ -3,5 +3,11 @@
   - build in build script...
  
 - test update
+
+- icon
+
+- icons in kreis
+
+- bilder schöner
  
 - other path than lan-path to deploy to

@@ -11,11 +11,11 @@ namespace StandUpTimer
         public DateTime ChangeTime { get; set; }
         public TimeSpan CurrentLeg { get { return changeTimer.Interval; } }
 
-        //private static readonly TimeSpan StandingTime = TimeSpan.FromSeconds(8);
-        //private static readonly TimeSpan SittingTime = TimeSpan.FromSeconds(8);
+        private static readonly TimeSpan StandingTime = TimeSpan.FromSeconds(8);
+        private static readonly TimeSpan SittingTime = TimeSpan.FromSeconds(8);
 
-        private static readonly TimeSpan StandingTime = TimeSpan.FromMinutes(20);
-        private static readonly TimeSpan SittingTime = TimeSpan.FromHours(1);
+        //private static readonly TimeSpan StandingTime = TimeSpan.FromMinutes(20);
+        //private static readonly TimeSpan SittingTime = TimeSpan.FromHours(1);
 
         private readonly DispatcherTimer changeTimer;
 

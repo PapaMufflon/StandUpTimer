@@ -153,13 +153,6 @@
     <Resource Include="Images\walking.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\icon_15425.png" />
-    <Resource Include="Images\icon_5650.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icon_73419.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -170,6 +163,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\closeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\skipButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\okButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
