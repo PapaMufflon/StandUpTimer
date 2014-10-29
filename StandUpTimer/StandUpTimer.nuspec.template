@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>StandUpTimer</id>
+    <version>$version$</version>
+    <authors>Tobias Walter</authors>
+    <description>StandUpTimer for controlling time at a standing desk.</description>
+	<dependencies></dependencies>
+  </metadata>
+  <files>
+    <file src="ICsharpCode.SharpZipLib.dll" target="lib/net45" />
+	<file src="ICsharpCode.SharpZipLib.xml" target="lib/net45" />
+	<file src="Microsoft.Web.XmlTransform.dll" target="lib/net45" />
+	<file src="Mono.Cecil.dll" target="lib/net45" />
+	<file src="Mono.Cecil.Mdb.dll" target="lib/net45" />
+	<file src="Mono.Cecil.Pdb.dll" target="lib/net45" />
+	<file src="Mono.Cecil.Rocks.dll" target="lib/net45" />
+	<file src="NuGet.Core.dll" target="lib/net45" />
+	<file src="Splat.dll" target="lib/net45" />
+	<file src="Squirrel.dll" target="lib/net45" />
+	<file src="StandUpTimer.exe" target="lib/net45" />
+	<file src="StandUpTimer.exe.config" target="lib/net45" />
+  </files>
+</package>
