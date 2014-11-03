@@ -1,7 +1,11 @@
-- test update
+- azcopy to azure
 
 - icon
 
 - bilder schöner
- 
-- other path than lan-path to deploy to
+
+- github seite
+
+- anfragen
+
+- certificate (http://stackoverflow.com/a/18959881)

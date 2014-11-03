@@ -24,13 +24,8 @@ namespace StandUpTimer
             TaskbarItemInfo.ProgressState = TaskbarItemProgressState.Normal;
         }
 
-        private async void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            using (var mgr = new UpdateManager(@"Y:\Austausch\tw\StandUpTimer", "StandUpTimer", FrameworkVersion.Net45))
-            {
-                await mgr.UpdateApp();
-            }
-
             SaveWindowPosition();
         }
 
@@ -58,8 +53,21 @@ namespace StandUpTimer
             standUpViewModel.ExitButtonVisibility = Visibility.Hidden;
         }
 
-        private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        private async void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
+            using (var mgr = new UpdateManager(@"Y:\Austausch\tw\StandUpTimer", "StandUpTimer", FrameworkVersion.Net45))
+            {
+                SquirrelAwareApp.HandleEvents(
+                    onInitialInstall: v => mgr.CreateShortcutForThisExe(),
+                    onAppUpdate: v => mgr.CreateShortcutForThisExe(),
+                    onAppUninstall: v => mgr.RemoveShortcutForThisExe());
+
+                var updateInfo = await mgr.CheckForUpdate();
+
+                if (updateInfo.ReleasesToApply.Count > 0)
+                    await mgr.UpdateApp();
+            }
+
             Close();
         }
 
