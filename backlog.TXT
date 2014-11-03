@@ -1,6 +1,4 @@
-- azcopy to azure
-
-- icon
+- fix update bug
 
 - bilder schöner
 

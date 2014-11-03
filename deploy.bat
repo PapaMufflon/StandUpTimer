@@ -11,7 +11,9 @@ move *.nupkg build
 
 cd build
 ..\packages\squirrel.windows.0.5.5\tools\squirrel -releasify StandUpTimer.%version%.nupkg
-copy Releases\*.* Y:\Austausch\tw\StandUpTimer
 cd..
+
+set /p AzureKey=<azure.key
+"C:\Program Files (x86)\Microsoft SDKs\Azure\AzCopy\AzCopy.exe" /Source:build\Releases /Dest:http://mufflonosoft.blob.core.windows.net/standuptimer /DestKey:%AzureKey% /S /XO /Y /NC:1
 
 pause

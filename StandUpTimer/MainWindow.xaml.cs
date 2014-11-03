@@ -55,7 +55,7 @@ namespace StandUpTimer
 
         private async void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            using (var mgr = new UpdateManager(@"Y:\Austausch\tw\StandUpTimer", "StandUpTimer", FrameworkVersion.Net45))
+            using (var mgr = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
             {
                 SquirrelAwareApp.HandleEvents(
                     onInitialInstall: v => mgr.CreateShortcutForThisExe(),
