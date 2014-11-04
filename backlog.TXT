@@ -1,6 +1,8 @@
 - fix update bug
 
-- bilder schöner
+- attribution
+
+- autostart
 
 - github seite
 
