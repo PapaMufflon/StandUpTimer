@@ -9,9 +9,31 @@ namespace StandUpTimer
     public partial class MainWindow : IBringToForeground
     {
         private readonly StandUpViewModel standUpViewModel;
+        private UpdateManager updateManager;
 
         public MainWindow()
         {
+            SquirrelAwareApp.HandleEvents(
+                    onInitialInstall: v =>
+                    {
+                        using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
+                            updateManager.CreateShortcutForThisExe();
+                    },
+                    onAppUpdate: v =>
+                    {
+                        using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
+                            updateManager.CreateShortcutForThisExe();
+
+                        Close();
+                    },
+                    onAppUninstall: v =>
+                    {
+                        using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
+                            updateManager.RemoveShortcutForThisExe();
+
+                        Close();
+                    });
+
             standUpViewModel = new StandUpViewModel(this);
 
             DataContext = standUpViewModel;
@@ -55,17 +77,12 @@ namespace StandUpTimer
 
         private async void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            using (var mgr = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
+            using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
             {
-                SquirrelAwareApp.HandleEvents(
-                    onInitialInstall: v => mgr.CreateShortcutForThisExe(),
-                    onAppUpdate: v => mgr.CreateShortcutForThisExe(),
-                    onAppUninstall: v => mgr.RemoveShortcutForThisExe());
-
-                var updateInfo = await mgr.CheckForUpdate();
+                var updateInfo = await updateManager.CheckForUpdate();
 
                 if (updateInfo.ReleasesToApply.Count > 0)
-                    await mgr.UpdateApp();
+                    await updateManager.UpdateApp();
             }
 
             Close();
