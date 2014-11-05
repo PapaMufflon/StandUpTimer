@@ -49,6 +49,7 @@
     <Compile Include="StandUpModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StandUpViewModelTests.cs" />
+    <Compile Include="TimeExtensionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

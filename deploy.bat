@@ -1,6 +1,10 @@
 rmdir build /S /Q
 msbuild StandUpTimer.sln /p:Configuration=Release /p:OutputPath=..\build
 
+test
+
+if errorlevel NEQ 0 exit
+
 copy StandUpTimer\StandUpTimer.nuspec.template StandUpTimer\StandUpTimer.nuspec
 for /f "delims=" %%a in ('tools\ReplaceVersionString\bin\debug\ReplaceVersionString build\StandUpTimer.exe StandUpTimer\StandUpTimer.nuspec $version$') do @set version=%%a
 move StandUpTimer\StandUpTimer.nuspec build
