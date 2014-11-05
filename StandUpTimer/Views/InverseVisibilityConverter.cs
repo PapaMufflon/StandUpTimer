@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace StandUpTimer
+namespace StandUpTimer.Views
 {
     public class InverseVisibilityConverter : IValueConverter
     {

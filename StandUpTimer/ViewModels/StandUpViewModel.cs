@@ -1,12 +1,13 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using StandUpTimer.Annotations;
+using StandUpTimer.Models;
 
-namespace StandUpTimer
+namespace StandUpTimer.ViewModels
 {
     public class StandUpViewModel : INotifyPropertyChanged
     {
@@ -21,7 +22,7 @@ namespace StandUpTimer
 
         public StandUpViewModel(IBringToForeground bringToForeground)
         {
-            model = new StandUpModel();
+            model = new StandUpModel(new DispatcherTimerWrapper());
             model.DeskStateChanged += (sender, args) =>
             {
                 SetImageAccordingToDeskState();
@@ -46,10 +47,10 @@ namespace StandUpTimer
             switch (model.DeskState)
             {
                 case DeskState.Sitting:
-                    CurrentImage = "Images\\sitting.png";
+                    CurrentImage = "..\\Images\\sitting.png";
                     break;
                 case DeskState.Standing:
-                    CurrentImage = "Images\\standing.png";
+                    CurrentImage = "..\\Images\\standing.png";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

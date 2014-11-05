@@ -1,10 +1,11 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
 using Squirrel;
+using StandUpTimer.ViewModels;
 
-namespace StandUpTimer
+namespace StandUpTimer.Views
 {
     public partial class MainWindow : IBringToForeground
     {

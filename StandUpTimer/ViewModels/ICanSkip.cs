@@ -1,4 +1,4 @@
-﻿namespace StandUpTimer
+namespace StandUpTimer.ViewModels
 {
     internal interface ICanSkip
     {

@@ -1,4 +1,4 @@
-- fix update bug
+- download update while running
 
 - attribution
 

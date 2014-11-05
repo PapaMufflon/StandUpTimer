@@ -1,7 +1,8 @@
-﻿using System;
-using System.Windows.Threading;
+using System;
+using System.Diagnostics.Contracts;
+using StandUpTimer.ViewModels;
 
-namespace StandUpTimer
+namespace StandUpTimer.Models
 {
     internal class StandUpModel : ICanSkip
     {
@@ -11,21 +12,21 @@ namespace StandUpTimer
         public DateTime ChangeTime { get; set; }
         public TimeSpan CurrentLeg { get { return changeTimer.Interval; } }
 
-        //private static readonly TimeSpan StandingTime = TimeSpan.FromSeconds(8);
-        //private static readonly TimeSpan SittingTime = TimeSpan.FromSeconds(8);
+        internal static readonly TimeSpan StandingTime = TimeSpan.FromMinutes(20);
+        internal static readonly TimeSpan SittingTime = TimeSpan.FromHours(1);
 
-        private static readonly TimeSpan StandingTime = TimeSpan.FromMinutes(20);
-        private static readonly TimeSpan SittingTime = TimeSpan.FromHours(1);
+        private readonly ITimer changeTimer;
 
-        private readonly DispatcherTimer changeTimer;
-
-        public StandUpModel()
+        public StandUpModel(ITimer timer)
         {
+            Contract.Requires(timer != null);
+
             DeskState = DeskState.Sitting;
 
-            ChangeTime = DateTime.Now.Add(SittingTime);
+            ChangeTime = TestableDateTime.Now.Add(SittingTime);
 
-            changeTimer = new DispatcherTimer { Interval = SittingTime };
+            changeTimer = timer;
+            changeTimer.Interval = SittingTime;
             changeTimer.Tick += OnChangeTimerTicked;
             changeTimer.Start();
         }
@@ -65,7 +66,7 @@ namespace StandUpTimer
 
         public void NewDeskStateStarted()
         {
-            ChangeTime = DateTime.Now.Add(changeTimer.Interval);
+            ChangeTime = TestableDateTime.Now.Add(changeTimer.Interval);
             changeTimer.Start();
         }
 

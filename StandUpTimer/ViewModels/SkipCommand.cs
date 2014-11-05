@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Windows.Input;
 
-namespace StandUpTimer
+namespace StandUpTimer.ViewModels
 {
     internal class SkipCommand : ICommand
     {
