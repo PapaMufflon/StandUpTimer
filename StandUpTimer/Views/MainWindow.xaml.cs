@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
 using Squirrel;
+using StandUpTimer.Models;
 using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Views
@@ -35,7 +36,7 @@ namespace StandUpTimer.Views
                         Close();
                     });
 
-            standUpViewModel = new StandUpViewModel(this);
+            standUpViewModel = new StandUpViewModel(new StandUpModel(new DispatcherTimerWrapper()), this);
 
             DataContext = standUpViewModel;
 

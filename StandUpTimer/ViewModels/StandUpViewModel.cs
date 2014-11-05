@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -9,7 +11,7 @@ using StandUpTimer.Models;
 
 namespace StandUpTimer.ViewModels
 {
-    public class StandUpViewModel : INotifyPropertyChanged
+    internal class StandUpViewModel : INotifyPropertyChanged, ICanHandleDeskStateStarts
     {
         private readonly DispatcherTimer updateTimer;
         private string currentImage;
@@ -17,21 +19,19 @@ namespace StandUpTimer.ViewModels
         private Visibility okButtonVisibility;
         private bool shake;
         private readonly StandUpModel model;
-        private OkCommand okCommand;
-        private SkipCommand skipCommand;
+        private readonly IBringToForeground bringToForeground;
+        private ICommand okCommand;
+        private ICommand skipCommand;
 
-        public StandUpViewModel(IBringToForeground bringToForeground)
+        public StandUpViewModel(StandUpModel model, IBringToForeground bringToForeground)
         {
-            model = new StandUpModel(new DispatcherTimerWrapper());
-            model.DeskStateChanged += (sender, args) =>
-            {
-                SetImageAccordingToDeskState();
+            Contract.Requires(model != null);
+            Contract.Requires(bringToForeground != null);
+            
+            this.model = model;
+            this.bringToForeground = bringToForeground;
 
-                OkButtonVisibility = Visibility.Visible;
-                Shake = true;
-
-                bringToForeground.Now();
-            };
+            model.DeskStateChanged += (sender, args) => DeskStateEnded();
 
             SetImageAccordingToDeskState();
             ExitButtonVisibility = Visibility.Hidden;
@@ -40,6 +40,18 @@ namespace StandUpTimer.ViewModels
             updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             updateTimer.Tick += OnUpdateTimerTicked;
             updateTimer.Start();
+        }
+
+        public void DeskStateEnded()
+        {
+            Contract.Requires<InvalidOperationException>(Shake == false);
+
+            SetImageAccordingToDeskState();
+
+            OkButtonVisibility = Visibility.Visible;
+            Shake = true;
+
+            bringToForeground.Now();
         }
 
         private void SetImageAccordingToDeskState()
@@ -59,55 +71,36 @@ namespace StandUpTimer.ViewModels
 
         private void OnUpdateTimerTicked(object sender, EventArgs e)
         {
-            OnPropertyChanged("RemainingTimeToChangeAsString");
-            OnPropertyChanged("RemainingTimeToChangeInPercent");
-            OnPropertyChanged("TimeOfLegInFraction");
+            OnPropertyChanged(() => RemainingTimeToChangeAsString);
+            OnPropertyChanged(() => RemainingTimeToChangeInPercent);
+            OnPropertyChanged(() => TimeOfLegInFraction);
         }
 
-        public void StartTimer()
+        public void DeskStateStarted()
         {
+            Contract.Requires<InvalidOperationException>(Shake == true);
+
+            Shake = false;
+            OkButtonVisibility = Visibility.Collapsed;
+
             model.NewDeskStateStarted();
         }
 
         public string RemainingTimeToChangeAsString
         {
-            get
-            {
-                var remainingTimeToChange = model.ChangeTime.Subtract(DateTime.Now);
-
-                if (remainingTimeToChange <= TimeSpan.Zero)
-                    return string.Empty;
-
-                if (remainingTimeToChange < TimeSpan.FromMinutes(1))
-                    return string.Format("{0:0}\nsec", remainingTimeToChange.TotalSeconds);
-
-                return string.Format("{0:0}\nmin", remainingTimeToChange.TotalMinutes);
-            }
+            get { return model.ChangeTime.Subtract(DateTime.Now).FormatRemainingTime(); }
         }
 
         public double RemainingTimeToChangeInPercent
         {
-            get
-            {
-                var remainingTimeToChange = model.ChangeTime.Subtract(DateTime.Now);
-
-                return remainingTimeToChange > TimeSpan.Zero
-                           ? remainingTimeToChange.TotalSeconds / model.CurrentLeg.TotalSeconds * 100.0
-                           : 0.0;
-            }
+            get { return model.ChangeTime.Subtract(DateTime.Now).PercentageTo(model.CurrentLeg); }
         }
 
         public double TimeOfLegInFraction
         {
-            get
-            {
-                var remainingTimeToChange = model.ChangeTime.Subtract(DateTime.Now);
-
-                return model.CurrentLeg.Subtract(remainingTimeToChange).TotalSeconds / model.CurrentLeg.TotalSeconds;
-            }
+            get { return model.ChangeTime.Subtract(DateTime.Now).FractionTo(model.CurrentLeg); }
         }
         
-
         public string CurrentImage
         {
             get { return currentImage; }
@@ -152,7 +145,7 @@ namespace StandUpTimer.ViewModels
         {
             get
             {
-                return okCommand ?? (okCommand = new OkCommand(this));
+                return okCommand ?? (okCommand = new RelayCommand(_ => DeskStateStarted()));
             }
         }
 
@@ -160,7 +153,11 @@ namespace StandUpTimer.ViewModels
         {
             get
             {
-                return skipCommand ?? (skipCommand = new SkipCommand(model, OkCommand));
+                return skipCommand ?? (skipCommand = new RelayCommand(_ =>
+                {
+                    model.Skip();
+                    DeskStateStarted();
+                }));
             }
         }
 
@@ -171,6 +168,15 @@ namespace StandUpTimer.ViewModels
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OnPropertyChanged<T>(Expression<Func<T>> exp)
+        {
+            var memberExpression = (MemberExpression)exp.Body;
+            var propertyName = memberExpression.Member.Name;
+
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
