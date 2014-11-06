@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
-using Squirrel;
 using StandUpTimer.Models;
 using StandUpTimer.ViewModels;
 
@@ -10,38 +9,18 @@ namespace StandUpTimer.Views
 {
     public partial class MainWindow : IBringToForeground
     {
+        private readonly Updater updater;
         private readonly StandUpViewModel standUpViewModel;
-        private UpdateManager updateManager;
 
         public MainWindow()
         {
-            SquirrelAwareApp.HandleEvents(
-                    onInitialInstall: v =>
-                    {
-                        using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
-                            updateManager.CreateShortcutForThisExe();
-                    },
-                    onAppUpdate: v =>
-                    {
-                        using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
-                            updateManager.CreateShortcutForThisExe();
-
-                        Close();
-                    },
-                    onAppUninstall: v =>
-                    {
-                        using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
-                            updateManager.RemoveShortcutForThisExe();
-
-                        Close();
-                    });
-
+            updater = new Updater(Close);
             standUpViewModel = new StandUpViewModel(new StandUpModel(new DispatcherTimerWrapper()), this);
 
             DataContext = standUpViewModel;
 
-            this.Left = Properties.Settings.Default.Left;
-            this.Top = Properties.Settings.Default.Top;
+            Left = Properties.Settings.Default.Left;
+            Top = Properties.Settings.Default.Top;
 
             InitializeComponent();
 
@@ -55,8 +34,8 @@ namespace StandUpTimer.Views
 
         private void SaveWindowPosition()
         {
-            Properties.Settings.Default.Left = this.Left;
-            Properties.Settings.Default.Top = this.Top;
+            Properties.Settings.Default.Left = Left;
+            Properties.Settings.Default.Top = Top;
 
             Properties.Settings.Default.Save();
         }
@@ -77,16 +56,8 @@ namespace StandUpTimer.Views
             standUpViewModel.ExitButtonVisibility = Visibility.Hidden;
         }
 
-        private async void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            using (updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
-            {
-                var updateInfo = await updateManager.CheckForUpdate();
-
-                if (updateInfo.ReleasesToApply.Count > 0)
-                    await updateManager.UpdateApp();
-            }
-
             Close();
         }
 

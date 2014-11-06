@@ -1,11 +1,13 @@
-- download update while running
+- wo ist das icon hin?
 
 - attribution
 
 - autostart
 
+- anfragen
+
 - github seite
 
-- anfragen
+- delete last packages on deploy
 
 - certificate (http://stackoverflow.com/a/18959881)
