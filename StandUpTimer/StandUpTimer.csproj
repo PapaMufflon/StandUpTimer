@@ -274,6 +274,9 @@
   <ItemGroup>
     <Resource Include="StandUpTimer.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ccButton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <ExtensionTasksPath Condition="'$(ExtensionTasksPath)' == ''">..\packages\MSBuild.Extension.Pack.1.5.0\tools\net40\</ExtensionTasksPath>

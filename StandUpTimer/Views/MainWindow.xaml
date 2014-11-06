@@ -16,10 +16,11 @@
     <Window.Resources>
         <views:InverseVisibilityConverter x:Key="InverseVisibilityConverter" />
     </Window.Resources>
+
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressValue="{Binding TimeOfLegInFraction}"/>
     </Window.TaskbarItemInfo>
-    
+
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close"
                         Executed="CloseCommandHandler"/>
@@ -56,7 +57,7 @@
         <Grid>
             <Image Source="{Binding CurrentImage}"
                    Height="253"/>
-            
+
             <Button HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Style="{StaticResource FadeOutStyle}"
@@ -73,6 +74,35 @@
                     Command="{Binding OkCommand}">
                 <Image Source="..\Images\okButton.png" />
             </Button>
+
+            <Button HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Style="{StaticResource FadeOutStyle}"
+                    Template="{StaticResource ImageButton}"
+                    MouseMove="CreativeCommons_OnMouseMove">
+                <Image Source="..\Images\ccButton.png" />
+            </Button>
+
+            <Grid Visibility="{Binding CreativeCommonsVisibility}"
+                  MouseLeave="CreativeCommons_OnMouseLeave">
+                <Border Background="LightGray"
+                        BorderThickness="4"
+                        BorderBrush="DarkGray"
+                        CornerRadius="20">
+                    <StackPanel Margin="0 10"
+                                 Width="250">
+                        <TextBlock TextWrapping="Wrap">
+                            Standing up and sitting down images &#169; <Hyperlink NavigateUri="http://www.breu-buerotechnik.de/" RequestNavigate="Hyperlink_OnRequestNavigate">Breu B&#252;rotechnik</Hyperlink>.
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap">
+                            Skip designed by <Hyperlink NavigateUri="http://www.thenounproject.com/convoy" RequestNavigate="Hyperlink_OnRequestNavigate">Convoy</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
+                            Close designed by <Hyperlink NavigateUri="http://www.thenounproject.com/alex.s.lakas" RequestNavigate="Hyperlink_OnRequestNavigate">Alex S. Lakas</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
+                            Creative Commons designed by <Hyperlink NavigateUri="http://www.thenounproject.com/acondiff" RequestNavigate="Hyperlink_OnRequestNavigate">Austin Condiff</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
+                            Check Mark designed by <Hyperlink NavigateUri="http://www.thenounproject.com/ricardo.cherem" RequestNavigate="Hyperlink_OnRequestNavigate">Ricardo Augusto Cherem</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>

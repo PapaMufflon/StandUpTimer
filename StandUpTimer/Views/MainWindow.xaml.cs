@@ -1,6 +1,8 @@
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Windows.Shell;
 using StandUpTimer.Models;
 using StandUpTimer.ViewModels;
@@ -67,6 +69,22 @@ namespace StandUpTimer.Views
 
             Topmost = true;
             Topmost = false;
+        }
+
+        private void CreativeCommons_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            standUpViewModel.CreativeCommonsVisibility = Visibility.Visible;
+        }
+
+        private void CreativeCommons_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            standUpViewModel.CreativeCommonsVisibility = Visibility.Hidden;
+        }
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

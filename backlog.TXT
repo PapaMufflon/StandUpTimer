@@ -1,7 +1,3 @@
-- wo ist das icon hin?
-
-- attribution
-
 - autostart
 
 - anfragen

@@ -17,6 +17,7 @@ namespace StandUpTimer.ViewModels
         private string currentImage;
         private Visibility exitButtonVisibility;
         private Visibility okButtonVisibility;
+        private Visibility creativeCommonsVisibility;
         private bool shake;
         private readonly StandUpModel model;
         private readonly IBringToForeground bringToForeground;
@@ -36,6 +37,7 @@ namespace StandUpTimer.ViewModels
             SetImageAccordingToDeskState();
             ExitButtonVisibility = Visibility.Hidden;
             OkButtonVisibility = Visibility.Collapsed;
+            CreativeCommonsVisibility = Visibility.Hidden;
 
             updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             updateTimer.Tick += OnUpdateTimerTicked;
@@ -127,6 +129,16 @@ namespace StandUpTimer.ViewModels
             set
             {
                 okButtonVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility CreativeCommonsVisibility
+        {
+            get { return creativeCommonsVisibility; }
+            set
+            {
+                creativeCommonsVisibility = value;
                 OnPropertyChanged();
             }
         }
