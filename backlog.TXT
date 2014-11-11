@@ -1,8 +1,9 @@
+- specs
+  - first spec
+  - automate concordion
+  - all the specs
+
 - autostart
-
-- anfragen
-
-- github seite
 
 - delete last packages on deploy
 

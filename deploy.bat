@@ -1,8 +1,7 @@
-rmdir build /S /Q
-msbuild StandUpTimer.sln /p:Configuration=Release /p:OutputPath=..\build
+call build.bat
+if %ERRORLEVEL% NEQ 0 goto exit
 
 call test.bat
-
 if %ERRORLEVEL% NEQ 0 goto exit
 
 copy StandUpTimer\StandUpTimer.nuspec.template StandUpTimer\StandUpTimer.nuspec

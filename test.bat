@@ -1,1 +1,12 @@
-packages\NUnit.Runners.2.6.3\tools\nunit-console.exe build\StandUpTimer.UnitTests.dll
+cd build
+..\packages\NUnit.Runners.2.6.3\tools\nunit-console.exe StandUpTimer.UnitTests.dll
+if %ERRORLEVEL% NEQ 0 goto exit
+
+md ..\packages\NUnit.Runners.2.6.3\tools\addins
+copy ..\packages\Concordion.NET-1.1.0\Concordion.NET-NUnit-Addin\Concordion.NUnit.dll ..\packages\NUnit.Runners.2.6.3\tools\addins
+
+..\packages\NUnit.Runners.2.6.3\tools\nunit-console.exe StandUpTimer.Specs.dll
+if %ERRORLEVEL% NEQ 0 goto exit
+
+:exit
+cd ..

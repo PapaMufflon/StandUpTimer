@@ -34,7 +34,8 @@
                         HorizontalAlignment="Right"
                         Command="ApplicationCommands.Close"
                         Style="{StaticResource FadeOutStyle}"
-                        Template="{StaticResource ImageButton}">
+                        Template="{StaticResource ImageButton}"
+                        x:Name="CloseButton">
                     <Image Source="..\Images\closeButton.png" />
                 </Button>
 
@@ -55,15 +56,21 @@
         </Grid>
 
         <Grid>
+            <TextBlock Text="{Binding CurrentImage}"
+                       Foreground="Transparent"
+                       x:Name="CurrentImageFileName" />
+            
             <Image Source="{Binding CurrentImage}"
-                   Height="253"/>
+                   Height="253"
+                   x:Name="CurrentImage" />
 
             <Button HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Style="{StaticResource FadeOutStyle}"
                     Visibility="{Binding OkButtonVisibility, Converter={StaticResource InverseVisibilityConverter}}"
                     Template="{StaticResource ImageButton}"
-                    Command="{Binding SkipCommand}">
+                    Command="{Binding SkipCommand}"
+                    x:Name="SkipButton">
                 <Image Source="..\Images\skipButton.png" />
             </Button>
 
@@ -79,7 +86,8 @@
                     VerticalAlignment="Bottom"
                     Style="{StaticResource FadeOutStyle}"
                     Template="{StaticResource ImageButton}"
-                    MouseMove="CreativeCommons_OnMouseMove">
+                    MouseMove="CreativeCommons_OnMouseMove"
+                    x:Name="AttributionButton">
                 <Image Source="..\Images\ccButton.png" />
             </Button>
 

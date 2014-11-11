@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3BC2FC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUpTimer.UnitTests", "StandUpTimer.UnitTests\StandUpTimer.UnitTests.csproj", "{D5D3014B-F656-4EF1-909A-74F85734BA22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUpTimer.Specs", "StandUpTimer.Specs\StandUpTimer.Specs.csproj", "{0ABF38F3-2FDA-4A82-844D-322A27A75C66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{D5D3014B-F656-4EF1-909A-74F85734BA22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5D3014B-F656-4EF1-909A-74F85734BA22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5D3014B-F656-4EF1-909A-74F85734BA22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ABF38F3-2FDA-4A82-844D-322A27A75C66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ABF38F3-2FDA-4A82-844D-322A27A75C66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ABF38F3-2FDA-4A82-844D-322A27A75C66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ABF38F3-2FDA-4A82-844D-322A27A75C66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
