@@ -1,60 +1,230 @@
-<!DOCTYPE html>
-<html>
+﻿<?xml version="1.0" encoding="UTF-8"?><html xmlns:concordion="http://www.concordion.org/2007/concordion">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <style>* {
+  font-family: Arial;
+}
+body {
+  padding: 32px;  
+}
+pre {
+  padding: 6px 28px 6px 28px;
+  background-color: #E8EEF7;
+}
+pre, pre *, code, kbd {
+  font-family: Courier New, Courier;
+  font-size: 10pt;
+}
+h1, h1 * {
+  font-size: 24pt;	
+}
+p, td, th, li, .breadcrumbs {
+  font-size: 10pt;
+}
+p, li {
+  line-height: 140%;
+}
+table {
+  border-collapse: collapse;
+  empty-cells: show;
+  margin: 8px 0px 8px 0px;
+}
+th, td {
+  border: 1px solid black;
+  padding: 3px;
+}
+td {
+  background-color: white;
+  vertical-align: top;
+}
+th {
+  background-color: #C3D9FF;
+}
+li {
+  margin-top: 6px;
+  margin-bottom: 6px; 
+}
 
+
+.example {
+  padding: 2px 12px 6px 12px;
+  border: 1px solid #C3D9FF;
+  margin: 6px 0px 28px 0px;
+  background-color: #F5F9FD;
+}
+.example h3 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 12pt;
+}
+
+p.success {
+  padding: 2px;
+}
+.success, .success * {
+  background-color: #afa !important;
+}
+.success pre {
+  background-color: #bbffbb;
+}
+.failure, .failure * {
+  background-color: #ffb0b0;
+  padding: 1px;
+}
+.failure .expected {
+  text-decoration: line-through;
+  color: #bb5050;
+}
+.ignored, .ignored * {
+  background-color: #f0f0f0 !important;	
+}
+
+ins {
+  text-decoration: none;	
+}
+
+.exceptionMessage {
+  background-color: #fdd;
+  font-family: Courier New, Courier, Monospace;
+  font-size: 10pt;
+  display: block;
+  font-weight: normal;
+  padding: 4px;
+  text-decoration: none !important;
+}
+.stackTrace, .stackTrace * {
+  font-weight: normal;
+}
+.stackTrace {
+  display: none;
+  padding: 1px 4px 4px 4px;
+  background-color: #fdd;
+  border-top: 1px dotted black;
+}
+.stackTraceExceptionMessage {
+  display: block;
+  font-family: Courier New, Courier, Monospace;
+  font-size: 8pt;
+  white-space: wrap;
+  padding: 1px 0px 1px 0px;
+}
+.stackTraceEntry {
+  white-space: nowrap;
+  font-family: Courier New, Courier, Monospace;
+  display: block;
+  font-size: 8pt;
+  padding: 1px 0px 1px 32px;
+}
+.stackTraceButton {
+  font-size: 8pt;
+  margin: 2px 8px 2px 0px;
+  font-weight: normal;
+  font-family: Arial;
+}
+
+.special {
+  font-style: italic;
+}
+.missing, .missing * {
+  background-color: #ff9999;
+}
+.surplus, .surplus * {
+  background-color: #ff9999;
+}
+.footer {
+  text-align: right;
+  margin-top: 40px;
+  font-size: 8pt;
+  width: 100%;
+  color: #999;
+}
+.footer .testTime {
+  padding: 2px 10px 0px 0px;
+}
+
+.idea {
+  font-size: 9pt;
+  color: #888;
+  font-style: italic;	
+}
+.tight li {
+  margin-top: 1px;
+  margin-bottom: 1px; 
+}
+.commentary {
+  float: right;
+  width: 200px;
+  background-color: #ffffd0;
+  padding:8px;
+  border: 3px solid #eeeeb0;	 
+  margin: 10px 0px 10px 10px;	 
+}
+.commentary, .commentary * {
+  font-size: 8pt;
+}</style>
+    <meta charset="utf-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/print.css" media="print" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
     <title>Stand-up Timer by PapaMufflon</title>
   </head>
-
   <body>
     <header>
       <div class="inner">
         <h1>Stand-up Timer</h1>
         <h2>Windows app for a standing desk.</h2>
-        <a href="https://github.com/PapaMufflon/StandUpTimer" class="button"><small>View project on</small> GitHub</a>
+        <a href="https://github.com/PapaMufflon/StandUpTimer" class="button">
+          <small>View project on</small> GitHub</a>
       </div>
     </header>
-
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
           <h3>
-<a id="welcome" class="anchor" href="#welcome" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to the Stand-Up Timer.</h3>
-
-<p>Check out the downloadable setup file on the right. More content coming hopefully soon.</p>
+            <a id="welcome" class="anchor" href="#welcome" aria-hidden="true">
+              <span class="octicon octicon-link"></span>
+            </a>
+                        Welcome to the Stand-Up Timer.
+                    </h3>
+          <p>Check out the downloadable setup file on the right. More content coming hopefully soon.</p>
+          <h3>
+            <a id="usage" class="anchor" href="#usage" aria-hidden="true">
+              <span class="octicon octicon-link"></span>
+            </a>
+                        How to use the Stand-Up Timer.
+                    </h3>
+          <p>After installation, the program starts immediately to run.</p>
+          <p concordion:assertEquals="ItBeginsWithTheSittingPhase()" class="success">It begins with the sitting phase.</p>
+          <p>
+                        When you move the mouse over the image, you can see the available controls:
+                        <ul><li concordion:assertEquals="YouCanSeeTheCloseButton()" class="success">The close button</li><li concordion:assertEquals="YouCanSeeTheSkipButton()" class="success">The skip button</li><li concordion:assertEquals="YouCanSeeTheAttributionButton()" class="success">The attribution button</li></ul></p>
+          <p concordion:assertEquals="YouCanSeeTheRemainingTime()" class="success">You can see how much time is left before changing to another position.</p>
         </section>
-
         <aside id="sidebar">
           <a href="https://mufflonosoft.blob.core.windows.net/standuptimer/Setup.exe" class="button">
             <small>Download</small>
-            Setup
-          </a>
+                        Setup
+                    </a>
           <a href="https://github.com/PapaMufflon/StandUpTimer/zipball/master" class="button">
             <small>Download</small>
-            .zip file
-          </a>
+                        .zip file
+                    </a>
           <a href="https://github.com/PapaMufflon/StandUpTimer/tarball/master" class="button">
             <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/PapaMufflon/StandUpTimer"></a> is maintained by <a href="https://github.com/PapaMufflon">PapaMufflon</a>.</p>
-
+                        .tar.gz file
+                    </a>
+          <p class="repo-owner">
+            <a href="https://github.com/PapaMufflon/StandUpTimer"></a>is maintained by <a href="https://github.com/PapaMufflon">PapaMufflon</a>.</p>
           <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
       </div>
     </div>
-
-  
+    <div class="footer">Results generated by <a href="http://www.concordion.org"><img src="..\..\image\concordion-logo.png" alt="Concordion" border="0" /></a><div class="testTime">in 25442545 ms 11.11.2014 13:10:31</div></div>
   </body>
 </html>
