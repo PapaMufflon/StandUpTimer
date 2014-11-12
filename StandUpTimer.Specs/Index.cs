@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using Concordion.Integration;
 using TestStack.White;
 using TestStack.White.Factory;
@@ -117,6 +119,112 @@ namespace StandUpTimer.Specs
                 Directory.CreateDirectory(@"results\StandUpTimer\Specs");
                 File.Move("screenshot.png", @"results\StandUpTimer\Specs\start.png");
             }
+        }
+
+        public string WaitForTheTimeToElapseToGoToTheNextPosition()
+        {
+            const int sittingWaitTime = 1000;
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+
+            using (var application = Application.Launch(processStartInfo))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                Thread.Sleep(sittingWaitTime);
+
+                var currentImageFileName = window.Get<Label>("CurrentImageFileName");
+
+                if (currentImageFileName == null)
+                    return "Cannot determine current image.";
+
+                return currentImageFileName.Text.Equals("..\\Images\\standing.png")
+                           ? "Wait for the time to elapse"
+                           : "There was a wrong image after waiting the sitting time.";
+            }
+        }
+
+        public string UseTheSkipButtonToGoToTheNextPosition()
+        {
+            using (var application = Application.Launch("StandUpTimer.exe"))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                var skipButton = window.Get<Button>("SkipButton");
+                skipButton.Click();
+
+                var currentImageFileName = window.Get<Label>("CurrentImageFileName");
+
+                if (currentImageFileName == null)
+                    return "Cannot determine current image.";
+
+                return currentImageFileName.Text.Equals("..\\Images\\standing.png")
+                           ? "Use the skip button"
+                           : "There was a wrong image after clicking the skip button.";
+            }
+        }
+
+        public string AfterTheTimeElapsedTheAppGetsIntoView()
+        {
+            const int sittingWaitTime = 1000;
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+
+            using (var application = Application.Launch(processStartInfo))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                var psi = new ProcessStartInfo("notepad.exe") { WindowStyle = ProcessWindowStyle.Maximized };
+                var process = Process.Start(psi);
+
+                Thread.Sleep(sittingWaitTime);
+
+                var result = window.IsFocussed
+                                 ? "the app will get into view"
+                                 : "the app didn't get into view";
+
+                process.Kill();
+
+                return result;
+            }
+        }
+
+        public string AfterTheTimeElapsedTheOkButtonIsVisible()
+        {
+            const int sittingWaitTime = 1000;
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+
+            using (var application = Application.Launch(processStartInfo))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                Thread.Sleep(sittingWaitTime);
+
+                var okButton = window.Get<Button>("OkButton");
+
+                if (okButton == null)
+                    return "Cannot find the OK button.";
+
+                return okButton.Visible
+                           ? "the OK button is visible"
+                           : "the OK button is not visible";
+            }
+        }
+
+        public string AfterClickingOkTheTimeTicksAgain()
+        {
+            return string.Empty;
+        }
+
+        public void TakeNextPhaseScreenshot()
+        {
+        }
+
+        public string TheAppStartsOnTheSamePosition()
+        {
+            return string.Empty;
+        }
+
+        public void TakeAttributionScreenshot()
+        {
         }
     }
 }

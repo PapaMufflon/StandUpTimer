@@ -1,6 +1,7 @@
 - specs
   - include version number in documentation
   - all the specs
+  - multilangual
 
 - autostart
 

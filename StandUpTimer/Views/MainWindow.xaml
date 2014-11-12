@@ -81,7 +81,8 @@
                     VerticalAlignment="Center"
                     Visibility="{Binding OkButtonVisibility}"
                     Template="{StaticResource ImageButton}"
-                    Command="{Binding OkCommand}">
+                    Command="{Binding OkCommand}"
+                    x:Name="OkButton" >
                 <Image Source="..\Images\okButton.png" />
             </Button>
 

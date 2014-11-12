@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -15,10 +16,10 @@ namespace StandUpTimer.Views
         private readonly Updater updater;
         private readonly StandUpViewModel standUpViewModel;
 
-        public MainWindow()
+        public MainWindow(TimeSpan sittingTime, TimeSpan standingTime)
         {
             updater = new Updater(Close);
-            standUpViewModel = new StandUpViewModel(new StandUpModel(new DispatcherTimerWrapper()), this);
+            standUpViewModel = new StandUpViewModel(new StandUpModel(new DispatcherTimerWrapper(), sittingTime, standingTime), this);
 
             DataContext = standUpViewModel;
 

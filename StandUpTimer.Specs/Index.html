@@ -57,8 +57,10 @@
                     </h3>
                     
                     <p>After installation, the program starts immediately.</p>
+
                     <p concordion:assertEquals="ItBeginsWithTheSittingPhase()">It begins with the sitting phase.</p>
                     <img concordion:execute="TakeStartScreenshot()" src="start.png" />
+
                     <p>
                         When you move the mouse over the image, you can see the available controls:
                         <ul>
@@ -69,6 +71,29 @@
                     </p>
 
                     <p concordion:assertEquals="YouCanSeeTheRemainingTime()">You can see how much time is left before changing to another position.</p>
+					
+                    <p>
+                        You have two choices to go to the next position:
+                        <ul>
+                            <li concordion:assertEquals="WaitForTheTimeToElapseToGoToTheNextPosition()">Wait for the time to elapse</li>
+                            <li concordion:assertEquals="UseTheSkipButtonToGoToTheNextPosition()">Use the skip button</li>
+                        </ul>
+                    </p>
+                    
+                    <p>When you waited for the time to elapse, the application will shake, 
+                       <span concordion:assertEquals="AfterTheTimeElapsedTheAppGetsIntoView()">the app will get into view</span> and 
+                       <span concordion:assertEquals="AfterTheTimeElapsedTheOkButtonIsVisible()">the OK button is visible</span>.
+                    </p>
+					
+                    <p>After clicking the OK button, the shaking stops and <span concordion:assertEquals="AfterClickingOkTheTimeTicksAgain()">the time is ticking again</span>.</p>
+                    
+                    <img concordion:execute="TakeNextPhaseScreenshot()" src="nextPhase.png" />
+                    
+                    <p>When you close the application, the screen position will be saved and <span concordion:assertEquals="TheAppStartsOnTheSamePosition()">on the next startup, the app starts on that position again</span>.</p>
+                    
+                    <p>You can see the attributions of the used images when moving the mouse on the attribution button:</p>
+                    <img concordion:execute="TakeAttributionScreenshot()" src="attribution.png" />
+
                 </section>
 
                 <aside id="sidebar">

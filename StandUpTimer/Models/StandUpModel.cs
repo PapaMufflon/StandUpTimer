@@ -12,21 +12,24 @@ namespace StandUpTimer.Models
         public DateTime ChangeTime { get; set; }
         public TimeSpan CurrentLeg { get { return changeTimer.Interval; } }
 
-        internal static readonly TimeSpan StandingTime = TimeSpan.FromMinutes(20);
-        internal static readonly TimeSpan SittingTime = TimeSpan.FromHours(1);
-
         private readonly ITimer changeTimer;
+        private readonly TimeSpan sittingTime;
+        private readonly TimeSpan standingTime;
 
-        public StandUpModel(ITimer timer)
+        public StandUpModel(ITimer timer, TimeSpan sittingTime, TimeSpan standingTime)
         {
             Contract.Requires(timer != null);
+            Contract.Requires(sittingTime != TimeSpan.Zero);
+            Contract.Requires(standingTime != TimeSpan.Zero);
 
             DeskState = DeskState.Sitting;
 
-            ChangeTime = TestableDateTime.Now.Add(SittingTime);
+            ChangeTime = TestableDateTime.Now.Add(sittingTime);
 
             changeTimer = timer;
-            changeTimer.Interval = SittingTime;
+            this.sittingTime = sittingTime;
+            this.standingTime = standingTime;
+            changeTimer.Interval = sittingTime;
             changeTimer.Tick += OnChangeTimerTicked;
             changeTimer.Start();
         }
@@ -49,12 +52,12 @@ namespace StandUpTimer.Models
             {
                 case DeskState.Sitting:
                     DeskState = DeskState.Standing;
-                    changeTimer.Interval = StandingTime;
+                    changeTimer.Interval = standingTime;
                     break;
 
                 case DeskState.Standing:
                     DeskState = DeskState.Sitting;
-                    changeTimer.Interval = SittingTime;
+                    changeTimer.Interval = sittingTime;
                     break;
 
                 default:
