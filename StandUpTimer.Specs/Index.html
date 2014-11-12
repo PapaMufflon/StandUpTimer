@@ -9,7 +9,22 @@
     <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/print.css" media="print" />
+    <style>
+        .success, .success * {
+            background-color: transparent !important;
+        }
 
+        .success pre {
+            background-color: transparent;
+        }
+
+        .success:after {
+            content:'\2713';
+            display:inline-block;
+            color:red;
+            padding:0 6px 0 0;
+        }
+    </style>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -41,8 +56,9 @@
                         How to use the Stand-Up Timer.
                     </h3>
                     
-                    <p>After installation, the program starts immediately to run.</p>
+                    <p>After installation, the program starts immediately.</p>
                     <p concordion:assertEquals="ItBeginsWithTheSittingPhase()">It begins with the sitting phase.</p>
+                    <img concordion:execute="TakeStartScreenshot()" src="start.png" />
                     <p>
                         When you move the mouse over the image, you can see the available controls:
                         <ul>
@@ -52,7 +68,7 @@
                         </ul>
                     </p>
 
-                    <p>You can see how much time is left before changing to another position.</p>
+                    <p concordion:assertEquals="YouCanSeeTheRemainingTime()">You can see how much time is left before changing to another position.</p>
                 </section>
 
                 <aside id="sidebar">

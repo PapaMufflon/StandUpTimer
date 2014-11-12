@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
@@ -85,6 +86,12 @@ namespace StandUpTimer.Views
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
+        }
+
+        private void MainWindow_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.PrintScreen)
+                File.WriteAllBytes("screenshot.png", this.GetJpgImage(1.0, 80));
         }
     }
 }

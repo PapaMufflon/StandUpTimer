@@ -1,6 +1,5 @@
 - specs
-  - first spec
-  - automate concordion
+  - include version number in documentation
   - all the specs
 
 - autostart

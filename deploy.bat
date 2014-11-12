@@ -19,5 +19,7 @@ cd..
 set /p AzureKey=<azure.key
 "C:\Program Files (x86)\Microsoft SDKs\Azure\AzCopy\AzCopy.exe" /Source:build\Releases /Dest:http://mufflonosoft.blob.core.windows.net/standuptimer /DestKey:%AzureKey% /S /XO /Y /NC:1
 
+call pushDocumentation.bat
+
 :exit
 pause

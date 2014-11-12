@@ -11,6 +11,7 @@
         MouseLeftButtonDown="MainWindow_OnMouseLeftButtonDown"
         MouseMove="MainWindow_OnMouseMove"
         MouseLeave="MainWindow_OnMouseLeave"
+        KeyUp="MainWindow_OnKeyUp"
         Style="{StaticResource ShakeDatAss}">
 
     <Window.Resources>
@@ -44,13 +45,15 @@
                                  FlowDirection="RightToLeft"
                                  MinWidth="30"
                                  Value="{Binding RemainingTimeToChangeInPercent, Mode=OneWay}"
-                                 Style="{StaticResource FadeOutStyle}"/>
+                                 Style="{StaticResource FadeOutStyle}"
+                                 x:Name="ProgressBar" />
 
                     <TextBlock Text="{Binding RemainingTimeToChangeAsString}"
                                TextAlignment="Center"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Style="{StaticResource FadeOutStyle}" />
+                               Style="{StaticResource FadeOutStyle}"
+                               x:Name="ProgressText"/>
                 </Grid>
             </DockPanel>
         </Grid>
