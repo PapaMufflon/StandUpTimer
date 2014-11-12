@@ -216,6 +216,18 @@ namespace StandUpTimer.Specs
 
         public void TakeNextPhaseScreenshot()
         {
+            using (var application = Application.Launch("StandUpTimer.exe"))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                var skipButton = window.Get<Button>("SkipButton");
+                skipButton.Click();
+
+                window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
+
+                Directory.CreateDirectory(@"results\StandUpTimer\Specs");
+                File.Move("screenshot.png", @"results\StandUpTimer\Specs\nextPhase.png");
+            }
         }
 
         public string TheAppStartsOnTheSamePosition()
@@ -225,6 +237,18 @@ namespace StandUpTimer.Specs
 
         public void TakeAttributionScreenshot()
         {
+            using (var application = Application.Launch("StandUpTimer.exe"))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                var attributionButton = window.Get<Button>("AttributionButton");
+                window.Mouse.Location = attributionButton.Location;
+
+                window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
+
+                Directory.CreateDirectory(@"results\StandUpTimer\Specs");
+                File.Move("screenshot.png", @"results\StandUpTimer\Specs\attribution.png");
+            }
         }
     }
 }
