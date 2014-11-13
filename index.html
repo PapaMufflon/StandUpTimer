@@ -169,6 +169,22 @@ ins {
     <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="http://papamufflon.github.io/StandUpTimer/stylesheets/print.css" media="print" />
+    <style>
+        .success, .success * {
+            background-color: transparent !important;
+        }
+
+        .success pre {
+            background-color: transparent;
+        }
+
+        .success:after {
+            content:'\2713';
+            display:inline-block;
+            color:red;
+            padding:0 6px 0 0;
+        }
+    </style>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -178,53 +194,132 @@ ins {
     <header>
       <div class="inner">
         <h1>Stand-up Timer</h1>
-        <h2>Windows app for a standing desk.</h2>
-        <a href="https://github.com/PapaMufflon/StandUpTimer" class="button">
+        <h2 lang="en">Windows app for a standing desk.</h2>
+        <h2 lang="de">Windows App für einen Stehtisch.</h2>
+        <a lang="en" href="https://github.com/PapaMufflon/StandUpTimer" class="button">
           <small>View project on</small> GitHub</a>
+        <a lang="de" href="https://github.com/PapaMufflon/StandUpTimer" class="button">
+          <small>Das Projekt liegt auf</small> GitHub</a>
       </div>
     </header>
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h3>
+          <span lang="xx" concordion:set="#en">en</span>
+          <span lang="xx" concordion:set="#de">de</span>
+          <h3 lang="en">
             <a id="welcome" class="anchor" href="#welcome" aria-hidden="true">
               <span class="octicon octicon-link"></span>
             </a>
                         Welcome to the Stand-Up Timer.
                     </h3>
-          <p>Check out the downloadable setup file on the right. More content coming hopefully soon.</p>
-          <h3>
+          <h3 lang="de">
+            <a id="welcome" class="anchor" href="#welcome" aria-hidden="true">
+              <span class="octicon octicon-link"></span>
+            </a>
+                        Willkommen zum Stand-Up Timer.
+                    </h3>
+          <p lang="en">Check out the downloadable setup file on the right!</p>
+          <p lang="de">Schau Dir das downloadbare Setup rechts an!</p>
+          <h3 lang="en">
             <a id="usage" class="anchor" href="#usage" aria-hidden="true">
               <span class="octicon octicon-link"></span>
             </a>
                         How to use the Stand-Up Timer.
                     </h3>
-          <p>After installation, the program starts immediately to run.</p>
-          <p concordion:assertEquals="ItBeginsWithTheSittingPhase()" class="success">It begins with the sitting phase.</p>
-          <p>
+          <h3 lang="de">
+            <a id="usage" class="anchor" href="#usage" aria-hidden="true">
+              <span class="octicon octicon-link"></span>
+            </a>
+                        Wie man den Stand-Up Timer verwendet.
+                    </h3>
+          <p lang="en">After installation, the program starts immediately.</p>
+          <p lang="de">Nach der Installation startet das Programm sofort.</p>
+          <p lang="en" concordion:assertEquals="ItBeginsWithTheSittingPhase(#en)" class="success">It begins with the sitting phase.</p>
+          <p lang="de" concordion:assertEquals="ItBeginsWithTheSittingPhase(#de)" class="success">Es fängt mit der Sitzen-Phase an.</p>
+          <img concordion:execute="TakeStartScreenshot()" src="start.png" />
+          <p lang="en">
                         When you move the mouse over the image, you can see the available controls:
-                        <ul><li concordion:assertEquals="YouCanSeeTheCloseButton()" class="success">The close button</li><li concordion:assertEquals="YouCanSeeTheSkipButton()" class="success">The skip button</li><li concordion:assertEquals="YouCanSeeTheAttributionButton()" class="success">The attribution button</li></ul></p>
-          <p concordion:assertEquals="YouCanSeeTheRemainingTime()" class="success">You can see how much time is left before changing to another position.</p>
+                        <ul lang="en"><li concordion:assertEquals="YouCanSeeTheCloseButton(#en)" class="success">The close button</li><li concordion:assertEquals="YouCanSeeTheSkipButton(#en)" class="success">The skip button</li><li concordion:assertEquals="YouCanSeeTheAttributionButton(#en)" class="success">The attribution button</li></ul></p>
+          <p lang="de">
+					    Wenn Du Deine Maus über das Bild bewegst, kannst Du die vorhandenen Schaltflächen sehen:
+                        <ul lang="de"><li concordion:assertEquals="YouCanSeeTheCloseButton(#de)" class="success">Die Schließen Schaltfläche</li><li concordion:assertEquals="YouCanSeeTheSkipButton(#de)" class="success">Die Überspringen Schaltfläche</li><li concordion:assertEquals="YouCanSeeTheAttributionButton(#de)" class="success">Die Attribuierung Schaltfläche</li></ul></p>
+          <p lang="en" concordion:assertEquals="YouCanSeeTheRemainingTime(#en)" class="success">You can see how much time is left before changing to another position.</p>
+          <p lang="de" concordion:assertEquals="YouCanSeeTheRemainingTime(#de)" class="success">Man kann sehen, wie viel Zeit übrig ist, bevor man die Position wechseln muss.</p>
+          <p lang="en">
+                        You have two choices to go to the next position:
+                        <ul lang="en"><li concordion:assertEquals="WaitForTheTimeToElapseToGoToTheNextPosition(#en)" class="success">Wait for the time to elapse</li><li concordion:assertEquals="UseTheSkipButtonToGoToTheNextPosition(#en)" class="success">Use the skip button</li></ul></p>
+          <p lang="de">
+					    Du kannst auf zwei Arten zur nächsten Position gelangen:
+                        <ul lang="de"><li concordion:assertEquals="WaitForTheTimeToElapseToGoToTheNextPosition(#de)" class="success">Warte bis die Zeit verstrichen ist</li><li concordion:assertEquals="UseTheSkipButtonToGoToTheNextPosition(#de)" class="success">Verwende die Überspringen Schaltfläche</li></ul></p>
+          <p lang="en">
+					    When you waited for the time to elapse, the application will shake, 
+                       <span concordion:assertEquals="AfterTheTimeElapsedTheAppGetsIntoView(#en)" class="success">the app will get into view</span> and 
+                       <span concordion:assertEquals="AfterTheTimeElapsedTheOkButtonIsVisible(#en)" class="success">the OK button is visible</span>.
+                    </p>
+          <p lang="de">
+					    Wenn Du wartest, bis die Zeit verstrichen ist, wird das Programm sichtbar wackeln, 
+                       <span concordion:assertEquals="AfterTheTimeElapsedTheAppGetsIntoView(#de)" class="success">in den Vordergrund kommen</span> und
+                       <span concordion:assertEquals="AfterTheTimeElapsedTheOkButtonIsVisible(#de)" class="success">die OK Schaltfläche wird sichtbar</span>.
+                    </p>
+          <p lang="en">After clicking the OK button, the shaking stops and <span concordion:assertEquals="AfterClickingOkTheTimeTicksAgain(#en)" class="success">the time is ticking again</span>.</p>
+          <p lang="de">Nachdem man auf OK geklickt hat, hört das Wackeln auf und <span concordion:assertEquals="AfterClickingOkTheTimeTicksAgain(#de)" class="success">die Zeit läuft wieder</span>.</p>
+          <img concordion:execute="TakeNextPhaseScreenshot()" src="nextPhase.png" />
+          <p lang="en">When you close the application, the screen position will be saved and <span concordion:assertEquals="TheAppStartsOnTheSamePosition(#en)" class="success">on the next startup, the app starts on that position again</span>.</p>
+          <p lang="de">Wenn Du das Programm schließt, wird die Bildschirmposition gespeichert und <span concordion:assertEquals="TheAppStartsOnTheSamePosition(#de)" class="success">beim nächsten Start wird das Programm an der gleichen Position wieder angezeigt</span>.</p>
+          <p lang="en">You can see the attributions of the used images when moving the mouse on the attribution button:</p>
+          <p lang="de">Du kannst die Attribuierungen der verwendeten Bilder sehen, wenn Du die Maus auf die Attribuierung Schaltfläche bewegst:</p>
+          <img concordion:execute="TakeAttributionScreenshot()" src="attribution.png" />
         </section>
         <aside id="sidebar">
+          <select onchange="select_language(this.options[this.selectedIndex].value)">
+            <option value="de" selected="selected">Deutsch</option>
+            <option value="en">English</option>
+          </select>
           <a href="https://mufflonosoft.blob.core.windows.net/standuptimer/Setup.exe" class="button">
             <small>Download</small>
                         Setup
                     </a>
-          <a href="https://github.com/PapaMufflon/StandUpTimer/zipball/master" class="button">
+          <a lang="en" href="https://github.com/PapaMufflon/StandUpTimer/zipball/master" class="button">
             <small>Download</small>
                         .zip file
                     </a>
-          <a href="https://github.com/PapaMufflon/StandUpTimer/tarball/master" class="button">
+          <a lang="de" href="https://github.com/PapaMufflon/StandUpTimer/zipball/master" class="button">
+            <small>Download</small>
+                        .zip Datei
+                    </a>
+          <a lang="en" href="https://github.com/PapaMufflon/StandUpTimer/tarball/master" class="button">
             <small>Download</small>
                         .tar.gz file
                     </a>
-          <p class="repo-owner">
+          <a lang="de" href="https://github.com/PapaMufflon/StandUpTimer/tarball/master" class="button">
+            <small>Download</small>
+                        .tar.gz Datei
+                    </a>
+          <p lang="en" class="repo-owner">
             <a href="https://github.com/PapaMufflon/StandUpTimer"></a>is maintained by <a href="https://github.com/PapaMufflon">PapaMufflon</a>.</p>
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+          <p lang="de" class="repo-owner">
+            <a href="https://github.com/PapaMufflon/StandUpTimer"></a>wird gepflegt von <a href="https://github.com/PapaMufflon">PapaMufflon</a>.</p>
+          <p lang="en">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+          <p lang="en">Diese Seite wurde von <a href="https://pages.github.com">GitHub Pages</a> generiert mittels dem Architect theme von <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
       </div>
     </div>
-    <div class="footer">Results generated by <a href="http://www.concordion.org"><img src="..\..\image\concordion-logo.png" alt="Concordion" border="0" /></a><div class="testTime">in 25182519 ms 11.11.2014 13:28:04</div></div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+		function select_language(language) {
+	        $("[lang]").each(function () {
+		        if ($(this).attr("lang") == language)
+                    $(this).show();
+			    else
+			        $(this).hide();
+			});
+		}
+		
+		$(document).ready(function () {
+	        select_language("de");
+		});
+	</script>
+    <div class="footer">Results generated by <a href="http://www.concordion.org"><img src="..\..\image\concordion-logo.png" alt="Concordion" border="0" /></a><div class="testTime">in 235103509 ms 13.11.2014 17:41:59</div></div>
   </body>
 </html>
