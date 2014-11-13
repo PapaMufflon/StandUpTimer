@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using Concordion.Integration;
 using StandUpTimer.Specs.Properties;
 using TestStack.White;
@@ -233,7 +235,41 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            return string.Empty;
+            const int sittingWaitTime = 1000;
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+
+            using (var application = Application.Launch(processStartInfo))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                Thread.Sleep(sittingWaitTime);
+
+                var okButton = window.Get<Button>("OkButton");
+
+                if (okButton == null)
+                    return "Cannot find the OK button.";
+
+                okButton.Click();
+
+                var progressText = window.Get<Label>("ProgressText");
+
+                WaitFor(() => progressText.Text.Equals("60\nmin"));
+
+                return progressText.Text.Equals("60\nmin")
+                           ? Resources.TheTimeIsTickingAgain
+                           : "the time is not ticking correctly, " + progressText.Text + " was shown.";
+            }
+        }
+
+        private void WaitFor(Func<bool> func)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
+            while (stopwatch.Elapsed < TimeSpan.FromSeconds(5))
+            {
+                if (func())
+                    return;
+            }
         }
 
         public void TakeNextPhaseScreenshot()
@@ -256,7 +292,23 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            return string.Empty;
+            Point savedLocation;
+
+            using (var application = Application.Launch("StandUpTimer.exe"))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                savedLocation = window.Location;
+            }
+
+            using (var application = Application.Launch("StandUpTimer.exe"))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                return savedLocation == window.Location
+                           ? Resources.OnTheNextStartupTheAppStartOnThatPositionAgain
+                           : "the app is not on the previous position.";
+            }
         }
 
         public void TakeAttributionScreenshot()
@@ -266,7 +318,9 @@ namespace StandUpTimer.Specs
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
                 var attributionButton = window.Get<Button>("AttributionButton");
-                window.Mouse.Location = attributionButton.Location;
+                window.Mouse.Location = attributionButton.ClickablePoint;
+
+                Thread.Sleep(200);
 
                 window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
 
