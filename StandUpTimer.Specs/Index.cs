@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using Concordion.Integration;
+using StandUpTimer.Specs.Properties;
 using TestStack.White;
 using TestStack.White.Factory;
 using TestStack.White.UIItems;
@@ -13,8 +15,10 @@ namespace StandUpTimer.Specs
     [ConcordionTest]
     public class Index
     {
-        public string ItBeginsWithTheSittingPhase()
+        public string ItBeginsWithTheSittingPhase(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             using (var application = Application.Launch("StandUpTimer.exe"))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
@@ -30,13 +34,15 @@ namespace StandUpTimer.Specs
                     return "Cannot determine current image.";
 
                 return currentImageFileName.Text.Equals("..\\Images\\sitting.png")
-                           ? "It begins with the sitting phase."
+                           ? Resources.ItBeginsWithTheSittingPhase
                            : "It does not begin with the sitting phase.";
             }
         }
 
-        public string YouCanSeeTheCloseButton()
+        public string YouCanSeeTheCloseButton(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             using (var application = Application.Launch("StandUpTimer.exe"))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
@@ -47,13 +53,15 @@ namespace StandUpTimer.Specs
                     return "There is no close button.";
 
                 return closeButton.Visible
-                           ? "The close button"
+                           ? Resources.TheCloseButton
                            : "The close button is not visible.";
             }
         }
 
-        public string YouCanSeeTheSkipButton()
+        public string YouCanSeeTheSkipButton(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             using (var application = Application.Launch("StandUpTimer.exe"))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
@@ -64,13 +72,15 @@ namespace StandUpTimer.Specs
                     return "There is no skip button.";
 
                 return skipButton.Visible
-                           ? "The skip button"
+                           ? Resources.TheSkipButton
                            : "The skip button is not visible.";
             }
         }
 
-        public string YouCanSeeTheAttributionButton()
+        public string YouCanSeeTheAttributionButton(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             using (var application = Application.Launch("StandUpTimer.exe"))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
@@ -81,13 +91,15 @@ namespace StandUpTimer.Specs
                     return "There is no attribution button.";
 
                 return attributionButton.Visible
-                           ? "The attribution button"
+                           ? Resources.TheAttributionButton
                            : "The attribution button is not visible.";
             }
         }
 
-        public string YouCanSeeTheRemainingTime()
+        public string YouCanSeeTheRemainingTime(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             using (var application = Application.Launch("StandUpTimer.exe"))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
@@ -104,7 +116,7 @@ namespace StandUpTimer.Specs
 
                 return string.IsNullOrEmpty(progressText.Text)
                            ? "No progress information available"
-                           : "You can see how much time is left before changing to another position.";
+                           : Resources.YouCanSeeTheRemainingTime;
             }
         }
 
@@ -121,8 +133,10 @@ namespace StandUpTimer.Specs
             }
         }
 
-        public string WaitForTheTimeToElapseToGoToTheNextPosition()
+        public string WaitForTheTimeToElapseToGoToTheNextPosition(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             const int sittingWaitTime = 1000;
             var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
 
@@ -138,13 +152,15 @@ namespace StandUpTimer.Specs
                     return "Cannot determine current image.";
 
                 return currentImageFileName.Text.Equals("..\\Images\\standing.png")
-                           ? "Wait for the time to elapse"
+                           ? Resources.WaitForTheTimeToElapse
                            : "There was a wrong image after waiting the sitting time.";
             }
         }
 
-        public string UseTheSkipButtonToGoToTheNextPosition()
+        public string UseTheSkipButtonToGoToTheNextPosition(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             using (var application = Application.Launch("StandUpTimer.exe"))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
@@ -158,13 +174,15 @@ namespace StandUpTimer.Specs
                     return "Cannot determine current image.";
 
                 return currentImageFileName.Text.Equals("..\\Images\\standing.png")
-                           ? "Use the skip button"
+                           ? Resources.UseTheSkipButton
                            : "There was a wrong image after clicking the skip button.";
             }
         }
 
-        public string AfterTheTimeElapsedTheAppGetsIntoView()
+        public string AfterTheTimeElapsedTheAppGetsIntoView(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             const int sittingWaitTime = 1000;
             var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
 
@@ -178,7 +196,7 @@ namespace StandUpTimer.Specs
                 Thread.Sleep(sittingWaitTime);
 
                 var result = window.IsFocussed
-                                 ? "the app will get into view"
+                                 ? Resources.TheAppWillGetIntoView
                                  : "the app didn't get into view";
 
                 process.Kill();
@@ -187,8 +205,10 @@ namespace StandUpTimer.Specs
             }
         }
 
-        public string AfterTheTimeElapsedTheOkButtonIsVisible()
+        public string AfterTheTimeElapsedTheOkButtonIsVisible(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             const int sittingWaitTime = 1000;
             var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
 
@@ -204,13 +224,15 @@ namespace StandUpTimer.Specs
                     return "Cannot find the OK button.";
 
                 return okButton.Visible
-                           ? "the OK button is visible"
+                           ? Resources.TheOkButtonIsVisible
                            : "the OK button is not visible";
             }
         }
 
-        public string AfterClickingOkTheTimeTicksAgain()
+        public string AfterClickingOkTheTimeTicksAgain(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             return string.Empty;
         }
 
@@ -230,8 +252,10 @@ namespace StandUpTimer.Specs
             }
         }
 
-        public string TheAppStartsOnTheSamePosition()
+        public string TheAppStartsOnTheSamePosition(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
             return string.Empty;
         }
 

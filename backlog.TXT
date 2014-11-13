@@ -1,9 +1,10 @@
 - specs
+  - attribution image
   - include version number in documentation
-  - all the specs
-  - multilangual
 
 - autostart
+
+- remaining time in title to see it in taskbar
 
 - delete last packages on deploy
 
