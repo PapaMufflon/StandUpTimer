@@ -261,17 +261,6 @@ namespace StandUpTimer.Specs
             }
         }
 
-        private void WaitFor(Func<bool> func)
-        {
-            var stopwatch = Stopwatch.StartNew();
-
-            while (stopwatch.Elapsed < TimeSpan.FromSeconds(5))
-            {
-                if (func())
-                    return;
-            }
-        }
-
         public void TakeNextPhaseScreenshot()
         {
             using (var application = Application.Launch("StandUpTimer.exe"))
@@ -280,6 +269,10 @@ namespace StandUpTimer.Specs
 
                 var skipButton = window.Get<Button>("SkipButton");
                 skipButton.Click();
+
+                var progressText = window.Get<Label>("ProgressText");
+
+                WaitFor(() => progressText.Text.Equals("20\nmin"));
 
                 window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
 
@@ -326,6 +319,17 @@ namespace StandUpTimer.Specs
 
                 Directory.CreateDirectory(@"results\StandUpTimer\Specs");
                 File.Move("screenshot.png", @"results\StandUpTimer\Specs\attribution.png");
+            }
+        }
+
+        private void WaitFor(Func<bool> func)
+        {
+            var stopwatch = Stopwatch.StartNew();
+
+            while (stopwatch.Elapsed < TimeSpan.FromSeconds(5))
+            {
+                if (func())
+                    return;
             }
         }
     }
