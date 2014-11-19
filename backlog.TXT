@@ -1,5 +1,4 @@
 - specs
-  - attribution image
   - include version number in documentation
 
 - autostart

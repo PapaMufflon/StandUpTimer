@@ -112,6 +112,9 @@
                             Creative Commons designed by <Hyperlink NavigateUri="http://www.thenounproject.com/acondiff" RequestNavigate="Hyperlink_OnRequestNavigate">Austin Condiff</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
                             Check Mark designed by <Hyperlink NavigateUri="http://www.thenounproject.com/ricardo.cherem" RequestNavigate="Hyperlink_OnRequestNavigate">Ricardo Augusto Cherem</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
                         </TextBlock>
+                        <TextBlock HorizontalAlignment="Right"
+                                   VerticalAlignment="Bottom"
+                                   Text="{Binding VersionNumber}" />
                     </StackPanel>
                 </Border>
             </Grid>

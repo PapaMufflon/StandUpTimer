@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -28,7 +29,7 @@ namespace StandUpTimer.ViewModels
         {
             Contract.Requires(model != null);
             Contract.Requires(bringToForeground != null);
-            
+
             this.model = model;
             this.bringToForeground = bringToForeground;
 
@@ -102,7 +103,7 @@ namespace StandUpTimer.ViewModels
         {
             get { return model.ChangeTime.Subtract(DateTime.Now).FractionTo(model.CurrentLeg); }
         }
-        
+
         public string CurrentImage
         {
             get { return currentImage; }
@@ -152,6 +153,8 @@ namespace StandUpTimer.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string VersionNumber { get { return "V" + Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
 
         public ICommand OkCommand
         {
