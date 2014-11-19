@@ -9,6 +9,8 @@
 	<dependencies></dependencies>
   </metadata>
   <files>
+    <file src="FluentCommandLineParser.dll" target="lib/net45" />
+	<file src="FluentCommandLineParser.xml" target="lib/net45" />
     <file src="ICsharpCode.SharpZipLib.dll" target="lib/net45" />
 	<file src="ICsharpCode.SharpZipLib.xml" target="lib/net45" />
 	<file src="Microsoft.Web.XmlTransform.dll" target="lib/net45" />
