@@ -33,8 +33,9 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Concordion">
-      <HintPath>..\packages\Concordion.NET-1.1.0\Concordion.NET\Concordion.dll</HintPath>
+    <Reference Include="Concordion, Version=0.1.99.9999, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Concordion.NET.1.2.0\lib\Concordion.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -63,8 +64,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="OGNL">
-      <HintPath>..\packages\Concordion.NET-1.1.0\Concordion.NET\OGNL.dll</HintPath>
+    <Reference Include="OGNL, Version=1.0.3982.16799, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Concordion.NET.1.2.0\lib\OGNL.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="Splat">
@@ -106,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Concordion.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
