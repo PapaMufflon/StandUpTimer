@@ -1,0 +1,21 @@
+﻿@model IEnumerable<StandUpTimer.Web.Models.Status>
+
+@{
+    ViewBag.Title = "Statistics";
+}
+
+<h2>Statistics</h2>
+
+<p>Hello from our View Template!</p>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Position)
+        </td>
+    </tr>
+}
