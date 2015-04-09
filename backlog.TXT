@@ -1,10 +1,11 @@
-- specs
-  - include version number in documentation
+- tag released git commit
+
+- certificate (http://stackoverflow.com/a/18959881)
+
+- include version number in documentation
 
 - autostart
 
 - remaining time in title to see it in taskbar
 
 - delete last packages on deploy
-
-- certificate (http://stackoverflow.com/a/18959881)
