@@ -36,9 +36,9 @@
     var tasks = [
 @foreach (var item in Model)
 {
-    @:{ "startDate": new Date("@Html.DisplayFor(modelItem => item.StartDate)"), "endDate": new Date("@Html.DisplayFor(modelItem => item.EndDate)"), "taskName": "Heute", "status": "@Html.DisplayFor(modelItem => item.Position)" },
+    @:{ "startDate": new Date("@Html.DisplayFor(modelItem => item.StartDate)"), "endDate": new Date("@Html.DisplayFor(modelItem => item.EndDate)"), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.Position)" },
 }
-];
+    ];
 
     var taskStatus = {
         "Standing": "standing",
@@ -46,7 +46,7 @@
         "Inactive": "inactive"
     };
 
-    var taskNames = ["Heute"];
+    var taskNames = ["Heute", "Gestern"];
 
     tasks.sort(function (a, b) {
         return a.endDate - b.endDate;
