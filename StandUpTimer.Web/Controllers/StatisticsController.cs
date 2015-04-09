@@ -84,7 +84,37 @@ namespace StandUpTimer.Web.Controllers
                 }
             });
 
-            return View(statuses);
+            return View(statuses.Ganttisize());
         }
+    }
+
+    public static class GanttificationExtension
+    {
+        public static List<GanttStatus> Ganttisize(this IList<Status> statuses)
+        {
+            var result = new List<GanttStatus>();
+
+            for (int index = 1; index < statuses.Count; index++)
+            {
+                var status = statuses[index];
+                var previousStatus = statuses[index - 1];
+
+                result.Add(new GanttStatus
+                {
+                    Position = previousStatus.Position,
+                    StartDate = previousStatus.DateTime,
+                    EndDate = status.DateTime
+                });
+            }
+
+            return result;
+        }
+    }
+
+    public class GanttStatus
+    {
+        public Position Position { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

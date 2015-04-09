@@ -1,0 +1,22 @@
+﻿.chart {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+}
+ 
+.axis path,.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+ 
+.standing {
+	fill: #33b5e5;
+}
+ 
+.sitting {
+	fill: #CC0000;
+}
+
+.inactive {
+	fill: transparent;
+}
