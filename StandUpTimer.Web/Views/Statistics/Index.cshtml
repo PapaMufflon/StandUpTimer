@@ -11,22 +11,7 @@
 
 <h2>Statistics</h2>
 
-<p>Hello from our View Template!</p>
-
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Position)
-        </td>
-    </tr>
-}
+<div id="gantt" style="width: 100%; height: 400px"></div>
 
 @section scripts
 {
@@ -59,7 +44,7 @@
 
     var format = "%H:%M";
 
-    var gantt = d3.gantt().taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format);
+    var gantt = d3.gantt("#gantt").taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format);
     gantt(tasks);
 </script>
 }
