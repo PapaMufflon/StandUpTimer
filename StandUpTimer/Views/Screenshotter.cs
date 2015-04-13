@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 
 namespace StandUpTimer.Views
 {
+    // taken from http://www.grumpydev.com/2009/01/03/taking-wpf-screenshots/
     public static class Screenshotter
     {
         public static byte[] GetJpgImage(this UIElement source, double scale, int quality)
