@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Net.Http;
 using StandUpTimer.Web.Contract;
 using DeskState = StandUpTimer.Models.DeskState;
