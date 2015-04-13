@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using System.Windows.Shell;
 using StandUpTimer.Models;
 using StandUpTimer.Properties;
+using StandUpTimer.Services;
 using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Views

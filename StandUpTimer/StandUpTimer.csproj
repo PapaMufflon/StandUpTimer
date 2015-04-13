@@ -211,6 +211,8 @@
     <Compile Include="Models\IDateTime.cs" />
     <Compile Include="Models\StandUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\StatusPublisher.cs" />
+    <Compile Include="Services\Updater.cs" />
     <Compile Include="ViewModels\DispatcherTimerWrapper.cs" />
     <Compile Include="ViewModels\IBringToForeground.cs" />
     <Compile Include="ViewModels\ICanHandleDeskStateStarts.cs" />
@@ -227,7 +229,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\Screenshotter.cs" />
-    <Compile Include="Views\Updater.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

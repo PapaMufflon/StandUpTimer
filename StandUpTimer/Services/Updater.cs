@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Squirrel;
 
-namespace StandUpTimer.Views
+namespace StandUpTimer.Services
 {
     internal class Updater
     {

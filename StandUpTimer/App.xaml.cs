@@ -2,6 +2,7 @@
 using System.Windows;
 using Fclp;
 using StandUpTimer.Models;
+using StandUpTimer.Services;
 using StandUpTimer.ViewModels;
 using StandUpTimer.Views;
 
@@ -13,6 +14,7 @@ namespace StandUpTimer
         {
             base.OnStartup(e);
 
+            var statusPublisher = new StatusPublisher();
             var deskStateTimes = ParseCommandLineArguments(e.Args, new DeskStateTimes
             {
                 StandingTime = TimeSpan.FromMinutes(20),
