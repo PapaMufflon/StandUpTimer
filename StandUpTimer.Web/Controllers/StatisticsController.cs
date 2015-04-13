@@ -10,6 +10,16 @@ namespace StandUpTimer.Web.Controllers
     {
         private readonly StatusContext _db = new StatusContext();
 
+        [HttpPost]
+        public ActionResult Index([Bind(Include = "DateTime,Position")] Status status)
+        {
+            _db.Statuses.Add(status);
+            _db.SaveChanges();
+
+            return null;
+        }
+
+        [HttpGet]
         // GET: Statistics
         public ActionResult Index()
         {
