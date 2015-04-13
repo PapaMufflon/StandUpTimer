@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using StandUpTimer.ViewModels;
 
-namespace StandUpTimer.UnitTests
+namespace StandUpTimer.UnitTests.ViewModels
 {
     [TestFixture]
     public class TimeExtensionTests

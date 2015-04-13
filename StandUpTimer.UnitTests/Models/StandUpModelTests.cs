@@ -3,7 +3,7 @@ using FakeItEasy;
 using NUnit.Framework;
 using StandUpTimer.Models;
 
-namespace StandUpTimer.UnitTests
+namespace StandUpTimer.UnitTests.Models
 {
     [TestFixture]
     public class StandUpModelTests

@@ -3,9 +3,10 @@ using System.Windows;
 using FakeItEasy;
 using NUnit.Framework;
 using StandUpTimer.Models;
+using StandUpTimer.UnitTests.Models;
 using StandUpTimer.ViewModels;
 
-namespace StandUpTimer.UnitTests
+namespace StandUpTimer.UnitTests.ViewModels
 {
     [TestFixture]
     public class StandUpViewModelTests
