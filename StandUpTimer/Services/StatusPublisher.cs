@@ -1,7 +1,8 @@
 using System;
 using System.Globalization;
 using System.Net.Http;
-using StandUpTimer.Models;
+using StandUpTimer.Web.Contract;
+using DeskState = StandUpTimer.Models.DeskState;
 
 namespace StandUpTimer.Services
 {
@@ -24,7 +25,7 @@ namespace StandUpTimer.Services
         {
             httpClient.PostAsJsonAsync(string.Empty, new
             {
-                DateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                DateTime = DateTime.Now.ToString(Status.DateTimeFormat),
                 DeskState = deskState
             });
         }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using StandUpTimer.Web.Models;
-using DeskState = StandUpTimer.Web.Models.DeskState;
 using Status = StandUpTimer.Web.Models.Status;
 
 namespace StandUpTimer.Web.Controllers
@@ -144,8 +144,8 @@ namespace StandUpTimer.Web.Controllers
                 result.Add(new GanttStatus
                 {
                     DeskState = previousStatus.DeskState,
-                    StartDate = DateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString("yyyy, M, d, H, m, s, 0"),
-                    EndDate = DateTime.Today.Add(status.DateTime.TimeOfDay).ToString("yyyy, M, d, H, m, s, 0"),
+                    StartDate = DateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
+                    EndDate = DateTime.Today.Add(status.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
                     Day = ToReadableDay(previousStatus.DateTime)
                 });
             }
@@ -185,7 +185,7 @@ namespace StandUpTimer.Web.Controllers
         {
             return new Status
             {
-                DateTime = status.DateTime,
+                DateTime = DateTime.ParseExact(status.DateTime, Contract.Status.DateTimeFormat, CultureInfo.InvariantCulture),
                 DeskState = status.DeskState.ToModel()
             };
         }

@@ -21,7 +21,7 @@ namespace StandUpTimer.Views
         {
             updater = new Updater(Close);
 
-            DataContext = new StandUpViewModel(standUpModel, this);
+            DataContext = standUpViewModel = new StandUpViewModel(standUpModel, this);
 
             Left = Settings.Default.Left;
             Top = Settings.Default.Top;
