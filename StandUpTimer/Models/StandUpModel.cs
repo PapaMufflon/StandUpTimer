@@ -6,7 +6,7 @@ namespace StandUpTimer.Models
 {
     internal class StandUpModel : ICanSkip
     {
-        public event EventHandler DeskStateChanged;
+        public event EventHandler<DeskStateChangedEventArgs> DeskStateChanged;
 
         public DeskState DeskState { get; set; }
         public DateTime ChangeTime { get; set; }
@@ -70,7 +70,7 @@ namespace StandUpTimer.Models
         protected virtual void OnDeskStateChanged()
         {
             var handler = DeskStateChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            if (handler != null) handler(this, new DeskStateChangedEventArgs(DeskState));
         }
 
         public void NewDeskStateStarted()

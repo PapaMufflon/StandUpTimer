@@ -243,6 +243,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StandUpTimer.Web.Contract\StandUpTimer.Web.Contract.csproj">
+      <Project>{D4F35FB6-C896-48D8-AAE7-D5011D1DF61F}</Project>
+      <Name>StandUpTimer.Web.Contract</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

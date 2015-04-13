@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using StandUpTimer.Web.Contract;
 using StandUpTimer.Web.Models;
+using Status = StandUpTimer.Web.Models.Status;
 
 namespace StandUpTimer.Web.Controllers
 {
     public class StatisticsController : Controller
     {
-        private readonly StatusContext _db = new StatusContext();
+        private readonly StatusContext db = new StatusContext();
 
         [HttpPost]
-        public ActionResult Index([Bind(Include = "DateTime,Position")] Status status)
+        public ActionResult Index([Bind(Include = "DateTime,DeskState")] Contract.Status status)
         {
-            _db.Statuses.Add(status);
-            _db.SaveChanges();
+            db.Statuses.Add(status.ToModel());
+            db.SaveChanges();
 
             return null;
         }
@@ -23,98 +25,98 @@ namespace StandUpTimer.Web.Controllers
         // GET: Statistics
         public ActionResult Index()
         {
-            var statuses = _db.Statuses.ToList();
+            var statuses = db.Statuses.ToList();
             statuses.AddRange(new List<Status>
             {
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 8, 15, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 9, 17, 0),
-                    Position = Position.Standing
+                    DeskState = DeskState.Standing
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 9, 37, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 11, 0, 0),
-                    Position = Position.Standing
+                    DeskState = DeskState.Standing
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 11, 20, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 12, 15, 0),
-                    Position = Position.Inactive
+                    DeskState = DeskState.Inactive
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 12, 50, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 14, 0, 0),
-                    Position = Position.Standing
+                    DeskState = DeskState.Standing
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 14, 20, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 15, 25, 0),
-                    Position = Position.Standing
+                    DeskState = DeskState.Standing
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 15, 45, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 9, 17, 5, 0),
-                    Position = Position.Inactive
+                    DeskState = DeskState.Inactive
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 8, 8, 15, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 8, 9, 17, 0),
-                    Position = Position.Standing
+                    DeskState = DeskState.Standing
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 8, 9, 37, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 8, 11, 0, 0),
-                    Position = Position.Standing
+                    DeskState = DeskState.Standing
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 8, 11, 20, 0),
-                    Position = Position.Sitting
+                    DeskState = DeskState.Sitting
                 },
                 new Status
                 {
                     DateTime = new DateTime(2015, 4, 8, 12, 15, 0),
-                    Position = Position.Inactive
+                    DeskState = DeskState.Inactive
                 }
             });
 
@@ -141,7 +143,7 @@ namespace StandUpTimer.Web.Controllers
 
                 result.Add(new GanttStatus
                 {
-                    Position = previousStatus.Position,
+                    DeskState = previousStatus.DeskState,
                     StartDate = DateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString("yyyy, M, d, H, m, s, 0"),
                     EndDate = DateTime.Today.Add(status.DateTime.TimeOfDay).ToString("yyyy, M, d, H, m, s, 0"),
                     Day = ToReadableDay(previousStatus.DateTime)
@@ -165,7 +167,7 @@ namespace StandUpTimer.Web.Controllers
 
     public class GanttStatus
     {
-        public Position Position { get; set; }
+        public DeskState DeskState { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string Day { get; set; }
@@ -175,5 +177,17 @@ namespace StandUpTimer.Web.Controllers
     {
         public List<GanttStatus> Statuses { get; set; }
         public List<string> Days { get; set; }
+    }
+
+    public static class StatusConversionExtension
+    {
+        public static Status ToModel(this Contract.Status status)
+        {
+            return new Status
+            {
+                DateTime = status.DateTime,
+                DeskState = status.DeskState
+            };
+        }
     }
 }

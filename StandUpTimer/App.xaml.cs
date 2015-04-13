@@ -10,11 +10,14 @@ namespace StandUpTimer
 {
     public partial class App
     {
+        private StatusPublisher statusPublisher;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            var statusPublisher = new StatusPublisher();
+            statusPublisher = new StatusPublisher();
+
             var deskStateTimes = ParseCommandLineArguments(e.Args, new DeskStateTimes
             {
                 StandingTime = TimeSpan.FromMinutes(20),
@@ -22,7 +25,7 @@ namespace StandUpTimer
             });
 
             var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), deskStateTimes.SittingTime, deskStateTimes.StandingTime);
-            standUpModel.DeskStateChanged += (sender, args) => { };
+            standUpModel.DeskStateChanged += (s, f) => statusPublisher.PublishChangedDeskState(f.NewDeskState);
 
             new MainWindow(standUpModel).Show();
         }
@@ -46,6 +49,13 @@ namespace StandUpTimer
         {
             public TimeSpan StandingTime { get; set; }
             public TimeSpan SittingTime { get; set; }
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            statusPublisher.PublishEndOfSession();
+
+            base.OnExit(e);
         }
     }
 }
