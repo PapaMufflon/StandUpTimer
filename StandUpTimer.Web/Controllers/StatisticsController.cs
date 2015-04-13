@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using StandUpTimer.Web.Contract;
 using StandUpTimer.Web.Models;
+using DeskState = StandUpTimer.Web.Models.DeskState;
 using Status = StandUpTimer.Web.Models.Status;
 
 namespace StandUpTimer.Web.Controllers
 {
     public class StatisticsController : Controller
     {
-        private readonly StatusContext db = new StatusContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         [HttpPost]
         public ActionResult Index([Bind(Include = "DateTime,DeskState")] Contract.Status status)
@@ -186,8 +186,23 @@ namespace StandUpTimer.Web.Controllers
             return new Status
             {
                 DateTime = status.DateTime,
-                DeskState = status.DeskState
+                DeskState = status.DeskState.ToModel()
             };
+        }
+
+        public static DeskState ToModel(this Contract.DeskState deskState)
+        {
+            switch (deskState)
+            {
+                case Contract.DeskState.Standing:
+                    return DeskState.Standing;
+                case Contract.DeskState.Sitting:
+                    return DeskState.Sitting;
+                case Contract.DeskState.Inactive:
+                    return DeskState.Inactive;
+                default:
+                    throw new ArgumentOutOfRangeException("deskState");
+            }
         }
     }
 }

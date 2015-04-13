@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
-using StandUpTimer.Web.Contract;
 
 namespace StandUpTimer.Web.Models
 {
@@ -11,8 +9,10 @@ namespace StandUpTimer.Web.Models
         public DeskState DeskState { get; set; }
     }
 
-    public class StatusContext : DbContext
+    public enum DeskState
     {
-        public DbSet<Status> Statuses { get; set; }
+        Standing,
+        Sitting,
+        Inactive
     }
 }

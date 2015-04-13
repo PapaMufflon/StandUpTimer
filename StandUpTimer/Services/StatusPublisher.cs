@@ -25,7 +25,7 @@ namespace StandUpTimer.Services
             httpClient.PostAsJsonAsync(string.Empty, new
             {
                 DateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                Position = deskState
+                DeskState = deskState
             });
         }
 
