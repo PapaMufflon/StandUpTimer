@@ -9,7 +9,7 @@ namespace StandUpTimer.Views
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var visibility = value is Visibility ? (Visibility) value : Visibility.Visible;
+            var visibility = value as Visibility? ?? Visibility.Visible;
 
             return visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
         }
