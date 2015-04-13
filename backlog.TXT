@@ -1,7 +1,3 @@
-- what's new info after update
-
-- check config behavior on update (i.e. default is disabled, enable it and do another update)
-
 - web statistics
 
 - tag released git commit
