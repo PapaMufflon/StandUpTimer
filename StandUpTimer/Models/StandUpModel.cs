@@ -67,16 +67,16 @@ namespace StandUpTimer.Models
             OnDeskStateChanged();
         }
 
-        public void NewDeskStateStarted()
-        {
-            ChangeTime = TestableDateTime.Now.Add(changeTimer.Interval);
-            changeTimer.Start();
-        }
-
         protected virtual void OnDeskStateChanged()
         {
             var handler = DeskStateChanged;
             if (handler != null) handler(this, EventArgs.Empty);
+        }
+
+        public void NewDeskStateStarted()
+        {
+            ChangeTime = TestableDateTime.Now.Add(changeTimer.Interval);
+            changeTimer.Start();
         }
     }
 }
