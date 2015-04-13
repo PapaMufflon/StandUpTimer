@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -7,24 +6,24 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Windows.Shell;
 using StandUpTimer.Models;
+using StandUpTimer.Properties;
 using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Views
 {
-    public partial class MainWindow : IBringToForeground
+    internal partial class MainWindow : IBringToForeground
     {
         private readonly Updater updater;
         private readonly StandUpViewModel standUpViewModel;
 
-        public MainWindow(TimeSpan sittingTime, TimeSpan standingTime)
+        public MainWindow(StandUpModel standUpModel)
         {
             updater = new Updater(Close);
-            standUpViewModel = new StandUpViewModel(new StandUpModel(new DispatcherTimerWrapper(), sittingTime, standingTime), this);
 
-            DataContext = standUpViewModel;
+            DataContext = new StandUpViewModel(standUpModel, this);
 
-            Left = Properties.Settings.Default.Left;
-            Top = Properties.Settings.Default.Top;
+            Left = Settings.Default.Left;
+            Top = Settings.Default.Top;
 
             InitializeComponent();
 
@@ -38,10 +37,10 @@ namespace StandUpTimer.Views
 
         private void SaveWindowPosition()
         {
-            Properties.Settings.Default.Left = Left;
-            Properties.Settings.Default.Top = Top;
+            Settings.Default.Left = Left;
+            Settings.Default.Top = Top;
 
-            Properties.Settings.Default.Save();
+            Settings.Default.Save();
         }
 
         private void MainWindow_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

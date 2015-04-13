@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using Fclp;
+using StandUpTimer.Models;
+using StandUpTimer.ViewModels;
 using StandUpTimer.Views;
 
 namespace StandUpTimer
@@ -17,7 +19,10 @@ namespace StandUpTimer
                 SittingTime = TimeSpan.FromHours(1)
             });
 
-            new MainWindow(deskStateTimes.SittingTime, deskStateTimes.StandingTime).Show();
+            var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), deskStateTimes.SittingTime, deskStateTimes.StandingTime);
+            standUpModel.DeskStateChanged += (sender, args) => { };
+
+            new MainWindow(standUpModel).Show();
         }
 
         private static DeskStateTimes ParseCommandLineArguments(string[] args, DeskStateTimes deskStateTimes)
