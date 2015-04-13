@@ -1,6 +1,14 @@
+- what's new info after update
+
+- check config behavior on update (i.e. default is disabled, enable it and do another update)
+
+- web statistics
+
 - tag released git commit
 
 - certificate (http://stackoverflow.com/a/18959881)
+
+- web ui tests
 
 - include version number in documentation
 
