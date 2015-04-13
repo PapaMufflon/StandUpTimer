@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StandUpTimer.Web.Controllers.GanttStatus>
+﻿@model StandUpTimer.Web.Controllers.StatisticModel
 
 @{
     ViewBag.Title = "Statistics";
@@ -19,9 +19,9 @@
 
     <script>
     var tasks = [
-@foreach (var item in Model)
+@foreach (var item in Model.Statuses)
 {
-    @:{ "startDate": new Date("@Html.DisplayFor(modelItem => item.StartDate)"), "endDate": new Date("@Html.DisplayFor(modelItem => item.EndDate)"), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.Position)" },
+    @:{ "startDate": new Date(@Html.DisplayFor(modelItem => item.StartDate)), "endDate": new Date(@Html.DisplayFor(modelItem => item.EndDate)), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.Position)" },
 }
     ];
 
@@ -31,7 +31,12 @@
         "Inactive": "inactive"
     };
 
-    var taskNames = ["Heute", "Gestern"];
+    var taskNames = [
+        @foreach (var day in Model.Days)
+        {
+            @:"@Html.DisplayFor(modelItem => day)",
+        }
+    ];
 
     tasks.sort(function (a, b) {
         return a.endDate - b.endDate;

@@ -108,7 +108,13 @@ namespace StandUpTimer.Web.Controllers
                 }
             });
 
-            return View(statuses.Ganttisize());
+            var ganttStatuses = statuses.Ganttisize();
+
+            return View(new StatisticModel
+            {
+                Statuses = ganttStatuses,
+                Days = ganttStatuses.Select(x => x.Day).Distinct().ToList()
+            });
         }
     }
 
@@ -126,8 +132,8 @@ namespace StandUpTimer.Web.Controllers
                 result.Add(new GanttStatus
                 {
                     Position = previousStatus.Position,
-                    StartDate = DateTime.Today.Add(previousStatus.DateTime.TimeOfDay),
-                    EndDate = DateTime.Today.Add(status.DateTime.TimeOfDay),
+                    StartDate = DateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString("yyyy, M, d, H, m, s, 0"),
+                    EndDate = DateTime.Today.Add(status.DateTime.TimeOfDay).ToString("yyyy, M, d, H, m, s, 0"),
                     Day = ToReadableDay(previousStatus.DateTime)
                 });
             }
@@ -140,15 +146,24 @@ namespace StandUpTimer.Web.Controllers
             if (dateTime.Date.Equals(DateTime.Today))
                 return "Heute";
 
-            return "Gestern";
+            if (dateTime.Date.Equals(DateTime.Today.AddDays(-1)))
+                return "Gestern";
+
+            return dateTime.Date.ToShortDateString();
         }
     }
 
     public class GanttStatus
     {
         public Position Position { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public string Day { get; set; }
+    }
+
+    public class StatisticModel
+    {
+        public List<GanttStatus> Statuses { get; set; }
+        public List<string> Days { get; set; }
     }
 }
