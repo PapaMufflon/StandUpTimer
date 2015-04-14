@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using StandUpTimer.Common;
 using StandUpTimer.Web.Models;
@@ -12,37 +13,45 @@ namespace StandUpTimer.Web.Statistics
         {
             var result = new List<GanttStatus>();
 
-            for (int index = 1; index < statuses.Count; index++)
-            {
-                var status = statuses[index];
-                var previousStatus = statuses[index - 1];
+            var sortedStatuses = statuses.ToList();
+            sortedStatuses.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
 
-                if (!IsValidGanttStatus(previousStatus, status.DateTime))
-                    continue;
+            for (int index = 1; index < sortedStatuses.Count; index++)
+                TryAddGanttStatus(sortedStatuses[index - 1], sortedStatuses[index].DateTime, result);
 
-                result.Add(new GanttStatus
-                {
-                    DeskState = previousStatus.DeskState,
-                    StartDate = TestableDateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
-                    EndDate = TestableDateTime.Today.Add(status.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
-                    Day = ToReadableDay(previousStatus.DateTime)
-                });
-            }
-
-            var lastStatus = statuses.Last();
-
-            if (IsValidGanttStatus(lastStatus, TestableDateTime.Now))
-            {
-                result.Add(new GanttStatus
-                {
-                    DeskState = lastStatus.DeskState,
-                    StartDate = TestableDateTime.Today.Add(lastStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
-                    EndDate = TestableDateTime.Now.ToString(Contract.Status.DateTimeFormat),
-                    Day = ToReadableDay(lastStatus.DateTime)
-                });
-            }
+            TryAddGanttStatus(sortedStatuses.Last(), TestableDateTime.Now, result);
 
             return result;
+        }
+
+        private static void TryAddGanttStatus(Status previousStatus, DateTime currentStatusPosition, List<GanttStatus> result)
+        {
+            if (IsValidGanttStatus(previousStatus, currentStatusPosition))
+            {
+                if (SpansOverTwoDays(previousStatus.DateTime, currentStatusPosition))
+                {
+                    AddGanttStatus(previousStatus, currentStatusPosition.Date.AddSeconds(-1), result);
+                    AddGanttStatus(previousStatus.WithDate(currentStatusPosition.Date), currentStatusPosition, result);                    
+                }
+                else
+                    AddGanttStatus(previousStatus, currentStatusPosition, result);
+            }
+        }
+
+        private static bool SpansOverTwoDays(DateTime start, DateTime end)
+        {
+            return !start.Date.Equals(end.Date);
+        }
+
+        private static void AddGanttStatus(Status previousStatus, DateTime currentStatusPosition, List<GanttStatus> result)
+        {
+            result.Add(new GanttStatus
+            {
+                DeskState = previousStatus.DeskState,
+                StartDate = TestableDateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
+                EndDate = TestableDateTime.Today.Add(currentStatusPosition.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
+                Day = ToReadableDay(previousStatus.DateTime)
+            });
         }
 
         private static bool IsValidGanttStatus(Status previousStatus, DateTime currentStatusPosition)

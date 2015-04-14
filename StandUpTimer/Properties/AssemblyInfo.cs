@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyVersion("0.6.0414.15")]
-[assembly: AssemblyFileVersion("0.6.0414.15")]
+[assembly: AssemblyVersion("0.6.0414.20")]
+[assembly: AssemblyFileVersion("0.6.0414.20")]
 
 [assembly: AssemblyMetadata("SquirrelAwareVersion", "1")]
 

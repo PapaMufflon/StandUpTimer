@@ -203,9 +203,179 @@ namespace StandUpTimer.Web.UnitTests.Statistics
             }));
         }
 
-        // inactive then standing
-        // status over 2 days
-        // good case: inactive before end of day
-        // two consecutive standings
+        [Test]
+        public void A_sitting_state_after_an_inactive_state_produces_just_one_state_starting_at_the_sitting_state()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+            A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 14, 21, 21, 0));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 14, 20, 0, 0)},
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 21, 0, 0)}
+
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 21, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 21, 21, 0, 0"
+                }
+            }));
+        }
+
+        [Test]
+        public void A_status_over_midnight_gets_divided_into_two_statuses()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 13, 20, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 14, 1, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "Gestern",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 23, 59, 59, 0"
+                },
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 0, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 1, 0, 0, 0"
+                }
+            }));
+        }
+
+        [Test]
+        public void Inactive_before_midnight_produces_no_more_statuses_on_that_day()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+            A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 14, 22, 0, 0));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 13, 20, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 13, 21, 0, 0)},
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 20, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "Gestern",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 21, 0, 0, 0"
+                },
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 22, 0, 0, 0"
+                }
+            }));
+        }
+
+        [Test]
+        public void Two_statuses_with_the_same_state_produce_two_items()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+            A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 14, 22, 0, 0));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 20, 0, 0)},
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 21, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 21, 0, 0, 0"
+                },
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 21, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 22, 0, 0, 0"
+                }
+            }));
+        }
+
+        [Test]
+        public void Unordered_items_are_acceptable()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+            A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 14, 22, 0, 0));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 13, 10, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 12, 20, 0, 0)},
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 12, 10, 0, 0)},
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 20, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 13, 20, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 14, 21, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "12.04.2015",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 10, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 20, 0, 0, 0"
+                },
+                new GanttStatus
+                {
+                    Day = "Gestern",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 10, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 20, 0, 0, 0"
+                },
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 21, 0, 0, 0"
+                }
+            }));
+        }
     }
 }
