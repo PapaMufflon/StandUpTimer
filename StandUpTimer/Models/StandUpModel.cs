@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using StandUpTimer.Common;
 using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Models

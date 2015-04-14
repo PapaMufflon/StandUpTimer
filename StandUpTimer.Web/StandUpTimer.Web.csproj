@@ -248,6 +248,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StandUpTimer.Common\StandUpTimer.Common.csproj">
+      <Project>{EC1EA970-91B1-4331-86ED-69E3554AF274}</Project>
+      <Name>StandUpTimer.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StandUpTimer.Web.Contract\StandUpTimer.Web.Contract.csproj">
       <Project>{D4F35FB6-C896-48D8-AAE7-D5011D1DF61F}</Project>
       <Name>StandUpTimer.Web.Contract</Name>

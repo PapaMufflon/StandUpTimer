@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using StandUpTimer.Common;
 using StandUpTimer.Web.Models;
 
 namespace StandUpTimer.Web.Statistics
@@ -18,8 +19,8 @@ namespace StandUpTimer.Web.Statistics
                 result.Add(new GanttStatus
                 {
                     DeskState = previousStatus.DeskState,
-                    StartDate = DateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
-                    EndDate = DateTime.Today.Add(status.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
+                    StartDate = TestableDateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
+                    EndDate = TestableDateTime.Today.Add(status.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
                     Day = ToReadableDay(previousStatus.DateTime)
                 });
             }
@@ -29,10 +30,10 @@ namespace StandUpTimer.Web.Statistics
 
         private static string ToReadableDay(DateTime dateTime)
         {
-            if (dateTime.Date.Equals(DateTime.Today))
+            if (dateTime.Date.Equals(TestableDateTime.Today))
                 return "Heute";
 
-            if (dateTime.Date.Equals(DateTime.Today.AddDays(-1)))
+            if (dateTime.Date.Equals(TestableDateTime.Today.AddDays(-1)))
                 return "Gestern";
 
             return dateTime.Date.ToShortDateString();

@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUpTimer.Web.Contract",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUpTimer.Web.UnitTests", "StandUpTimer.Web.UnitTests\StandUpTimer.Web.UnitTests.csproj", "{F629A573-BF02-4DA8-8619-16236EC90429}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandUpTimer.Common", "StandUpTimer.Common\StandUpTimer.Common.csproj", "{EC1EA970-91B1-4331-86ED-69E3554AF274}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{F629A573-BF02-4DA8-8619-16236EC90429}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F629A573-BF02-4DA8-8619-16236EC90429}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F629A573-BF02-4DA8-8619-16236EC90429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1EA970-91B1-4331-86ED-69E3554AF274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1EA970-91B1-4331-86ED-69E3554AF274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1EA970-91B1-4331-86ED-69E3554AF274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1EA970-91B1-4331-86ED-69E3554AF274}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using StandUpTimer.Annotations;
+using StandUpTimer.Common;
 using StandUpTimer.Models;
 
 namespace StandUpTimer.ViewModels
@@ -91,17 +92,17 @@ namespace StandUpTimer.ViewModels
 
         public string RemainingTimeToChangeAsString
         {
-            get { return model.ChangeTime.Subtract(DateTime.Now).FormatRemainingTime(); }
+            get { return model.ChangeTime.Subtract(TestableDateTime.Now).FormatRemainingTime(); }
         }
 
         public double RemainingTimeToChangeInPercent
         {
-            get { return model.ChangeTime.Subtract(DateTime.Now).PercentageTo(model.CurrentLeg); }
+            get { return model.ChangeTime.Subtract(TestableDateTime.Now).PercentageTo(model.CurrentLeg); }
         }
 
         public double TimeOfLegInFraction
         {
-            get { return model.ChangeTime.Subtract(DateTime.Now).FractionTo(model.CurrentLeg); }
+            get { return model.ChangeTime.Subtract(TestableDateTime.Now).FractionTo(model.CurrentLeg); }
         }
 
         public string CurrentImage

@@ -1,6 +1,6 @@
 using System;
 
-namespace StandUpTimer.Models
+namespace StandUpTimer.Common
 {
     public static class TestableDateTime
     {
@@ -14,6 +14,11 @@ namespace StandUpTimer.Models
         public static DateTime Now
         {
             get { return DateTime.Now; }
+        }
+
+        public static DateTime Today
+        {
+            get { return DateTime.Today; }
         }
     }
 }

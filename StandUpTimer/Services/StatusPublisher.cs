@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using StandUpTimer.Common;
 using StandUpTimer.Web.Contract;
 using DeskState = StandUpTimer.Models.DeskState;
 
@@ -24,7 +25,7 @@ namespace StandUpTimer.Services
         {
             httpClient.PostAsJsonAsync(string.Empty, new
             {
-                DateTime = DateTime.Now.ToString(Status.DateTimeFormat),
+                DateTime = TestableDateTime.Now.ToString(Status.DateTimeFormat),
                 DeskState = deskState
             });
         }

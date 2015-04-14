@@ -1,9 +1,10 @@
 using System;
 
-namespace StandUpTimer.Models
+namespace StandUpTimer.Common
 {
     public interface IDateTime
     {
         DateTime Now { get; }
+        DateTime Today { get; }
     }
 }

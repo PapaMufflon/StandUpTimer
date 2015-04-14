@@ -1,6 +1,7 @@
 ﻿using System;
 using FakeItEasy;
 using NUnit.Framework;
+using StandUpTimer.Common;
 using StandUpTimer.Models;
 
 namespace StandUpTimer.UnitTests.Models
