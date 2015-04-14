@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using StandUpTimer.Web.Statistics;
 
-namespace StandUpTimer.Web.Statistics
+namespace StandUpTimer.Web.Controllers
 {
     public class StatisticModel
     {

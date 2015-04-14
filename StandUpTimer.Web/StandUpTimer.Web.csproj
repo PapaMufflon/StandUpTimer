@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StatisticModel.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,7 +174,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Statistics\GanttificationExtension.cs" />
     <Compile Include="Statistics\GanttStatus.cs" />
-    <Compile Include="Statistics\StatisticModel.cs" />
     <Compile Include="Statistics\StatusConversionExtension.cs" />
   </ItemGroup>
   <ItemGroup>
