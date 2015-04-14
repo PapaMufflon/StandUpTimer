@@ -6,6 +6,8 @@
 
 - web ui tests
 
+- detect hibernation/standby to send inactive status
+
 - include version number in documentation
 
 - autostart

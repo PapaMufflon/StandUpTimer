@@ -115,6 +115,97 @@ namespace StandUpTimer.Web.UnitTests.Statistics
             }));
         }
 
+        [Test]
+        public void Two_consecutive_inactive_states_will_be_ignored()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 1));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 20, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 14, 21, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 14, 22, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "14.04.2015",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 1, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 1, 21, 0, 0, 0"
+                }
+            }));
+        }
+
+        [Test]
+        public void A_non_inactive_state_at_the_end_produces_a_gantt_item_that_lasts_until_now()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+            A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 14, 23, 45, 0));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 20, 0, 0)},
+                new Status {DeskState = DeskState.Sitting, DateTime = new DateTime(2015, 4, 14, 21, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 21, 0, 0, 0"
+                },
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Sitting,
+                    StartDate = "2015, 4, 14, 21, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 23, 45, 0, 0"
+                }
+            }));
+        }
+
+        [Test]
+        public void A_status_lasting_more_than_24_hours_gets_ignored()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+            A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 14, 23, 45, 0));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 10, 20, 0, 0)},
+                new Status {DeskState = DeskState.Sitting, DateTime = new DateTime(2015, 4, 10, 21, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "10.04.2015",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 21, 0, 0, 0"
+                }
+            }));
+        }
+
+        // inactive then standing
         // status over 2 days
+        // good case: inactive before end of day
+        // two consecutive standings
     }
 }

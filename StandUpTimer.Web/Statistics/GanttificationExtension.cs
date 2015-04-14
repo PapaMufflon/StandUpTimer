@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using StandUpTimer.Common;
 using StandUpTimer.Web.Models;
 
@@ -16,6 +17,9 @@ namespace StandUpTimer.Web.Statistics
                 var status = statuses[index];
                 var previousStatus = statuses[index - 1];
 
+                if (!IsValidGanttStatus(previousStatus, status.DateTime))
+                    continue;
+
                 result.Add(new GanttStatus
                 {
                     DeskState = previousStatus.DeskState,
@@ -25,7 +29,31 @@ namespace StandUpTimer.Web.Statistics
                 });
             }
 
+            var lastStatus = statuses.Last();
+
+            if (IsValidGanttStatus(lastStatus, TestableDateTime.Now))
+            {
+                result.Add(new GanttStatus
+                {
+                    DeskState = lastStatus.DeskState,
+                    StartDate = TestableDateTime.Today.Add(lastStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
+                    EndDate = TestableDateTime.Now.ToString(Contract.Status.DateTimeFormat),
+                    Day = ToReadableDay(lastStatus.DateTime)
+                });
+            }
+
             return result;
+        }
+
+        private static bool IsValidGanttStatus(Status previousStatus, DateTime currentStatusPosition)
+        {
+            return previousStatus.DeskState != DeskState.Inactive &&
+                   !StateLastsTooLong(previousStatus, currentStatusPosition);
+        }
+
+        private static bool StateLastsTooLong(Status previousStatus, DateTime currentStatusPosition)
+        {
+            return currentStatusPosition.Subtract(previousStatus.DateTime) > TimeSpan.FromDays(1);
         }
 
         private static string ToReadableDay(DateTime dateTime)
