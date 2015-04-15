@@ -1,12 +1,13 @@
+using StandUpTimer.ViewModels;
 using StandUpTimer.Views;
 
 namespace StandUpTimer.Services
 {
     internal class DialogPresenter : IDialogPresenter
     {
-        public bool? ShowModal(object loginViewModel)
+        public bool? ShowModal(IDialogViewModel dialogViewModel)
         {
-            return new Dialog { DataContext = loginViewModel }.ShowDialog();
+            return new Dialog(dialogViewModel).ShowDialog();
         }
     }
 }

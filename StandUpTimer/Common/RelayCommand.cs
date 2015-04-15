@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Windows.Input;
 
-namespace StandUpTimer.ViewModels
+namespace StandUpTimer.Common
 {
     public class RelayCommand : ICommand
     {

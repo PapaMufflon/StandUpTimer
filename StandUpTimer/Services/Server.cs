@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading.Tasks;
 using StandUpTimer.Web.Contract;
 
 namespace StandUpTimer.Services
@@ -20,12 +21,18 @@ namespace StandUpTimer.Services
             httpClient.PostAsJsonAsync("statistics", status);
         }
 
-        public bool LogIn(string username, SecureString password)
+        public async Task<bool> LogIn(string username, SecureString password)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.PostAsJsonAsync("Account/Login", new
+            {
+                Email = username,
+                Password = password.ConvertToUnsecureString()
+            });
+
+            return response.IsSuccessStatusCode;
         }
 
-        public bool LogOut()
+        public async Task<bool> LogOut()
         {
             throw new NotImplementedException();
         }

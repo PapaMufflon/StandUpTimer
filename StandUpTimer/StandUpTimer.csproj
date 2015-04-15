@@ -213,6 +213,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Models\DeskState.cs" />
     <Compile Include="Models\DeskStateChangedEventArgs.cs" />
     <Compile Include="Models\ITimer.cs" />
@@ -225,17 +226,18 @@
     <Compile Include="Services\Server.cs" />
     <Compile Include="Services\StatusPublisher.cs" />
     <Compile Include="Services\Updater.cs" />
-    <Compile Include="ViewModels\DispatcherTimerWrapper.cs" />
     <Compile Include="ViewModels\IBringToForeground.cs" />
     <Compile Include="ViewModels\ICanHandleDeskStateStarts.cs" />
     <Compile Include="ViewModels\ICanSkip.cs" />
+    <Compile Include="ViewModels\IDialogViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\RequestCloseEventArgs.cs" />
     <Compile Include="ViewModels\StandUpViewModel.cs" />
     <Compile Include="ViewModels\TimeExtensions.cs" />
     <Compile Include="Views\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DispatcherTimerWrapper.cs" />
     <Compile Include="Views\InverseVisibilityConverter.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>

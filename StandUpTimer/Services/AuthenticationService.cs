@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Services
@@ -17,21 +18,21 @@ namespace StandUpTimer.Services
             IsLoggedIn = false;
         }
 
-        public void ChangeState()
+        public async Task ChangeState()
         {
             if (IsLoggedIn)
-                TryLogOut();
+                await TryLogOut();
             else
-                TryLogIn();
+                await TryLogIn();
         }
 
-        private void TryLogOut()
+        private async Task TryLogOut()
         {
             var tries = 0;
 
             do
             {
-                if (server.LogOut())
+                if (await server.LogOut())
                 {
                     IsLoggedIn = false;
                     return;
@@ -41,7 +42,7 @@ namespace StandUpTimer.Services
             } while (tries < 5);
         }
 
-        private void TryLogIn()
+        private async Task TryLogIn()
         {
             var loginViewModel = new LoginViewModel();
 
@@ -53,7 +54,7 @@ namespace StandUpTimer.Services
                 if (dialogPresenter.ShowModal(loginViewModel) != true)
                     return;
 
-                if (server.LogIn(loginViewModel.Username, loginViewModel.Password))
+                if (await server.LogIn(loginViewModel.Username, loginViewModel.Password))
                     IsLoggedIn = true;
             } while (!IsLoggedIn);
         }

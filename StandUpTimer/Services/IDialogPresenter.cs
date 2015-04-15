@@ -1,7 +1,9 @@
+using StandUpTimer.ViewModels;
+
 namespace StandUpTimer.Services
 {
     internal interface IDialogPresenter
     {
-        bool? ShowModal(object loginViewModel);
+        bool? ShowModal(IDialogViewModel dialogViewModel);
     }
 }

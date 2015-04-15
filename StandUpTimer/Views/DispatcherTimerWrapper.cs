@@ -2,7 +2,7 @@ using System;
 using System.Windows.Threading;
 using StandUpTimer.Models;
 
-namespace StandUpTimer.ViewModels
+namespace StandUpTimer.Views
 {
     public class DispatcherTimerWrapper : ITimer
     {

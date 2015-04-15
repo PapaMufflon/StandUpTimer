@@ -4,7 +4,7 @@
         Title="{Binding Title}" Height="300" Width="300"
         SizeToContent="WidthAndHeight"
         WindowStyle="ThreeDBorderWindow"
-        Icon="../Images/StandUpTimer.ico">
+        Icon="../Images/StandUpTimer.ico" x:ClassModifier="internal">
     <ContentControl Content="{Binding}"
                     Margin="10"/>
 </Window>
