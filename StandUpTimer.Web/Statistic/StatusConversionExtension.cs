@@ -6,10 +6,11 @@ namespace StandUpTimer.Web.Statistic
 {
     public static class StatusConversionExtension
     {
-        public static Status ToModel(this Contract.Status status)
+        public static Status ToModel(this Contract.Status status, string username)
         {
             return new Status
             {
+                Username = username,
                 DateTime = DateTime.ParseExact(status.DateTime, Contract.Status.DateTimeFormat, CultureInfo.InvariantCulture),
                 DeskState = status.DeskState.ToModel()
             };

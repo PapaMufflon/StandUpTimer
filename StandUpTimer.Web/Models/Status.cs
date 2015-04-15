@@ -5,6 +5,7 @@ namespace StandUpTimer.Web.Models
     public class Status
     {
         public int Id { get; set; }
+        public string Username { get; set; }
         public DateTime DateTime { get; set; }
         public DeskState DeskState { get; set; }
 
@@ -13,6 +14,7 @@ namespace StandUpTimer.Web.Models
             return new Status
             {
                 Id = Id,
+                Username = Username,
                 DateTime = date,
                 DeskState = DeskState
             };

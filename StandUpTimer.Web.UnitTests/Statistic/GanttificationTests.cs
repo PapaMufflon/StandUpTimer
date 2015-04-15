@@ -12,6 +12,16 @@ namespace StandUpTimer.Web.UnitTests.Statistic
     public class GanttificationTests
     {
         [Test]
+        public void No_status_to_process_returns_an_empty_list()
+        {
+            var target = new List<Status>();
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.Empty);
+        }
+
+        [Test]
         public void Two_statuses_will_become_one_gantt_item()
         {
             TestableDateTime.DateTime = A.Fake<IDateTime>();

@@ -5,6 +5,7 @@ using StandUpTimer.Web.Statistic;
 
 namespace StandUpTimer.Web.Controllers
 {
+    [Authorize]
     public class StatisticsController : Controller
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
@@ -12,7 +13,7 @@ namespace StandUpTimer.Web.Controllers
         [HttpPost]
         public ActionResult Index([Bind(Include = "DateTime,DeskState")] Contract.Status status)
         {
-            db.Statuses.Add(status.ToModel());
+            db.Statuses.Add(status.ToModel(User.Identity.Name));
             db.SaveChanges();
 
             return null;
@@ -22,7 +23,7 @@ namespace StandUpTimer.Web.Controllers
         // GET: Statistics
         public ActionResult Index()
         {
-            var statuses = db.Statuses.ToList();
+            var statuses = db.Statuses.Where(x => x.Username.Equals(User.Identity.Name)).ToList();
             var ganttStatuses = statuses.Ganttisize();
 
             return View(new StatisticModel

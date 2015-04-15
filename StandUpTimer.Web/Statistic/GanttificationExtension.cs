@@ -12,6 +12,9 @@ namespace StandUpTimer.Web.Statistic
         {
             var result = new List<GanttStatus>();
 
+            if (statuses.Count == 0)
+                return result;
+
             var sortedStatuses = statuses.ToList();
             sortedStatuses.Sort((x, y) => x.DateTime.CompareTo(y.DateTime));
 
