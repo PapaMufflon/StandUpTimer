@@ -20,15 +20,42 @@ namespace StandUpTimer.Services
         public void ChangeState()
         {
             if (IsLoggedIn)
-                server.LogOut();
+                TryLogOut();
             else
-            {
-                var loginViewModel = new LoginViewModel();
-                var result = dialogPresenter.ShowModal(loginViewModel);
+                TryLogIn();
+        }
 
-                if (result == true)
-                    server.LogIn(loginViewModel.Username, loginViewModel.Password);
-            }
+        private void TryLogOut()
+        {
+            var tries = 0;
+
+            do
+            {
+                if (server.LogOut())
+                {
+                    IsLoggedIn = false;
+                    return;
+                }
+
+                tries++;
+            } while (tries < 5);
+        }
+
+        private void TryLogIn()
+        {
+            var loginViewModel = new LoginViewModel();
+
+            do
+            {
+                if (loginViewModel.Password != null)
+                    loginViewModel.Password.Clear();
+
+                if (dialogPresenter.ShowModal(loginViewModel) != true)
+                    return;
+
+                if (server.LogIn(loginViewModel.Username, loginViewModel.Password))
+                    IsLoggedIn = true;
+            } while (!IsLoggedIn);
         }
     }
 }

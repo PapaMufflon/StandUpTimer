@@ -1,4 +1,5 @@
-﻿using FakeItEasy;
+﻿using System.Security;
+using FakeItEasy;
 using NUnit.Framework;
 using StandUpTimer.Services;
 
@@ -16,6 +17,108 @@ namespace StandUpTimer.UnitTests.Services
             var target = new AuthenticationService(server, dialogPresenter);
 
             Assert.That(target.IsLoggedIn, Is.False);
+        }
+
+        [Test]
+        public void Changing_the_state_when_logged_out_logs_in()
+        {
+            var server = A.Fake<IServer>();
+            var dialogPresenter = A.Fake<IDialogPresenter>();
+
+            A.CallTo(() => dialogPresenter.ShowModal(A<object>._)).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
+
+            var target = new AuthenticationService(server, dialogPresenter);
+
+            target.ChangeState();
+
+            Assert.That(target.IsLoggedIn, Is.True);
+        }
+
+        [Test]
+        public void You_can_cancel_logging_in()
+        {
+            var server = A.Fake<IServer>();
+            var dialogPresenter = A.Fake<IDialogPresenter>();
+
+            A.CallTo(() => dialogPresenter.ShowModal(A<object>._)).Returns(false);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
+
+            var target = new AuthenticationService(server, dialogPresenter);
+
+            target.ChangeState();
+
+            Assert.That(target.IsLoggedIn, Is.False);
+        }
+
+        [Test]
+        public void Wrong_credentials_lets_you_retry()
+        {
+            var server = A.Fake<IServer>();
+            var dialogPresenter = A.Fake<IDialogPresenter>();
+
+            A.CallTo(() => dialogPresenter.ShowModal(A<object>._)).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).ReturnsNextFromSequence(false, true);
+
+            var target = new AuthenticationService(server, dialogPresenter);
+
+            target.ChangeState();
+
+            Assert.That(target.IsLoggedIn, Is.True);
+        }
+
+        [Test]
+        public void Changing_the_state_when_logged_in_logs_out()
+        {
+            var server = A.Fake<IServer>();
+            var dialogPresenter = A.Fake<IDialogPresenter>();
+
+            A.CallTo(() => dialogPresenter.ShowModal(A<object>._)).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
+            A.CallTo(() => server.LogOut()).Returns(true);
+
+            var target = new AuthenticationService(server, dialogPresenter);
+
+            target.ChangeState();
+            target.ChangeState();
+
+            Assert.That(target.IsLoggedIn, Is.False);
+        }
+
+        [Test]
+        public void Logging_out_is_automatically_retried()
+        {
+            var server = A.Fake<IServer>();
+            var dialogPresenter = A.Fake<IDialogPresenter>();
+
+            A.CallTo(() => dialogPresenter.ShowModal(A<object>._)).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
+            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(false, false, true);
+
+            var target = new AuthenticationService(server, dialogPresenter);
+
+            target.ChangeState();
+            target.ChangeState();
+
+            Assert.That(target.IsLoggedIn, Is.False);
+        }
+
+        [Test]
+        public void Logging_out_is_automatically_retried_5_times()
+        {
+            var server = A.Fake<IServer>();
+            var dialogPresenter = A.Fake<IDialogPresenter>();
+
+            A.CallTo(() => dialogPresenter.ShowModal(A<object>._)).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
+            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(false, false, false, false, false, true);
+
+            var target = new AuthenticationService(server, dialogPresenter);
+
+            target.ChangeState();
+            target.ChangeState();
+
+            Assert.That(target.IsLoggedIn, Is.True);
         }
     }
 }

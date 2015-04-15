@@ -20,12 +20,12 @@ namespace StandUpTimer.Services
             httpClient.PostAsJsonAsync("statistics", status);
         }
 
-        public void LogIn(string username, SecureString password)
+        public bool LogIn(string username, SecureString password)
         {
             throw new NotImplementedException();
         }
 
-        public void LogOut()
+        public bool LogOut()
         {
             throw new NotImplementedException();
         }
