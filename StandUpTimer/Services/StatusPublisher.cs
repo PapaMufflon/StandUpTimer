@@ -21,7 +21,7 @@ namespace StandUpTimer.Services
             SendDeskState(newDeskState.ToWebContract());
         }
 
-        private void SendDeskState(Web.Contract.DeskState deskState = Web.Contract.DeskState.Standing)
+        private void SendDeskState(Web.Contract.DeskState deskState = Web.Contract.DeskState.Sitting)
         {
             httpClient.PostAsJsonAsync(string.Empty, new
             {
