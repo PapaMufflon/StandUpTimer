@@ -111,12 +111,14 @@
                         BorderThickness="4"
                         BorderBrush="DarkGray"
                         CornerRadius="20">
-                    <StackPanel Margin="0 10"
-                                 Width="250">
-                        <TextBlock TextWrapping="Wrap">
+                    <StackPanel Margin="0 14"
+                                Width="250">
+                        <TextBlock TextWrapping="Wrap"
+                                   Margin="2 0">
                             Standing up and sitting down images &#169; <Hyperlink NavigateUri="http://www.breu-buerotechnik.de/" RequestNavigate="Hyperlink_OnRequestNavigate">Breu B&#252;rotechnik</Hyperlink>.
                         </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
+                        <TextBlock TextWrapping="Wrap"
+                                   Margin="2 0">
                             Skip designed by <Hyperlink NavigateUri="http://www.thenounproject.com/convoy" RequestNavigate="Hyperlink_OnRequestNavigate">Convoy</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
                             Close designed by <Hyperlink NavigateUri="http://www.thenounproject.com/alex.s.lakas" RequestNavigate="Hyperlink_OnRequestNavigate">Alex S. Lakas</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
                             Creative Commons designed by <Hyperlink NavigateUri="http://www.thenounproject.com/acondiff" RequestNavigate="Hyperlink_OnRequestNavigate">Austin Condiff</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
