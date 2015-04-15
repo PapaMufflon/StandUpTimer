@@ -86,15 +86,24 @@
                     x:Name="OkButton" >
                 <Image Source="..\Images\okButton.png" />
             </Button>
+            
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom">
+                <Button Style="{StaticResource FadeOutStyle}"
+                        Template="{StaticResource ImageButton}"
+                        MouseMove="CreativeCommons_OnMouseMove"
+                        x:Name="AttributionButton">
+                    <Image Source="..\Images\ccButton.png" />
+                </Button>
 
-            <Button HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                    Style="{StaticResource FadeOutStyle}"
-                    Template="{StaticResource ImageButton}"
-                    MouseMove="CreativeCommons_OnMouseMove"
-                    x:Name="AttributionButton">
-                <Image Source="..\Images\ccButton.png" />
-            </Button>
+                <Button Style="{StaticResource FadeOutStyle}"
+                        Template="{StaticResource ImageButton}"
+                        Command="{Binding LoginCommand}"
+                        Margin="4,0,0,0">
+                    <Image Source="{Binding AuthenticationStatus}" />
+                </Button>
+            </StackPanel>
 
             <Grid Visibility="{Binding CreativeCommonsVisibility}"
                   MouseLeave="CreativeCommons_OnMouseLeave">

@@ -1,5 +1,4 @@
 using System;
-using System.Net.Http;
 using StandUpTimer.Common;
 using StandUpTimer.Web.Contract;
 using DeskState = StandUpTimer.Models.DeskState;
@@ -8,11 +7,12 @@ namespace StandUpTimer.Services
 {
     internal class StatusPublisher
     {
-        private readonly HttpClient httpClient;
+        private readonly IServer server;
 
-        public StatusPublisher()
+        public StatusPublisher(IServer server)
         {
-            httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:54776/statistics") };
+            this.server = server;
+
             SendDeskState();
         }
 
@@ -23,7 +23,7 @@ namespace StandUpTimer.Services
 
         private void SendDeskState(Web.Contract.DeskState deskState = Web.Contract.DeskState.Sitting)
         {
-            httpClient.PostAsJsonAsync(string.Empty, new
+            server.SendDeskState(new Status
             {
                 DateTime = TestableDateTime.Now.ToString(Status.DateTimeFormat),
                 DeskState = deskState

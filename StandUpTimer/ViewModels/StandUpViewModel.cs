@@ -22,16 +22,20 @@ namespace StandUpTimer.ViewModels
         private Visibility creativeCommonsVisibility;
         private bool shake;
         private readonly StandUpModel model;
+        private readonly AuthenticationModel authenticationModel;
         private readonly IBringToForeground bringToForeground;
         private ICommand okCommand;
         private ICommand skipCommand;
+        private ICommand loginCommand;
 
-        public StandUpViewModel(StandUpModel model, IBringToForeground bringToForeground)
+        public StandUpViewModel(StandUpModel model, AuthenticationModel authenticationModel, IBringToForeground bringToForeground)
         {
             Contract.Requires(model != null);
+            Contract.Requires(authenticationModel != null);
             Contract.Requires(bringToForeground != null);
 
             this.model = model;
+            this.authenticationModel = authenticationModel;
             this.bringToForeground = bringToForeground;
 
             model.DeskStateChanged += (sender, args) => DeskStateEnded();
@@ -63,10 +67,10 @@ namespace StandUpTimer.ViewModels
             switch (model.DeskState)
             {
                 case DeskState.Sitting:
-                    CurrentImage = "..\\Images\\sitting.png";
+                    CurrentImage = @"..\Images\sitting.png";
                     break;
                 case DeskState.Standing:
-                    CurrentImage = "..\\Images\\standing.png";
+                    CurrentImage = @"..\Images\standing.png";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -113,6 +117,11 @@ namespace StandUpTimer.ViewModels
                 currentImage = value;
                 OnPropertyChanged();
             }
+        }
+
+        public string AuthenticationStatus
+        {
+            get { return authenticationModel.IsLoggedIn ? @"..\Images\loggedInButton.png" : @"..\Images\loginButton.png"; }
         }
 
         public Visibility ExitButtonVisibility
@@ -174,6 +183,19 @@ namespace StandUpTimer.ViewModels
                     model.Skip();
                     DeskStateStarted();
                 }));
+            }
+        }
+
+        public ICommand LoginCommand
+        {
+            get
+            {
+                return loginCommand ?? (loginCommand = new RelayCommand(_ =>
+                {
+                    authenticationModel.ChangeState();
+
+                    OnPropertyChanged(() => AuthenticationStatus);
+                }, _ => !authenticationModel.IsLoggedIn));
             }
         }
 
