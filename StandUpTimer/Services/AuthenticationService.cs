@@ -19,7 +19,7 @@ namespace StandUpTimer.Services
                 server.LogOut();
             else
             {
-                var credentials = credentialsProvider.Collect();
+                
                 server.LogIn(credentials.Username, credentials.Password);
             }
         }

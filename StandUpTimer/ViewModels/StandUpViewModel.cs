@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using StandUpTimer.Annotations;
 using StandUpTimer.Common;
 using StandUpTimer.Models;
+using StandUpTimer.Services;
 
 namespace StandUpTimer.ViewModels
 {
@@ -22,20 +23,20 @@ namespace StandUpTimer.ViewModels
         private Visibility creativeCommonsVisibility;
         private bool shake;
         private readonly StandUpModel model;
-        private readonly AuthenticationModel authenticationModel;
+        private readonly AuthenticationService authenticationService;
         private readonly IBringToForeground bringToForeground;
         private ICommand okCommand;
         private ICommand skipCommand;
         private ICommand loginCommand;
 
-        public StandUpViewModel(StandUpModel model, AuthenticationModel authenticationModel, IBringToForeground bringToForeground)
+        public StandUpViewModel(StandUpModel model, AuthenticationService authenticationService, IBringToForeground bringToForeground)
         {
             Contract.Requires(model != null);
-            Contract.Requires(authenticationModel != null);
+            Contract.Requires(authenticationService != null);
             Contract.Requires(bringToForeground != null);
 
             this.model = model;
-            this.authenticationModel = authenticationModel;
+            this.authenticationService = authenticationService;
             this.bringToForeground = bringToForeground;
 
             model.DeskStateChanged += (sender, args) => DeskStateEnded();
@@ -121,7 +122,7 @@ namespace StandUpTimer.ViewModels
 
         public string AuthenticationStatus
         {
-            get { return authenticationModel.IsLoggedIn ? @"..\Images\loggedInButton.png" : @"..\Images\loginButton.png"; }
+            get { return authenticationService.IsLoggedIn ? @"..\Images\loggedInButton.png" : @"..\Images\loginButton.png"; }
         }
 
         public Visibility ExitButtonVisibility
@@ -192,10 +193,10 @@ namespace StandUpTimer.ViewModels
             {
                 return loginCommand ?? (loginCommand = new RelayCommand(_ =>
                 {
-                    authenticationModel.ChangeState();
+                    authenticationService.ChangeState();
 
                     OnPropertyChanged(() => AuthenticationStatus);
-                }, _ => !authenticationModel.IsLoggedIn));
+                }, _ => !authenticationService.IsLoggedIn));
             }
         }
 
