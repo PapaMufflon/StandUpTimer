@@ -219,6 +219,7 @@
     <Compile Include="Models\StandUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\IDialogPresenter.cs" />
     <Compile Include="Services\IServer.cs" />
     <Compile Include="Services\Server.cs" />
     <Compile Include="Services\StatusPublisher.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="ViewModels\IBringToForeground.cs" />
     <Compile Include="ViewModels\ICanHandleDeskStateStarts.cs" />
     <Compile Include="ViewModels\ICanSkip.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\StandUpViewModel.cs" />
     <Compile Include="ViewModels\TimeExtensions.cs" />

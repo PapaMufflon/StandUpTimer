@@ -1,3 +1,5 @@
+using StandUpTimer.ViewModels;
+
 namespace StandUpTimer.Services
 {
     internal class AuthenticationService
@@ -5,10 +7,12 @@ namespace StandUpTimer.Services
         public bool IsLoggedIn { get; private set; }
 
         private readonly IServer server;
+        private readonly IDialogPresenter dialogPresenter;
 
-        public AuthenticationService(IServer server)
+        public AuthenticationService(IServer server, IDialogPresenter dialogPresenter)
         {
             this.server = server;
+            this.dialogPresenter = dialogPresenter;
 
             IsLoggedIn = false;
         }
@@ -19,8 +23,11 @@ namespace StandUpTimer.Services
                 server.LogOut();
             else
             {
-                
-                server.LogIn(credentials.Username, credentials.Password);
+                var loginViewModel = new LoginViewModel();
+                var result = dialogPresenter.ShowModel(loginViewModel);
+
+                if (result)
+                    server.LogIn(loginViewModel.Username, loginViewModel.Password);
             }
         }
     }
