@@ -1,6 +1,6 @@
 using StandUpTimer.Web.Models;
 
-namespace StandUpTimer.Web.Statistics
+namespace StandUpTimer.Web.Statistic
 {
     public class GanttStatus
     {

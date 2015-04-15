@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using StandUpTimer.Web.Models;
-using StandUpTimer.Web.Statistics;
+using StandUpTimer.Web.Statistic;
 
 namespace StandUpTimer.Web.Controllers
 {

@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using StandUpTimer.Web.Models;
 
-namespace StandUpTimer.Web.Statistics
+namespace StandUpTimer.Web.Statistic
 {
     public static class StatusConversionExtension
     {

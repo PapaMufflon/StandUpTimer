@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Statistics\GanttificationTests.cs" />
+    <Compile Include="Statistic\GanttificationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

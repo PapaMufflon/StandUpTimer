@@ -4,9 +4,9 @@ using FakeItEasy;
 using NUnit.Framework;
 using StandUpTimer.Common;
 using StandUpTimer.Web.Models;
-using StandUpTimer.Web.Statistics;
+using StandUpTimer.Web.Statistic;
 
-namespace StandUpTimer.Web.UnitTests.Statistics
+namespace StandUpTimer.Web.UnitTests.Statistic
 {
     [TestFixture]
     public class GanttificationTests
