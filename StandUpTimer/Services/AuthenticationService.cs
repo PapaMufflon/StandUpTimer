@@ -56,6 +56,8 @@ namespace StandUpTimer.Services
 
                 if (await server.LogIn(loginViewModel.Username, loginViewModel.Password))
                     IsLoggedIn = true;
+                else
+                    loginViewModel.ErrorMessage = Properties.Resources.LoginFailed;
             } while (!IsLoggedIn);
         }
     }

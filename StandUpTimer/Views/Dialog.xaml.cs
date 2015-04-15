@@ -1,4 +1,5 @@
-﻿using StandUpTimer.ViewModels;
+﻿using System.Windows;
+using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Views
 {
@@ -6,11 +7,12 @@ namespace StandUpTimer.Views
     {
         public Dialog(IDialogViewModel dataContext)
         {
-            dataContext.RequestClose += (sender, args) =>
-            {
-                DialogResult = args.DialogResult;
-                Close();
-            };
+            WeakEventManager<IDialogViewModel, RequestCloseEventArgs>.AddHandler(dataContext, "RequestClose",
+                (sender, args) =>
+                {
+                    DialogResult = args.DialogResult;
+                    Close();
+                });
 
             DataContext = dataContext;
 

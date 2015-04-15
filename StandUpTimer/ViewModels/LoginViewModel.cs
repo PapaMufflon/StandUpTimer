@@ -13,6 +13,7 @@ namespace StandUpTimer.ViewModels
         public string Title { get { return "Login"; } }
         public string Username { get; set; }
         public SecureString Password { get; set; }
+        public string ErrorMessage { get; set; }
 
         private ICommand loginCommand;
 

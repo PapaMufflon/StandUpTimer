@@ -12,6 +12,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="8" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -34,5 +36,9 @@
                     CommandParameter="{Binding ElementName=PasswordBox}">Login</Button>
             <Button IsCancel="True">Cancel</Button>
         </StackPanel>
+        
+        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                   Foreground="Red"
+                   Text="{Binding ErrorMessage}" />
     </Grid>
 </UserControl>
