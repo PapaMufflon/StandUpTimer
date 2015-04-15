@@ -2,6 +2,6 @@ namespace StandUpTimer.Services
 {
     internal interface IDialogPresenter
     {
-        bool ShowModel(object loginViewModel);
+        bool? ShowModal(object loginViewModel);
     }
 }

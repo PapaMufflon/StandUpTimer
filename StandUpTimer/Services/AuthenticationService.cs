@@ -24,9 +24,9 @@ namespace StandUpTimer.Services
             else
             {
                 var loginViewModel = new LoginViewModel();
-                var result = dialogPresenter.ShowModel(loginViewModel);
+                var result = dialogPresenter.ShowModal(loginViewModel);
 
-                if (result)
+                if (result == true)
                     server.LogIn(loginViewModel.Username, loginViewModel.Password);
             }
         }

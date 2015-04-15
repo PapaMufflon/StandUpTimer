@@ -5,23 +5,18 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Windows.Shell;
-using StandUpTimer.Models;
 using StandUpTimer.Properties;
-using StandUpTimer.Services;
 using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Views
 {
-    internal partial class MainWindow : IBringToForeground
+    internal partial class MainWindow
     {
-        private readonly Updater updater;
         private readonly StandUpViewModel standUpViewModel;
 
-        public MainWindow(StandUpModel standUpModel)
+        public MainWindow(StandUpViewModel standUpViewModel)
         {
-            updater = new Updater(Close);
-
-            DataContext = standUpViewModel = new StandUpViewModel(standUpModel, this);
+            DataContext = this.standUpViewModel = standUpViewModel;
 
             Left = Settings.Default.Left;
             Top = Settings.Default.Top;
@@ -63,14 +58,6 @@ namespace StandUpTimer.Views
         private void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             Close();
-        }
-
-        public void Now()
-        {
-            Activate();
-
-            Topmost = true;
-            Topmost = false;
         }
 
         private void CreativeCommons_OnMouseMove(object sender, MouseEventArgs e)

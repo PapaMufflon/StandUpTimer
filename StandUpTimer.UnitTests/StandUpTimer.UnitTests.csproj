@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Models\StandUpModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthenticationServiceTests.cs" />
     <Compile Include="ViewModels\StandUpViewModelTests.cs" />
     <Compile Include="ViewModels\TimeExtensionTests.cs" />
   </ItemGroup>
