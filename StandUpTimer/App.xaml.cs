@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Windows;
 using Fclp;
 using StandUpTimer.Models;
@@ -22,7 +24,7 @@ namespace StandUpTimer
 
         private void Bootstrap(string[] args)
         {
-            var server = new Server("http://localhost:54776/");
+            var server = BootstrapServer();
             statusPublisher = new StatusPublisher(server);
 
             var deskStateTimes = ParseCommandLineArguments(args, new DeskStateTimes
@@ -45,6 +47,24 @@ namespace StandUpTimer
             MainWindow.Show();
 
             updater = new Updater(MainWindow.Close);
+        }
+
+        private static Server BootstrapServer()
+        {
+            var cookieContainer = new CookieContainer();
+
+            var handler = new HttpClientHandler
+            {
+                CookieContainer = cookieContainer,
+                UseCookies = true
+            };
+
+            var httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri("http://localhost:54776/")
+            };
+
+            return new Server(httpClient, cookieContainer);
         }
 
         private static DeskStateTimes ParseCommandLineArguments(string[] args, DeskStateTimes deskStateTimes)

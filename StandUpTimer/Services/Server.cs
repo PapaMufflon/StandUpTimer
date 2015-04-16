@@ -18,19 +18,10 @@ namespace StandUpTimer.Services
         private readonly HttpClient httpClient;
         private readonly CookieContainer cookieContainer;
 
-        public Server(string baseUrl)
+        public Server(HttpClient httpClient, CookieContainer cookieContainer)
         {
-            cookieContainer = new CookieContainer();
-            var handler = new HttpClientHandler
-            {
-                CookieContainer = cookieContainer,
-                UseCookies = true
-            };
-
-            httpClient = new HttpClient(handler)
-            {
-                BaseAddress = new Uri(baseUrl)
-            };
+            this.httpClient = httpClient;
+            this.cookieContainer = cookieContainer;
         }
 
         public void SendDeskState(Status status)
@@ -56,11 +47,9 @@ namespace StandUpTimer.Services
                 new KeyValuePair<string, string>("__RequestVerificationToken", result.AccountToken)
             });
 
-            HttpResponseMessage response;
-
             try
             {
-                response = await httpClient.PostAsync(AccountLoginUrl, content);
+                await httpClient.PostAsync(AccountLoginUrl, content);
             }
             catch (HttpRequestException)
             {
