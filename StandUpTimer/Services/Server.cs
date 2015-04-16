@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,7 +29,7 @@ namespace StandUpTimer.Services
 
         public async Task<CommunicationResult> LogIn(string username, SecureString password)
         {
-            var result = await TryGetAccountToken();
+            var result = await TryGetAntiForgeryToken();
 
             if (!result.Success)
                 return new CommunicationResult
@@ -67,7 +65,7 @@ namespace StandUpTimer.Services
 
         public async Task<CommunicationResult> LogOut()
         {
-            var result = await TryGetAccountToken();
+            var result = await TryGetAntiForgeryToken();
 
             if (!result.Success)
                 return new CommunicationResult
@@ -84,7 +82,7 @@ namespace StandUpTimer.Services
                 : new CommunicationResult { Success = false, Message = Properties.Resources.CommunicationFailed };
         }
 
-        private async Task<AccountTokenResult> TryGetAccountToken()
+        private async Task<AccountTokenResult> TryGetAntiForgeryToken()
         {
             string returnedSite;
 
@@ -111,27 +109,6 @@ namespace StandUpTimer.Services
         {
             public bool Success { get; set; }
             public string AccountToken { get; set; }
-        }
-    }
-
-    public static class SecureStringExtension
-    {
-        // taken from http://blogs.msdn.com/b/fpintos/archive/2009/06/12/how-to-properly-convert-securestring-to-string.aspx
-        public static string ConvertToUnsecureString(this SecureString securePassword)
-        {
-            if (securePassword == null)
-                throw new ArgumentNullException("securePassword");
-
-            IntPtr unmanagedString = IntPtr.Zero;
-            try
-            {
-                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
-                return Marshal.PtrToStringUni(unmanagedString);
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
-            }
         }
     }
 }

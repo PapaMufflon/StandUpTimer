@@ -224,6 +224,7 @@
     <Compile Include="Services\DialogPresenter.cs" />
     <Compile Include="Services\IDialogPresenter.cs" />
     <Compile Include="Services\IServer.cs" />
+    <Compile Include="Services\SecureStringExtension.cs" />
     <Compile Include="Services\Server.cs" />
     <Compile Include="Services\StatusPublisher.cs" />
     <Compile Include="Services\Updater.cs" />
