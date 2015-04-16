@@ -23,7 +23,6 @@ namespace StandUpTimer
         private void Bootstrap(string[] args)
         {
             var server = new Server();
-            
             statusPublisher = new StatusPublisher(server);
 
             var deskStateTimes = ParseCommandLineArguments(args, new DeskStateTimes
@@ -32,12 +31,15 @@ namespace StandUpTimer
                 SittingTime = TimeSpan.FromHours(1)
             });
 
-            var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), deskStateTimes.SittingTime,
-                deskStateTimes.StandingTime);
+            var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), deskStateTimes.SittingTime, deskStateTimes.StandingTime);
             standUpModel.DeskStateChanged += (s, f) => statusPublisher.PublishChangedDeskState(f.NewDeskState);
 
-            var authenticationService = new AuthenticationService(server, new DialogPresenter());
-            var standUpViewModel = new StandUpViewModel(standUpModel, authenticationService, this);
+            var standUpViewModel = new StandUpViewModel(standUpModel, new AuthenticationService(server, new DialogPresenter()), this);
+            standUpViewModel.PropertyChanged += (sender, eventArgs) =>
+            {
+                if (eventArgs.PropertyName.Equals("AuthenticationStatus"))
+                    statusPublisher.PublishChangedDeskState(standUpModel.DeskState);
+            };
 
             MainWindow = new MainWindow(standUpViewModel);
             MainWindow.Show();
