@@ -196,7 +196,7 @@ namespace StandUpTimer.ViewModels
                     await authenticationService.ChangeState();
 
                     OnPropertyChanged(() => AuthenticationStatus);
-                }, _ => !authenticationService.IsLoggedIn));
+                }));
             }
         }
 

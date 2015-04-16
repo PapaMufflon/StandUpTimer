@@ -38,9 +38,7 @@ namespace StandUpTimer.Services
 
         public async Task<bool> LogIn(string username, SecureString password)
         {
-            var returnedSite = await httpClient.GetStringAsync("Account/Login");
-            const string pattern = @"<input name=""__RequestVerificationToken"" type=""hidden"" value=""(?<token>.*)"" />";
-            var token = Regex.Match(returnedSite, pattern).Groups["token"].Value;
+            var token = await GetAccountToken();
 
             var content = new FormUrlEncodedContent(new[]
             {
@@ -56,7 +54,19 @@ namespace StandUpTimer.Services
 
         public async Task<bool> LogOut()
         {
-            throw new NotImplementedException();
+            var token = await GetAccountToken();
+            var content = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("__RequestVerificationToken", token) });
+            var response = await httpClient.PostAsync("Account/LogOff", content);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        private async Task<string> GetAccountToken()
+        {
+            var returnedSite = await httpClient.GetStringAsync("Account/Login");
+            const string pattern = @"<input name=""__RequestVerificationToken"" type=""hidden"" value=""(?<token>.*)"" />";
+            var token = Regex.Match(returnedSite, pattern).Groups["token"].Value;
+            return token;
         }
     }
 
