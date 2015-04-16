@@ -135,6 +135,39 @@ namespace StandUpTimer.UnitTests.Services
             Assert.That(result.Success, Is.False);
         }
 
+        [Test]
+        public async void For_logging_out_you_also_need_an_anti_forgery_token()
+        {
+            var cookieContainer = new CookieContainer();
+
+            var fakeResponseHandler = new FakeResponseHandler();
+            fakeResponseHandler.AddFakeResponse(r => r.Method == HttpMethod.Get && r.RequestUri.Equals(new Uri(BaseUrl + "Account/Login")), new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(@"<input name=""__RequestVerificationToken"" type=""hidden"" value=""antiForgeryToken"" />") });
+            fakeResponseHandler.AddFakeResponse(r => r.Method == HttpMethod.Post && r.RequestUri.Equals(new Uri(BaseUrl + "Account/LogOff")), new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(string.Empty) });
+
+            var client = new HttpClient(fakeResponseHandler) { BaseAddress = new Uri(BaseUrl) };
+            var target = new Server(client, cookieContainer);
+
+            var result = await target.LogOut();
+
+            Assert.That(result.Success, Is.True);
+        }
+
+        [Test]
+        public async void Without_an_anti_forgery_token_you_cannot_log_out()
+        {
+            var cookieContainer = new CookieContainer();
+
+            var fakeResponseHandler = new FakeResponseHandler();
+            fakeResponseHandler.AddFakeResponse(r => r.Method == HttpMethod.Post && r.RequestUri.Equals(new Uri(BaseUrl + "Account/LogOff")), new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(string.Empty) });
+
+            var client = new HttpClient(fakeResponseHandler) { BaseAddress = new Uri(BaseUrl) };
+            var target = new Server(client, cookieContainer);
+
+            var result = await target.LogOut();
+
+            Assert.That(result.Success, Is.False);
+        }
+
         private class FakeResponseHandler : DelegatingHandler
         {
             private readonly Dictionary<Predicate<HttpRequestMessage>, HttpResponseMessage> fakeResponses = new Dictionary<Predicate<HttpRequestMessage>, HttpResponseMessage>();
