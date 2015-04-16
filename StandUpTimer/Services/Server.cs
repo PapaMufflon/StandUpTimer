@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -12,22 +13,23 @@ namespace StandUpTimer.Services
 {
     internal class Server : IServer
     {
-        private const string BaseUrl = "http://localhost:54776";
         private const string AccountLoginUrl = "Account/Login";
 
         private readonly HttpClient httpClient;
+        private readonly CookieContainer cookieContainer;
 
-        public Server()
+        public Server(string baseUrl)
         {
+            cookieContainer = new CookieContainer();
             var handler = new HttpClientHandler
             {
-                CookieContainer = new CookieContainer(),
+                CookieContainer = cookieContainer,
                 UseCookies = true
             };
 
             httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri(BaseUrl),
+                BaseAddress = new Uri(baseUrl)
             };
         }
 
@@ -69,7 +71,7 @@ namespace StandUpTimer.Services
                 };
             }
 
-            return response.IsSuccessStatusCode
+            return cookieContainer.GetCookies(httpClient.BaseAddress).Cast<Cookie>().Any(x => x.Name.Equals(".AspNet.ApplicationCookie"))
                 ? new CommunicationResult { Success = true }
                 : new CommunicationResult { Success = false, Message = Properties.Resources.LoginFailed };
         }

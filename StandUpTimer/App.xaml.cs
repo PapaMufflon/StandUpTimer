@@ -22,7 +22,7 @@ namespace StandUpTimer
 
         private void Bootstrap(string[] args)
         {
-            var server = new Server();
+            var server = new Server("http://localhost:54776/");
             statusPublisher = new StatusPublisher(server);
 
             var deskStateTimes = ParseCommandLineArguments(args, new DeskStateTimes
