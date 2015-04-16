@@ -16,15 +16,12 @@ namespace StandUpTimer.Services
         private const string BaseUrl = "http://localhost:54776";
 
         private readonly HttpClient httpClient;
-        private readonly CookieContainer cookies;
 
         public Server()
         {
-            cookies = new CookieContainer();
-
             var handler = new HttpClientHandler
             {
-                CookieContainer = cookies,
+                CookieContainer = new CookieContainer(),
                 UseCookies = true
             };
 
@@ -36,8 +33,7 @@ namespace StandUpTimer.Services
 
         public void SendDeskState(Status status)
         {
-            var foo = httpClient.PostAsJsonAsync("statistics", status).Result;
-            var bar = foo;
+            httpClient.PostAsJsonAsync("statistics", status);
         }
 
         public async Task<bool> LogIn(string username, SecureString password)
@@ -48,7 +44,7 @@ namespace StandUpTimer.Services
 
             var content = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("UserName", username),
+                new KeyValuePair<string, string>("Email", username),
                 new KeyValuePair<string, string>("Password", password.ConvertToUnsecureString()),
                 new KeyValuePair<string, string>("__RequestVerificationToken", token)
             });
