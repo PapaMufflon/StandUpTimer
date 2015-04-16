@@ -10,7 +10,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="8" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="12" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="8" />
             <RowDefinition Height="Auto" />
@@ -18,16 +18,17 @@
         
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="8" />
             <ColumnDefinition MinWidth="200" />
         </Grid.ColumnDefinitions>
         
         <TextBlock Grid.Row="0" Grid.Column="0">Username</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Username}" />
+        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Username}" />
 
         <TextBlock Grid.Row="2" Grid.Column="0">Password</TextBlock>
-        <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="PasswordBox" />
+        <PasswordBox Grid.Row="2" Grid.Column="2" x:Name="PasswordBox" />
         
-        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Margin="0,0,8,0"
@@ -37,7 +38,7 @@
             <Button IsCancel="True">Cancel</Button>
         </StackPanel>
         
-        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3"
                    Foreground="Red"
                    Text="{Binding ErrorMessage}" />
     </Grid>
