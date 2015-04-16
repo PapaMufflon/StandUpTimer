@@ -341,14 +341,4 @@
     <Resource Include="Images\loggedInButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <ExtensionTasksPath Condition="'$(ExtensionTasksPath)' == ''">..\packages\MSBuild.Extension.Pack.1.6.0\tools\net40\</ExtensionTasksPath>
-  </PropertyGroup>
-  <Import Project="$(ExtensionTasksPath)MSBuild.ExtensionPack.VersionNumber.targets" />
-  <PropertyGroup>
-    <AssemblyMajorVersion>0</AssemblyMajorVersion>
-    <AssemblyFileMajorVersion>0</AssemblyFileMajorVersion>
-    <AssemblyMinorVersion>6</AssemblyMinorVersion>
-    <AssemblyFileMinorVersion>6</AssemblyFileMinorVersion>
-  </PropertyGroup>
 </Project>
