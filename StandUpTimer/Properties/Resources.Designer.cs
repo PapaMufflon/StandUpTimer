@@ -61,6 +61,15 @@ namespace StandUpTimer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The communication with the server failed..
+        /// </summary>
+        internal static string CommunicationFailed {
+            get {
+                return ResourceManager.GetString("CommunicationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wrong credentials!.
         /// </summary>
         internal static string LoginFailed {

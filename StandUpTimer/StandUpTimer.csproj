@@ -220,6 +220,7 @@
     <Compile Include="Models\StandUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Services\CommunicationResult.cs" />
     <Compile Include="Services\DialogPresenter.cs" />
     <Compile Include="Services\IDialogPresenter.cs" />
     <Compile Include="Services\IServer.cs" />

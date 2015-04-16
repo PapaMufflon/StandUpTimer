@@ -7,7 +7,7 @@ namespace StandUpTimer.Services
     internal interface IServer
     {
         void SendDeskState(Status status);
-        Task<bool> LogIn(string username, SecureString password);
-        Task<bool> LogOut();
+        Task<CommunicationResult> LogIn(string username, SecureString password);
+        Task<CommunicationResult> LogOut();
     }
 }

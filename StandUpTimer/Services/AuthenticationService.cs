@@ -32,7 +32,7 @@ namespace StandUpTimer.Services
 
             do
             {
-                if (await server.LogOut())
+                if ((await server.LogOut()).Success)
                 {
                     IsLoggedIn = false;
                     return;
@@ -54,10 +54,12 @@ namespace StandUpTimer.Services
                 if (dialogPresenter.ShowModal(loginViewModel) != true)
                     return;
 
-                if (await server.LogIn(loginViewModel.Username, loginViewModel.Password))
+                var communicationResult = await server.LogIn(loginViewModel.Username, loginViewModel.Password);
+
+                if (communicationResult.Success)
                     IsLoggedIn = true;
                 else
-                    loginViewModel.ErrorMessage = Properties.Resources.LoginFailed;
+                    loginViewModel.ErrorMessage = communicationResult.Message;
             } while (!IsLoggedIn);
         }
     }

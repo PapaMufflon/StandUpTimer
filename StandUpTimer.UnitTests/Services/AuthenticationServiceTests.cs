@@ -27,7 +27,7 @@ namespace StandUpTimer.UnitTests.Services
             var dialogPresenter = A.Fake<IDialogPresenter>();
 
             A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
 
             var target = new AuthenticationService(server, dialogPresenter);
 
@@ -43,7 +43,7 @@ namespace StandUpTimer.UnitTests.Services
             var dialogPresenter = A.Fake<IDialogPresenter>();
 
             A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(false);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
 
             var target = new AuthenticationService(server, dialogPresenter);
 
@@ -59,7 +59,7 @@ namespace StandUpTimer.UnitTests.Services
             var dialogPresenter = A.Fake<IDialogPresenter>();
 
             A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).ReturnsNextFromSequence(false, true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).ReturnsNextFromSequence(new CommunicationResult { Success = false }, new CommunicationResult { Success = true });
 
             var target = new AuthenticationService(server, dialogPresenter);
 
@@ -75,8 +75,8 @@ namespace StandUpTimer.UnitTests.Services
             var dialogPresenter = A.Fake<IDialogPresenter>();
 
             A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
-            A.CallTo(() => server.LogOut()).Returns(true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
+            A.CallTo(() => server.LogOut()).Returns(new CommunicationResult { Success = true });
 
             var target = new AuthenticationService(server, dialogPresenter);
 
@@ -93,8 +93,11 @@ namespace StandUpTimer.UnitTests.Services
             var dialogPresenter = A.Fake<IDialogPresenter>();
 
             A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
-            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(false, false, true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
+            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(
+                new CommunicationResult { Success = false },
+                new CommunicationResult { Success = false },
+                new CommunicationResult { Success = true });
 
             var target = new AuthenticationService(server, dialogPresenter);
 
@@ -111,8 +114,14 @@ namespace StandUpTimer.UnitTests.Services
             var dialogPresenter = A.Fake<IDialogPresenter>();
 
             A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(true);
-            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(false, false, false, false, false, true);
+            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
+            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(
+                new CommunicationResult { Success = false },
+                new CommunicationResult { Success = false },
+                new CommunicationResult { Success = false },
+                new CommunicationResult { Success = false },
+                new CommunicationResult { Success = false },
+                new CommunicationResult { Success = true });
 
             var target = new AuthenticationService(server, dialogPresenter);
 

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CommunicationFailed" xml:space="preserve">
+    <value>The communication with the server failed.</value>
+  </data>
   <data name="LoginFailed" xml:space="preserve">
     <value>Wrong credentials!</value>
   </data>
