@@ -1,7 +1,4 @@
 - web statistics
-  - register link from wpf app to website
-  - about page
-  - remove contact (in about)
   - home text schreiben (evtl von website)
 
 - tag released git commit
