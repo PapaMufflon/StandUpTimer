@@ -1,4 +1,8 @@
 - web statistics
+  - register link from wpf app to website
+  - about page
+  - remove contact (in about)
+  - home text schreiben (evtl von website)
 
 - tag released git commit
 
@@ -6,12 +10,16 @@
 
 - web ui tests
 
+- remaining time in title to see it in taskbar
+
+- translations
+
 - detect hibernation/standby to send inactive status
 
 - include version number in documentation
 
-- autostart
-
-- remaining time in title to see it in taskbar
+- optional autostart
 
 - delete last packages on deploy
+
+- remove wrong statistic items on the web
