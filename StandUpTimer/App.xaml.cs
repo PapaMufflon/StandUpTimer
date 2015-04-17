@@ -61,7 +61,7 @@ namespace StandUpTimer
 
             var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri("http://localhost:54776/")
+                BaseAddress = new Uri(StandUpTimer.Properties.Settings.Default.BaseUrl)
             };
 
             return new Server(httpClient, cookieContainer);

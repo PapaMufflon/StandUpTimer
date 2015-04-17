@@ -27,8 +27,9 @@
 
         <TextBlock Grid.Row="2" Grid.Column="0">Password</TextBlock>
         <PasswordBox Grid.Row="2" Grid.Column="2" x:Name="PasswordBox" />
-        
-        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">No user? <Hyperlink NavigateUri="Account/Register" RequestNavigate="Hyperlink_OnRequestNavigate">Register</Hyperlink></TextBlock>
+        <StackPanel Grid.Row="4" Grid.Column="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Margin="0,0,8,0"
