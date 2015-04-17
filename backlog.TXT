@@ -1,5 +1,7 @@
 - web statistics
-  - home text schreiben (evtl von website)
+  - update nuget build package
+  - build and publish script for website
+  - test update
 
 - tag released git commit
 
