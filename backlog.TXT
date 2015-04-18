@@ -1,4 +1,5 @@
 - web statistics
+  - contracts ok?
   - update nuget build package
   - build and publish script for website
   - test update
@@ -20,5 +21,7 @@
 - optional autostart
 
 - delete last packages on deploy
+
+- think about switching to ProjectScaffold with Fake and Paket
 
 - remove wrong statistic items on the web

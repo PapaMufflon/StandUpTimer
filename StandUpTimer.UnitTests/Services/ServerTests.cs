@@ -177,11 +177,11 @@ namespace StandUpTimer.UnitTests.Services
                 fakeResponses.Add(predicate, responseMessage);
             }
 
-            protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {
-                return !fakeResponses.Any(x => x.Key(request))
+                return Task.Run(() => !fakeResponses.Any(x => x.Key(request))
                     ? new HttpResponseMessage(HttpStatusCode.NotFound)
-                    : fakeResponses.Single(x => x.Key(request)).Value;
+                    : fakeResponses.Single(x => x.Key(request)).Value);
             }
         }
     }

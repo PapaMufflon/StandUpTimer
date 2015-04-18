@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -16,6 +17,8 @@ namespace StandUpTimer.Views
 
         public MainWindow(StandUpViewModel standUpViewModel)
         {
+            Contract.Requires(standUpViewModel != null);
+
             DataContext = this.standUpViewModel = standUpViewModel;
 
             Left = Settings.Default.Left;
@@ -79,7 +82,7 @@ namespace StandUpTimer.Views
         private void MainWindow_OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.PrintScreen)
-                File.WriteAllBytes("screenshot.png", this.GetJpgImage(1.0, 80));
+                File.WriteAllBytes("screenshot.png", this.GetJpgImage(1.0));
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using StandUpTimer.Common;
 using StandUpTimer.Web.Contract;
 using DeskState = StandUpTimer.Models.DeskState;
@@ -11,6 +12,8 @@ namespace StandUpTimer.Services
 
         public StatusPublisher(IServer server)
         {
+            Contract.Requires(server != null);
+
             this.server = server;
 
             SendDeskState();

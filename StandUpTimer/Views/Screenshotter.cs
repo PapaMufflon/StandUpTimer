@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -9,8 +10,11 @@ namespace StandUpTimer.Views
     // taken from http://www.grumpydev.com/2009/01/03/taking-wpf-screenshots/
     public static class Screenshotter
     {
-        public static byte[] GetJpgImage(this UIElement source, double scale, int quality)
+        public static byte[] GetJpgImage(this UIElement source, double scale)
         {
+            Contract.Requires(source != null);
+            Contract.Requires(scale > 0);
+
             var actualHeight = source.RenderSize.Height;
             var actualWidth = source.RenderSize.Width;
 

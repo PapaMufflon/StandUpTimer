@@ -8,9 +8,12 @@ namespace StandUpTimer.Common
     public class RelayCommand : ICommand
     {
         readonly Action<object> execute;
-        readonly Predicate<object> canExecute;        
+        readonly Predicate<object> canExecute;
 
-        public RelayCommand(Action<object> execute) : this(execute, null) { }
+        public RelayCommand(Action<object> execute) : this(execute, null)
+        {
+            Contract.Requires(execute != null);
+        }
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 using Squirrel;
 
@@ -12,6 +13,8 @@ namespace StandUpTimer.Services
 
         public Updater(Action close)
         {
+            Contract.Requires(close != null);
+
             this.close = close;
 
             updateManager = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45);

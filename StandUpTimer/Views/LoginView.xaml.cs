@@ -1,11 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Controls;
+﻿using System.Diagnostics;
 using System.Windows.Navigation;
 
 namespace StandUpTimer.Views
 {
-    public partial class LoginView : UserControl
+    public partial class LoginView
     {
         public LoginView()
         {
