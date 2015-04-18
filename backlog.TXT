@@ -1,6 +1,4 @@
 - web statistics
-  - contracts ok?
-  - update nuget build package
   - build and publish script for website
   - test update
 
