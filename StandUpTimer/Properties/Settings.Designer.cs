@@ -49,7 +49,7 @@ namespace StandUpTimer.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:54776/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://stand-uptimer.azurewebsites.net/")]
         public string BaseUrl {
             get {
                 return ((string)(this["BaseUrl"]));

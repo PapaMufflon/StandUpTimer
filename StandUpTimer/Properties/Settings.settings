@@ -9,7 +9,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="BaseUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://localhost:54776/</Value>
+      <Value Profile="(Default)">http://stand-uptimer.azurewebsites.net/</Value>
     </Setting>
   </Settings>
 </SettingsFile>
