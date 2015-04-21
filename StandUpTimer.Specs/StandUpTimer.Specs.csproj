@@ -38,6 +38,10 @@
       <HintPath>..\packages\Concordion.NET.1.2.0\lib\Concordion.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Concordion.Runners, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\externals\Concordion.Runners.dll</HintPath>
+    </Reference>
     <Reference Include="DeltaCompressionDotNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d14d6e5194e7f4a, processorArchitecture=MSIL">
       <HintPath>..\packages\DeltaCompressionDotNet.1.0.0\lib\net45\DeltaCompressionDotNet.dll</HintPath>
       <Private>True</Private>
@@ -131,7 +135,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Index.html" />
+    <EmbeddedResource Include="Index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.de.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>

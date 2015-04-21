@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Windows;
 using Fclp;
 using StandUpTimer.Models;
+using StandUpTimer.Properties;
 using StandUpTimer.Services;
 using StandUpTimer.ViewModels;
 using StandUpTimer.Views;
@@ -19,21 +20,57 @@ namespace StandUpTimer
         {
             base.OnStartup(e);
 
-            Bootstrap(e.Args);
+            var commandLineArguments = ParseCommandLineArguments(e.Args);
+
+            Bootstrap(commandLineArguments);
         }
 
-        private void Bootstrap(string[] args)
+        private static CommandLineArguments ParseCommandLineArguments(string[] args)
+        {
+            var result = new CommandLineArguments
+            {
+                DeskStateTimes = new DeskStateTimes
+                {
+                    StandingTime = TimeSpan.FromMinutes(20),
+                    SittingTime = TimeSpan.FromHours(1)
+                },
+                Update = true
+            };
+
+            var p = new FluentCommandLineParser();
+
+            p.Setup<int>("stand")
+             .Callback(x => result.DeskStateTimes.StandingTime = TimeSpan.FromMilliseconds(x));
+
+            p.Setup<int>("sit")
+             .Callback(x => result.DeskStateTimes.SittingTime = TimeSpan.FromMilliseconds(x));
+
+            p.Setup<bool>("noUpdate")
+                .Callback(x => result.Update = false);
+
+            p.Parse(args);
+
+            return result;
+        }
+
+        private class DeskStateTimes
+        {
+            public TimeSpan StandingTime { get; set; }
+            public TimeSpan SittingTime { get; set; }
+        }
+
+        private class CommandLineArguments
+        {
+            public DeskStateTimes DeskStateTimes { get; set; }
+            public bool Update { get; set; }
+        }
+
+        private void Bootstrap(CommandLineArguments commandLineArguments)
         {
             var server = BootstrapServer();
             statusPublisher = new StatusPublisher(server);
 
-            var deskStateTimes = ParseCommandLineArguments(args, new DeskStateTimes
-            {
-                StandingTime = TimeSpan.FromMinutes(20),
-                SittingTime = TimeSpan.FromHours(1)
-            });
-
-            var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), deskStateTimes.SittingTime, deskStateTimes.StandingTime);
+            var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), commandLineArguments.DeskStateTimes.SittingTime, commandLineArguments.DeskStateTimes.StandingTime);
             standUpModel.DeskStateChanged += (s, f) => statusPublisher.PublishChangedDeskState(f.NewDeskState);
 
             var standUpViewModel = new StandUpViewModel(standUpModel, new AuthenticationService(server, new DialogPresenter()), this);
@@ -46,7 +83,8 @@ namespace StandUpTimer
             MainWindow = new MainWindow(standUpViewModel);
             MainWindow.Show();
 
-            updater = new Updater(MainWindow.Close);
+            if (commandLineArguments.Update)
+                updater = new Updater(MainWindow.Close);
         }
 
         private static Server BootstrapServer()
@@ -61,31 +99,10 @@ namespace StandUpTimer
 
             var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri(StandUpTimer.Properties.Settings.Default.BaseUrl)
+                BaseAddress = new Uri(Settings.Default.BaseUrl)
             };
 
             return new Server(httpClient, cookieContainer);
-        }
-
-        private static DeskStateTimes ParseCommandLineArguments(string[] args, DeskStateTimes deskStateTimes)
-        {
-            var p = new FluentCommandLineParser();
-
-            p.Setup<int>("stand")
-             .Callback(x => deskStateTimes.StandingTime = TimeSpan.FromMilliseconds(x));
-
-            p.Setup<int>("sit")
-             .Callback(x => deskStateTimes.SittingTime = TimeSpan.FromMilliseconds(x));
-
-            p.Parse(args);
-
-            return deskStateTimes;
-        }
-
-        private struct DeskStateTimes
-        {
-            public TimeSpan StandingTime { get; set; }
-            public TimeSpan SittingTime { get; set; }
         }
 
         protected override void OnExit(ExitEventArgs e)

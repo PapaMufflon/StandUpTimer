@@ -4,7 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Windows;
-using Concordion.Integration;
+using Concordion.Runners.NUnit;
+using NUnit.Framework;
 using StandUpTimer.Specs.Properties;
 using TestStack.White;
 using TestStack.White.Factory;
@@ -14,14 +15,16 @@ using Image = TestStack.White.UIItems.Image;
 
 namespace StandUpTimer.Specs
 {
-    [ConcordionTest]
-    public class Index
+    [TestFixture]
+    public class Index : ExecutableSpecification
     {
         public string ItBeginsWithTheSittingPhase(string locale)
         {
             Resources.Culture = new CultureInfo(locale);
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -45,7 +48,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -64,7 +69,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -83,7 +90,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -102,7 +111,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -124,7 +135,9 @@ namespace StandUpTimer.Specs
 
         public void TakeStartScreenshot()
         {
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -140,7 +153,7 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
             using (var application = Application.Launch(processStartInfo))
             {
@@ -163,7 +176,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -186,7 +201,7 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
             using (var application = Application.Launch(processStartInfo))
             {
@@ -212,7 +227,7 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
             using (var application = Application.Launch(processStartInfo))
             {
@@ -236,7 +251,7 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000", sittingWaitTime));
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
             using (var application = Application.Launch(processStartInfo))
             {
@@ -263,7 +278,9 @@ namespace StandUpTimer.Specs
 
         public void TakeNextPhaseScreenshot()
         {
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -287,14 +304,16 @@ namespace StandUpTimer.Specs
 
             Point savedLocation;
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
                 savedLocation = window.Location;
             }
 
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
@@ -306,7 +325,9 @@ namespace StandUpTimer.Specs
 
         public void TakeAttributionScreenshot()
         {
-            using (var application = Application.Launch("StandUpTimer.exe"))
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
