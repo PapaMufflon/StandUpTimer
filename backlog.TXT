@@ -1,5 +1,4 @@
 - web statistics
-  - build and publish script for website
   - test update
 
 - tag released git commit
