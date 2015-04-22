@@ -18,10 +18,21 @@
     @Scripts.Render("~/bundles/d3")
 
     <script>
+        function mingleDateTimes(date, time) {
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), time.getSeconds(), 0);
+        }
+
         var tasks = [
     @foreach (var item in Model.Statuses)
     {
-        @:{ "startDate": new Date(@Html.DisplayFor(modelItem => item.StartDate)), "endDate": @(item.EndDate.Equals("now") ? "new Date()" : "new Date("+Html.DisplayFor(modelItem => item.EndDate)+")"), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.DeskState)" },
+        var startDate = string.Format("new Date({0})", Html.DisplayFor(modelItem => item.StartDate));
+        var endDate = item.EndDate.Equals("now")
+            ? string.Format("mingleDateTimes({0}, new Date())", item.StartDate)
+            : string.Format("new Date({0})", Html.DisplayFor(modelItem => item.EndDate));
+        var taskName = Html.DisplayFor(modelItem => item.Day);
+        var status = Html.DisplayFor(modelItem => item.DeskState);
+
+        @:{ "startDate": @startDate, "endDate": @endDate, "taskName": "@taskName", "status": "@status" },
     }
         ];
 
