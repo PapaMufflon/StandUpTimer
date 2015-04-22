@@ -21,7 +21,7 @@
         var tasks = [
     @foreach (var item in Model.Statuses)
     {
-        @:{ "startDate": new Date(@Html.DisplayFor(modelItem => item.StartDate)), "endDate": @(item.EndDate.Equals("now") ? "Date.now()" : "new Date("+Html.DisplayFor(modelItem => item.EndDate)+")"), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.DeskState)" },
+        @:{ "startDate": new Date(@Html.DisplayFor(modelItem => item.StartDate)), "endDate": @(item.EndDate.Equals("now") ? "new Date()" : "new Date("+Html.DisplayFor(modelItem => item.EndDate)+")"), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.DeskState)" },
     }
         ];
 
