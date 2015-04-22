@@ -22,7 +22,7 @@ Target "Test" (fun _ ->
       |> NUnit (fun p ->
           {p with
              DisableShadowCopy = true;
-             OutputFile = buildDir + "TestResults.xml" })
+             OutputFile = buildDir + "/TestResults.xml" })
 )
 
 Target "Spec" (fun _ ->
@@ -34,7 +34,7 @@ Target "Spec" (fun _ ->
       |> NUnit (fun p ->
           {p with
              DisableShadowCopy = true;
-             OutputFile = buildDir + "SpecResults.xml" })
+             OutputFile = buildDir + "/SpecResults.xml" })
 )
 
 Target "DeployWindowsDesktopApp" (fun _ ->
