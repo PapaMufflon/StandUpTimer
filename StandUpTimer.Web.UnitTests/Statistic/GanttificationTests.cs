@@ -181,7 +181,34 @@ namespace StandUpTimer.Web.UnitTests.Statistic
                     Day = "Heute",
                     DeskState = DeskState.Sitting,
                     StartDate = "2015, 4, 14, 21, 0, 0, 0",
-                    EndDate = "2015, 4, 14, 23, 45, 0, 0"
+                    EndDate = "now"
+                }
+            }));
+        }
+
+        [Test]
+        public void A_inactive_state_at_the_end_does_not_produce_a_gantt_item_that_lasts_until_now()
+        {
+            TestableDateTime.DateTime = A.Fake<IDateTime>();
+            A.CallTo(() => TestableDateTime.DateTime.Today).Returns(new DateTime(2015, 4, 14));
+            A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 14, 23, 45, 0));
+
+            var target = new List<Status>
+            {
+                new Status {DeskState = DeskState.Standing, DateTime = new DateTime(2015, 4, 14, 20, 0, 0)},
+                new Status {DeskState = DeskState.Inactive, DateTime = new DateTime(2015, 4, 14, 21, 0, 0)}
+            };
+
+            var actual = target.Ganttisize();
+
+            Assert.That(actual, Is.EquivalentTo(new List<GanttStatus>
+            {
+                new GanttStatus
+                {
+                    Day = "Heute",
+                    DeskState = DeskState.Standing,
+                    StartDate = "2015, 4, 14, 20, 0, 0, 0",
+                    EndDate = "2015, 4, 14, 21, 0, 0, 0"
                 }
             }));
         }
@@ -236,7 +263,7 @@ namespace StandUpTimer.Web.UnitTests.Statistic
                     Day = "Heute",
                     DeskState = DeskState.Standing,
                     StartDate = "2015, 4, 14, 21, 0, 0, 0",
-                    EndDate = "2015, 4, 14, 21, 21, 0, 0"
+                    EndDate = "now"
                 }
             }));
         }
@@ -304,7 +331,7 @@ namespace StandUpTimer.Web.UnitTests.Statistic
                     Day = "Heute",
                     DeskState = DeskState.Standing,
                     StartDate = "2015, 4, 14, 20, 0, 0, 0",
-                    EndDate = "2015, 4, 14, 22, 0, 0, 0"
+                    EndDate = "now"
                 }
             }));
         }
@@ -338,7 +365,7 @@ namespace StandUpTimer.Web.UnitTests.Statistic
                     Day = "Heute",
                     DeskState = DeskState.Standing,
                     StartDate = "2015, 4, 14, 21, 0, 0, 0",
-                    EndDate = "2015, 4, 14, 22, 0, 0, 0"
+                    EndDate = "now"
                 }
             }));
         }

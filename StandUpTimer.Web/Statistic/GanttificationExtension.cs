@@ -21,7 +21,11 @@ namespace StandUpTimer.Web.Statistic
             for (int index = 1; index < sortedStatuses.Count; index++)
                 TryAddGanttStatus(sortedStatuses[index - 1], sortedStatuses[index].DateTime, result);
 
-            TryAddGanttStatus(sortedStatuses.Last(), TestableDateTime.Now, result);
+            // using DateTime.Now here on the server is actually wrong (may not be in the same time zone as the user)
+            // but as it will only affect the current running state which is over 24 hours, we will use the shortcut here
+            // and do not handle all the stuff on the client but on the server.
+            if (IsValidGanttStatus(sortedStatuses.Last(), TestableDateTime.Now))
+                AddLastGanttStatus(sortedStatuses.Last(), result);
 
             return result;
         }
@@ -33,11 +37,22 @@ namespace StandUpTimer.Web.Statistic
                 if (SpansOverTwoDays(previousStatus.DateTime, currentStatusPosition))
                 {
                     AddGanttStatus(previousStatus, currentStatusPosition.Date.AddSeconds(-1), result);
-                    AddGanttStatus(previousStatus.WithDate(currentStatusPosition.Date), currentStatusPosition, result);                    
+                    AddGanttStatus(previousStatus.WithDate(currentStatusPosition.Date), currentStatusPosition, result);
                 }
                 else
                     AddGanttStatus(previousStatus, currentStatusPosition, result);
             }
+        }
+
+        private static bool IsValidGanttStatus(Status previousStatus, DateTime currentStatusPosition)
+        {
+            return previousStatus.DeskState != DeskState.Inactive &&
+                   !StateLastsTooLong(previousStatus, currentStatusPosition);
+        }
+
+        private static bool StateLastsTooLong(Status previousStatus, DateTime currentStatusPosition)
+        {
+            return currentStatusPosition.Subtract(previousStatus.DateTime) > TimeSpan.FromDays(1);
         }
 
         private static bool SpansOverTwoDays(DateTime start, DateTime end)
@@ -56,15 +71,15 @@ namespace StandUpTimer.Web.Statistic
             });
         }
 
-        private static bool IsValidGanttStatus(Status previousStatus, DateTime currentStatusPosition)
+        private static void AddLastGanttStatus(Status previousStatus, List<GanttStatus> result)
         {
-            return previousStatus.DeskState != DeskState.Inactive &&
-                   !StateLastsTooLong(previousStatus, currentStatusPosition);
-        }
-
-        private static bool StateLastsTooLong(Status previousStatus, DateTime currentStatusPosition)
-        {
-            return currentStatusPosition.Subtract(previousStatus.DateTime) > TimeSpan.FromDays(1);
+            result.Add(new GanttStatus
+            {
+                DeskState = previousStatus.DeskState,
+                StartDate = TestableDateTime.Today.Add(previousStatus.DateTime.TimeOfDay).ToString(Contract.Status.DateTimeFormat),
+                EndDate = "now",
+                Day = ToReadableDay(previousStatus.DateTime)
+            });
         }
 
         private static string ToReadableDay(DateTime dateTime)
