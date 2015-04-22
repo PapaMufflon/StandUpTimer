@@ -1,16 +1,5 @@
-call build.bat
-if %ERRORLEVEL% NEQ 0 goto exit
-
-call test.bat
-if %ERRORLEVEL% NEQ 0 goto exit
-
-call deployWindowsDesktopApp.bat
-if %ERRORLEVEL% NEQ 0 goto exit
-
-call pushDocumentation.bat
-if %ERRORLEVEL% NEQ 0 goto exit
-
-call deployWebApp.bat
-
-:exit
+@echo off
+cls
+".nuget/NuGet.exe" "Install" "FAKE" "-OutputDirectory" "packages" "-ExcludeVersion"
+"packages/FAKE/tools/Fake.exe" deploy.fsx
 pause
