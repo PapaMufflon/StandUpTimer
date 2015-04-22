@@ -2,10 +2,13 @@
 open System
 open System.IO
 open Fake
+open Fake.Git
+open Fake.NuGet
 
 RestorePackages()
 
 let buildDir = "./build"
+let docDir = "./doc"
 
 Target "Clean" (fun _ ->
     CleanDir buildDir
@@ -46,7 +49,7 @@ Target "DeployWindowsDesktopApp" (fun _ ->
             info.Arguments <- "build\\StandUpTimer.exe StandUpTimer\\StandUpTimer.nuspec"
         ) (TimeSpan.FromSeconds 10.)
 
-    MoveFile "./build" "./StandUpTimer/StandUpTimer.nuspec"
+    MoveFile buildDir "./StandUpTimer/StandUpTimer.nuspec"
 
     NuGetPackDirectly (fun p ->
         {p with
@@ -71,6 +74,20 @@ Target "DeployWindowsDesktopApp" (fun _ ->
     if result <> 0 then failwith "azCopy returned with a non-zero exit code"
 )
 
+Target "UpdateDocumentation" (fun _ ->
+    CleanDir docDir
+
+    cloneSingleBranch docDir "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
+
+    CopyFile (docDir + "/StandUpTimer") (buildDir + "/results/StandUpTimer/Specs/Index.html")
+
+    StageAll docDir
+
+    Commit docDir "Updated documentation"
+
+    push docDir
+)
+
 Target "Default" (fun _ ->
     trace "Have fun building the Stand-Up Timer!!!"
 )
@@ -80,6 +97,7 @@ Target "Default" (fun _ ->
   ==> "Test"
   ==> "Spec"
   ==> "DeployWindowsDesktopApp"
+  ==> "UpdateDocumentation"
   ==> "Default"
 
 RunTargetOrDefault "Default"
