@@ -1,6 +1,8 @@
 - web statistics
   - test update
 
+- switch to fake
+
 - tag released git commit
 
 - certificate (http://stackoverflow.com/a/18959881)
