@@ -26,9 +26,9 @@ namespace StandUpTimer.Services
             this.cookieContainer = cookieContainer;
         }
 
-        public void SendDeskState(Status status)
+        public async Task SendDeskState(Status status)
         {
-            httpClient.PostAsJsonAsync("statistics", status);
+            await httpClient.PostAsJsonAsync("statistics", status);
         }
 
         public async Task<CommunicationResult> LogIn(string username, SecureString password)

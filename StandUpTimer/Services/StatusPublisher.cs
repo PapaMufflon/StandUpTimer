@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
 using StandUpTimer.Common;
 using StandUpTimer.Web.Contract;
 using DeskState = StandUpTimer.Models.DeskState;
@@ -16,26 +17,29 @@ namespace StandUpTimer.Services
 
             this.server = server;
 
+#pragma warning disable 4014
+            // fire and forget
             SendDeskState();
+#pragma warning restore 4014
         }
 
-        public void PublishChangedDeskState(DeskState newDeskState)
+        public async Task PublishChangedDeskState(DeskState newDeskState)
         {
-            SendDeskState(newDeskState.ToWebContract());
+            await SendDeskState(newDeskState.ToWebContract());
         }
 
-        private void SendDeskState(Web.Contract.DeskState deskState = Web.Contract.DeskState.Sitting)
+        private async Task SendDeskState(Web.Contract.DeskState deskState = Web.Contract.DeskState.Sitting)
         {
-            server.SendDeskState(new Status
+            await server.SendDeskState(new Status
             {
                 DateTime = TestableDateTime.Now.ToString(Status.DateTimeFormat),
                 DeskState = deskState
             });
         }
 
-        public void PublishEndOfSession()
+        public async Task PublishEndOfSession()
         {
-            SendDeskState(Web.Contract.DeskState.Inactive);
+            await SendDeskState(Web.Contract.DeskState.Inactive);
         }
     }
 

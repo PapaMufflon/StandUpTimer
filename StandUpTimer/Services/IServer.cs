@@ -8,7 +8,7 @@ namespace StandUpTimer.Services
     [ContractClass(typeof(ContractForIServer))]
     internal interface IServer
     {
-        void SendDeskState(Status status);
+        Task SendDeskState(Status status);
         Task<CommunicationResult> LogIn(string username, SecureString password);
         Task<CommunicationResult> LogOut();
     }
@@ -16,7 +16,7 @@ namespace StandUpTimer.Services
     [ContractClassFor(typeof(IServer))]
     internal abstract class ContractForIServer : IServer
     {
-        public void SendDeskState(Status status)
+        public Task SendDeskState(Status status)
         {
             Contract.Requires(status != null);
 

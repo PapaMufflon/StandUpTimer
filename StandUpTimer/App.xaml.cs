@@ -77,7 +77,10 @@ namespace StandUpTimer
             standUpViewModel.PropertyChanged += (sender, eventArgs) =>
             {
                 if (eventArgs.PropertyName.Equals("AuthenticationStatus"))
+#pragma warning disable 4014
+                    // fire and forget
                     statusPublisher.PublishChangedDeskState(standUpModel.DeskState);
+#pragma warning restore 4014
             };
 
             MainWindow = new MainWindow(standUpViewModel);
@@ -105,9 +108,9 @@ namespace StandUpTimer
             return new Server(httpClient, cookieContainer);
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        protected override async void OnExit(ExitEventArgs e)
         {
-            statusPublisher.PublishEndOfSession();
+            await statusPublisher.PublishEndOfSession();
 
             base.OnExit(e);
         }
