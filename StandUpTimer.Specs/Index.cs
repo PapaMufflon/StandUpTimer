@@ -5,6 +5,9 @@ using System.Windows;
 using Concordion.Runners.NUnit;
 using NUnit.Framework;
 using StandUpTimer.Specs.Properties;
+using TestStack.White.Factory;
+using TestStack.White.UIItems.Finders;
+using TestStack.White.WindowsAPI;
 
 namespace StandUpTimer.Specs
 {
