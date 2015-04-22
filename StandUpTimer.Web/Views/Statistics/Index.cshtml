@@ -18,38 +18,38 @@
     @Scripts.Render("~/bundles/d3")
 
     <script>
-    var tasks = [
-@foreach (var item in Model.Statuses)
-{
-    @:{ "startDate": new Date(@Html.DisplayFor(modelItem => item.StartDate)), "endDate": new Date(@Html.DisplayFor(modelItem => item.EndDate)), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.DeskState)" },
-}
-    ];
+        var tasks = [
+    @foreach (var item in Model.Statuses)
+    {
+        @:{ "startDate": new Date(@Html.DisplayFor(modelItem => item.StartDate)), "endDate": @(item.EndDate.Equals("now") ? "Date.now()" : "new Date("+Html.DisplayFor(modelItem => item.EndDate)+")"), "taskName": "@Html.DisplayFor(modelItem => item.Day)", "status": "@Html.DisplayFor(modelItem => item.DeskState)" },
+    }
+        ];
 
-    var taskStatus = {
-        "Standing": "standing",
-        "Sitting": "sitting",
-        "Inactive": "inactive"
-    };
+        var taskStatus = {
+            "Standing": "standing",
+            "Sitting": "sitting",
+            "Inactive": "inactive"
+        };
 
-    var taskNames = [
-        @foreach (var day in Model.Days)
-        {
-            @:"@Html.DisplayFor(modelItem => day)",
-        }
-    ];
+        var taskNames = [
+            @foreach (var day in Model.Days)
+            {
+                @:"@Html.DisplayFor(modelItem => day)",
+            }
+        ];
 
-    tasks.sort(function (a, b) {
-        return a.endDate - b.endDate;
-    });
-    var maxDate = tasks[tasks.length - 1].endDate;
-    tasks.sort(function (a, b) {
-        return a.startDate - b.startDate;
-    });
-    var minDate = tasks[0].startDate;
+        tasks.sort(function (a, b) {
+            return a.endDate - b.endDate;
+        });
+        var maxDate = tasks[tasks.length - 1].endDate;
+        tasks.sort(function (a, b) {
+            return a.startDate - b.startDate;
+        });
+        var minDate = tasks[0].startDate;
 
-    var format = "%H:%M";
+        var format = "%H:%M";
 
-    var gantt = d3.gantt("#gantt").taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format);
-    gantt(tasks);
-</script>
+        var gantt = d3.gantt("#gantt").taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format);
+        gantt(tasks);
+    </script>
 }
