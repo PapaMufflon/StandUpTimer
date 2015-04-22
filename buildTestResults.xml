@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\tobiaswalter\src\StandUpTimer\build\StandUpTimer.UnitTests.dll" total="64" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-04-22" time="14:01:24">
+  <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.8009" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\tobiaswalter\src\StandUpTimer" machine-name="SMETTBO" user="tobiaswalter" user-domain="BBV" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Test Project" name="" executed="True" result="Success" success="True" time="2.872" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="C:\Users\tobiaswalter\src\StandUpTimer\build\StandUpTimer.UnitTests.dll" executed="True" result="Success" success="True" time="1.533" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="StandUpTimer" executed="True" result="Success" success="True" time="1.519" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="UnitTests" executed="True" result="Success" success="True" time="1.518" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Models" executed="True" result="Success" success="True" time="0.602" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="StandUpModelTests" executed="True" result="Success" success="True" time="0.599" asserts="0">
+                        <results>
+                          <test-case name="StandUpTimer.UnitTests.Models.StandUpModelTests.Raise_an_event_when_the_state_is_changed" executed="True" result="Success" success="True" time="0.463" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Models.StandUpModelTests.Skipping_is_the_same_as_a_timer_tick" executed="True" result="Success" success="True" time="0.009" asserts="2" />
+                          <test-case name="StandUpTimer.UnitTests.Models.StandUpModelTests.The_change_time_is_the_time_when_the_new_desk_state_ends" executed="True" result="Success" success="True" time="0.107" asserts="3" />
+                          <test-case name="StandUpTimer.UnitTests.Models.StandUpModelTests.The_current_leg_is_different_for_each_desk_state" executed="True" result="Success" success="True" time="0.002" asserts="3" />
+                          <test-case name="StandUpTimer.UnitTests.Models.StandUpModelTests.When_the_timer_ticks_Change_the_desk_state" executed="True" result="Success" success="True" time="0.001" asserts="3" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                  <test-suite type="Namespace" name="Services" executed="True" result="Success" success="True" time="0.733" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="AuthenticationServiceTests" executed="True" result="Success" success="True" time="0.142" asserts="0">
+                        <results>
+                          <test-case name="StandUpTimer.UnitTests.Services.AuthenticationServiceTests.Changing_the_state_when_logged_in_logs_out" executed="True" result="Success" success="True" time="0.090" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.AuthenticationServiceTests.Changing_the_state_when_logged_out_logs_in" executed="True" result="Success" success="True" time="0.007" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.AuthenticationServiceTests.Initially_the_user_is_logged_out" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.AuthenticationServiceTests.Logging_out_is_automatically_retried" executed="True" result="Success" success="True" time="0.013" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.AuthenticationServiceTests.Logging_out_is_automatically_retried_5_times" executed="True" result="Success" success="True" time="0.011" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.AuthenticationServiceTests.Wrong_credentials_lets_you_retry" executed="True" result="Success" success="True" time="0.007" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.AuthenticationServiceTests.You_can_cancel_logging_in" executed="True" result="Success" success="True" time="0.008" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="ServerTests" executed="True" result="Success" success="True" time="0.479" asserts="0">
+                        <results>
+                          <test-case name="StandUpTimer.UnitTests.Services.ServerTests.For_logging_out_you_also_need_an_anti_forgery_token" executed="True" result="Success" success="True" time="0.236" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.ServerTests.To_log_in_you_need_the_AntiForgeryToken_first" executed="True" result="Success" success="True" time="0.089" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.ServerTests.When_receiving_the_application_cookie_you_are_logged_in" executed="True" result="Success" success="True" time="0.047" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.ServerTests.Without_an_anti_forgery_token_you_cannot_log_out" executed="True" result="Success" success="True" time="0.006" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.ServerTests.Wrong_credentials_do_not_log_you_in" executed="True" result="Success" success="True" time="0.007" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.ServerTests.You_are_not_logged_in_when_the_server_returns_not_found" executed="True" result="Success" success="True" time="0.007" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.Services.ServerTests.You_can_send_the_current_desk_state_although_the_user_is_not_logged_in" executed="True" result="Success" success="True" time="0.080" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="StatusPublisherTests" executed="True" result="Success" success="True" time="0.108" asserts="0">
+                        <results>
+                          <test-case name="StandUpTimer.UnitTests.Services.StatusPublisherTests.When_creating_an_instance_publish_a_sitting_state_to_the_server" executed="True" result="Success" success="True" time="0.086" asserts="0" />
+                          <test-case name="StandUpTimer.UnitTests.Services.StatusPublisherTests.When_publishing_use_the_current_time" executed="True" result="Success" success="True" time="0.009" asserts="0" />
+                          <test-case name="StandUpTimer.UnitTests.Services.StatusPublisherTests.You_can_publish_a_new_state" executed="True" result="Success" success="True" time="0.003" asserts="0" />
+                          <test-case name="StandUpTimer.UnitTests.Services.StatusPublisherTests.You_can_publish_the_end_of_a_session" executed="True" result="Success" success="True" time="0.006" asserts="0" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                  <test-suite type="Namespace" name="ViewModels" executed="True" result="Success" success="True" time="0.175" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="StandUpViewModelTests" executed="True" result="Success" success="True" time="0.138" asserts="0">
+                        <results>
+                          <test-case name="StandUpTimer.UnitTests.ViewModels.StandUpViewModelTests.Skipping_a_desk_state_ends_it_and_starts_the_new_leg" executed="True" result="Success" success="True" time="0.118" asserts="3" />
+                          <test-case name="StandUpTimer.UnitTests.ViewModels.StandUpViewModelTests.When_a_new_desk_state_started_Hide_the_OK_button" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.ViewModels.StandUpViewModelTests.When_the_desk_state_ended_Bring_the_app_into_the_foreground" executed="True" result="Success" success="True" time="0.003" asserts="0" />
+                          <test-case name="StandUpTimer.UnitTests.ViewModels.StandUpViewModelTests.When_the_desk_state_ended_Show_the_OK_button" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                          <test-case name="StandUpTimer.UnitTests.ViewModels.StandUpViewModelTests.When_the_desk_state_of_the_model_changes_Set_the_according_image" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                          <test-case name="StandUpTimer.UnitTests.ViewModels.StandUpViewModelTests.You_cannot_end_a_desk_state_without_starting_it_first" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                          <test-case name="StandUpTimer.UnitTests.ViewModels.StandUpViewModelTests.You_cannot_start_a_desk_state_when_it_already_runs" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TimeExtensionTests" executed="True" result="Success" success="True" time="0.034" asserts="0">
+                        <results>
+                          <test-suite type="ParameterizedTest" name="Format_remaining_time_tests" executed="True" result="Success" success="True" time="0.009" asserts="0">
+                            <results>
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(59000,&quot;59\nsec&quot;)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(0,&quot;&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(60000,&quot;1\nmin&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(3600000,&quot;60\nmin&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(7200000,&quot;120\nmin&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(1,&quot;0\nsec&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(1000,&quot;1\nsec&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Format_remaining_time_tests(-1,&quot;&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="ParameterizedTest" name="Fraction_tests" executed="True" result="Success" success="True" time="0.010" asserts="0">
+                            <results>
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Fraction_tests(2,1,200)" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Fraction_tests(0,1,0)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Fraction_tests(10,100,10)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Fraction_tests(2,0,double.PositiveInfinity)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Fraction_tests(1,1,100)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Fraction_tests(-1,1,0)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="ParameterizedTest" name="Percentage_tests" executed="True" result="Success" success="True" time="0.009" asserts="0">
+                            <results>
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Percentage_tests(10,100,10)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Percentage_tests(2,1,200)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Percentage_tests(1,0,double.PositiveInfinity)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Percentage_tests(0,1,0)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Percentage_tests(-1,1,0)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                              <test-case name="StandUpTimer.UnitTests.ViewModels.TimeExtensionTests.Percentage_tests(1,1,100)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Assembly" name="C:\Users\tobiaswalter\src\StandUpTimer\build\StandUpTimer.Web.UnitTests.dll" executed="True" result="Success" success="True" time="0.723" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="StandUpTimer" executed="True" result="Success" success="True" time="0.709" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Web" executed="True" result="Success" success="True" time="0.709" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="UnitTests" executed="True" result="Success" success="True" time="0.709" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Statistic" executed="True" result="Success" success="True" time="0.708" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="GanttificationTests" executed="True" result="Success" success="True" time="0.706" asserts="0">
+                            <results>
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.A_inactive_state_at_the_end_does_not_produce_a_gantt_item_that_lasts_until_now" executed="True" result="Success" success="True" time="0.491" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.A_non_inactive_state_at_the_end_produces_a_gantt_item_that_lasts_until_now" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.A_sitting_state_after_an_inactive_state_produces_just_one_state_starting_at_the_sitting_state" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.A_status_lasting_more_than_24_hours_gets_ignored" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.A_status_over_midnight_gets_divided_into_two_statuses" executed="True" result="Success" success="True" time="0.137" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.Inactive_before_midnight_produces_no_more_statuses_on_that_day" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.No_status_to_process_returns_an_empty_list" executed="True" result="Success" success="True" time="0.002" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.The_start_and_end_date_is_always_today" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.Two_consecutive_inactive_states_will_be_ignored" executed="True" result="Success" success="True" time="0.010" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.Two_statuses_will_become_one_gantt_item" executed="True" result="Success" success="True" time="0.006" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.Two_statuses_with_the_same_state_produce_two_items" executed="True" result="Success" success="True" time="0.003" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.Unordered_items_are_acceptable" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.When_a_status_is_from_yesterday_Name_it_so" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                              <test-case name="StandUpTimer.Web.UnitTests.Statistic.GanttificationTests.When_a_status_is_really_today_Name_it_so" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

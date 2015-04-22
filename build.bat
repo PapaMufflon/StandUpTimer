@@ -1,2 +1,5 @@
-rmdir build /S /Q
-msbuild StandUpTimer.sln /p:Configuration=Release /p:OutputPath=..\build
+@echo off
+cls
+".nuget/NuGet.exe" "Install" "FAKE" "-OutputDirectory" "packages" "-ExcludeVersion"
+"packages/FAKE/tools/Fake.exe" build.fsx
+pause

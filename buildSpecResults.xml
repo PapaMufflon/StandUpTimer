@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\tobiaswalter\src\StandUpTimer\build\StandUpTimer.Specs.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-04-22" time="14:01:53">
+  <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.8009" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\tobiaswalter\src\StandUpTimer" machine-name="SMETTBO" user="tobiaswalter" user-domain="BBV" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Users\tobiaswalter\src\StandUpTimer\build\StandUpTimer.Specs.dll" executed="True" result="Success" success="True" time="27.157" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="StandUpTimer" executed="True" result="Success" success="True" time="27.144" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Specs" executed="True" result="Success" success="True" time="27.144" asserts="0">
+            <results>
+              <test-suite type="TestFixture" name="Index" executed="True" result="Success" success="True" time="27.142" asserts="0">
+                <results>
+                  <test-case name="StandUpTimer.Specs.Index.ExecutableSpecification.ConcordionTest" executed="True" result="Success" success="True" time="27.132" asserts="0">
+                    <reason>
+                      <message><![CDATA[]]></message>
+                    </reason>
+                  </test-case>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
