@@ -100,7 +100,8 @@
                 <Button Style="{StaticResource FadeOutStyle}"
                         Template="{StaticResource ImageButton}"
                         Command="{Binding LoginCommand}"
-                        Margin="4,0,0,0">
+                        Margin="4,0,0,0"
+                        x:Name="LoginButton">
                     <Image Source="{Binding AuthenticationStatus}" />
                 </Button>
             </StackPanel>

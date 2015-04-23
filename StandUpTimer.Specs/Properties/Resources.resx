@@ -132,6 +132,9 @@
   <data name="TheCloseButton" xml:space="preserve">
     <value>The close button</value>
   </data>
+  <data name="TheLoginButton" xml:space="preserve">
+    <value>The login button</value>
+  </data>
   <data name="TheOkButtonIsVisible" xml:space="preserve">
     <value>the OK button is visible</value>
   </data>

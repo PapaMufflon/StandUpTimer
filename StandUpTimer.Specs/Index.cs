@@ -10,6 +10,7 @@ using StandUpTimer.Specs.Properties;
 using TestStack.White;
 using TestStack.White.Factory;
 using TestStack.White.UIItems;
+using TestStack.White.UIItems.Finders;
 using TestStack.White.WindowsAPI;
 using Image = TestStack.White.UIItems.Image;
 
@@ -107,6 +108,27 @@ namespace StandUpTimer.Specs
             }
         }
 
+        public string YouCanSeeTheLoginButton(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
+
+            using (var application = Application.Launch(processStartInfo))
+            {
+                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+
+                var attributionButton = window.Get<Button>("LoginButton");
+
+                if (attributionButton == null)
+                    return "There is no login button.";
+
+                return attributionButton.Visible
+                           ? Resources.TheLoginButton
+                           : "The login button is not visible.";
+            }
+        }
+
         public string YouCanSeeTheRemainingTime(string locale)
         {
             Resources.Culture = new CultureInfo(locale);
@@ -144,7 +166,7 @@ namespace StandUpTimer.Specs
                 window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
 
                 Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-                File.Move("screenshot.png", @"results\StandUpTimer\Specs\start.png");
+                File.Copy("screenshot.png", @"results\StandUpTimer\Specs\start.png", true);
             }
         }
 
@@ -294,7 +316,7 @@ namespace StandUpTimer.Specs
                 window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
 
                 Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-                File.Move("screenshot.png", @"results\StandUpTimer\Specs\nextPhase.png");
+                File.Copy("screenshot.png", @"results\StandUpTimer\Specs\nextPhase.png", true);
             }
         }
 
@@ -331,15 +353,16 @@ namespace StandUpTimer.Specs
             {
                 var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
 
-                var attributionButton = window.Get<Button>("AttributionButton");
+                var attributionButton = window.Get(SearchCriteria.ByAutomationId("AttributionButton"), TimeSpan.FromSeconds(10));
                 window.Mouse.Location = attributionButton.ClickablePoint;
 
+                // wait to show
                 Thread.Sleep(200);
 
                 window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
 
                 Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-                File.Move("screenshot.png", @"results\StandUpTimer\Specs\attribution.png");
+                File.Copy("screenshot.png", @"results\StandUpTimer\Specs\attribution.png", true);
             }
         }
 

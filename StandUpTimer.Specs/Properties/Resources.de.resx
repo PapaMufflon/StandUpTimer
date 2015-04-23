@@ -132,6 +132,9 @@
   <data name="TheCloseButton" xml:space="preserve">
     <value>Die Schließen Schaltfläche</value>
   </data>
+  <data name="TheLoginButton" xml:space="preserve">
+    <value>Die Anmelden Schaltfläche</value>
+  </data>
   <data name="TheOkButtonIsVisible" xml:space="preserve">
     <value>die OK Schaltfläche wird sichtbar</value>
   </data>
