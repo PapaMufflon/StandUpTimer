@@ -108,18 +108,16 @@ namespace StandUpTimer
             return new Server(httpClient, cookieContainer);
         }
 
-        protected override async void OnExit(ExitEventArgs e)
-        {
-            await statusPublisher.PublishEndOfSession();
-
-            base.OnExit(e);
-        }
-
         public void Now()
         {
             MainWindow.Activate();
             MainWindow.Topmost = true;
             MainWindow.Topmost = false;
+        }
+
+        private async void App_OnExit(object sender, ExitEventArgs e)
+        {
+            await statusPublisher.PublishEndOfSession();
         }
     }
 }
