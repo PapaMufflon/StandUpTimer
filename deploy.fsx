@@ -64,8 +64,7 @@ Target "Default" (fun _ ->
     trace "Have fun deploying the Stand-Up Timer!!!"
 )
 
-"Clean"
-  ==> "DeployWindowsDesktopApp"
+"DeployWindowsDesktopApp"
   ==> "UpdateDocumentation"
   ==> "Default"
 
