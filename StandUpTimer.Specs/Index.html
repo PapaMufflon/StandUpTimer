@@ -72,7 +72,10 @@
                         <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>
                         Wie man den Stand-Up Timer verwendet.
                     </h3>
-                    
+
+                    <h4 lang="en">Overview</h4>
+                    <h4 lang="de">Überblick</h4>
+
                     <p lang="en">After installation, the program starts immediately.</p>
 					<p lang="de">Nach der Installation startet das Programm sofort.</p>
 
@@ -89,8 +92,8 @@
                             <li concordion:assertEquals="YouCanSeeTheLoginButton(#en)">The login button</li>
                         </ul>
                     </p>
-					<p lang="de">
-					    Wenn Du Deine Maus &#252;ber das Bild bewegst, kannst Du die vorhandenen Schaltfl&#228;chen sehen:
+                    <p lang="de">
+                        Wenn Du Deine Maus &#252;ber das Bild bewegst, kannst Du die vorhandenen Schaltfl&#228;chen sehen:
                         <ul lang="de">
                             <li concordion:assertEquals="YouCanSeeTheCloseButton(#de)">Die Schlie&#223;en Schaltfl&#228;che</li>
                             <li concordion:assertEquals="YouCanSeeTheSkipButton(#de)">Die &#220;berspringen Schaltfl&#228;che</li>
@@ -98,6 +101,45 @@
                             <li concordion:assertequals="YouCanSeeTheLoginButton(#de)">Die Anmelden Schaltfl&#228;che</li>
                         </ul>
                     </p>
+
+                    <h4 lang="en">Login</h4>
+                    <h4 lang="de">Anmelden</h4>
+
+                    <p lang="en">
+                        If you like, you can create yourself in two steps a new user account:
+                        <ul lang="en">
+                            <li concordion:assertequals="OpenTheLoginDialog(#en)">Open the login dialog in which the register link is</li>
+                            <li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png" /></li>
+                            <li concordion:assertequals="CreateNewUser(#en)">click on the link and create a new user account</li>
+                            <li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li>
+                        </ul>
+                    </p>
+                    <p lang="de">
+                        Wenn Du willst, kannst Du Dir in zwei Schritten ein Benutzerkonto erstellen:
+                        <ul lang="de">
+                            <li concordion:assertequals="OpenTheLoginDialog(#de)">&#214;ffne den Anmelden Dialog, in dem der Registrieren-link ist</li>
+                            <li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png"/></li>
+                            <li concordion:assertequals="CreateNewUser(#de)">klicke auf den link und erstelle ein neues Benutzerkonto</li>
+                            <li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li>
+                        </ul>
+                    </p>
+
+                    <p lang="en" concordion:assertequals="YouCanLogin(#en)">In case you created a user account, you can login now.</p>
+                    <p lang="de" concordion:assertequals="YouCanLogin(#de)">Falls Du Dir ein Benutzerkonto erstellt hast, kannst Du Dich anmelden.</p>
+
+                    <p lang="en" concordion:assertequals="RetryLoggingIn(#en)">When you entered wrong credentials, you will see an error message and you can retry.</p>
+                    <p lang="de" concordion:assertequals="RetryLoggingIn(#de)">Hast Du falsche Anmeldedaten eingegeben, siehst Du eine Fehlermeldung und kannst es noch einmal versuchen.</p>
+
+                    <img lang="en" concordion:execute="TakeRetryScreenshot(#en)" src="retry.png" />
+                    <img lang="de" concordion:execute="TakeRetryScreenshot(#de)" src="retry.png" />
+
+                    <p lang="en">You can see on the <a href="http://stand-uptimer.azurewebsites.net/Statistics">internet</a> how virtuous you are.</p>
+                    <p lang="de">Im <a href="http://stand-uptimer.azurewebsites.net/Statistics">Internet</a> kannst Du sehen, wie tugendhaft Du bist.</p>
+
+                    <img concordion:execute="TakeStatisticsScreenshot()" src="statistics.png" />
+
+                    <h4 lang="en">Usage</h4>
+                    <h4 lang="de">Verwendung</h4>
 
                     <p lang="en" concordion:assertEquals="YouCanSeeTheRemainingTime(#en)">You can see how much time is left before changing to another position.</p>
 					<p lang="de" concordion:assertEquals="YouCanSeeTheRemainingTime(#de)">Man kann sehen, wie viel Zeit &#252;brig ist, bevor man die Position wechseln muss.</p>
@@ -135,7 +177,10 @@
                     
                     <p lang="en">When you close the application, the screen position will be saved and <span concordion:assertEquals="TheAppStartsOnTheSamePosition(#en)">on the next startup, the app starts on that position again</span>.</p>
 					<p lang="de">Wenn Du das Programm schlie&#223;t, wird die Bildschirmposition gespeichert und <span concordion:assertEquals="TheAppStartsOnTheSamePosition(#de)">beim n&#228;chsten Start wird das Programm an der gleichen Position wieder angezeigt</span>.</p>
-                    
+
+                    <h4 lang="en">Miscellaneous</h4>
+                    <h4 lang="de">Verschiedenes</h4>
+
                     <p lang="en">You can see the attributions of the used images when moving the mouse on the attribution button:</p>
 					<p lang="de">Du kannst die Attribuierungen der verwendeten Bilder sehen, wenn Du die Maus auf die Attribuierung Schaltfl&#228;che bewegst:</p>
                     <img concordion:execute="TakeAttributionScreenshot()" src="attribution.png" />

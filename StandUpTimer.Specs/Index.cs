@@ -129,6 +129,46 @@ namespace StandUpTimer.Specs
             }
         }
 
+        public string OpenTheLoginDialog(string locale)
+        {
+            return null;
+        }
+
+        public void TakeLoginScreenshot()
+        {
+            
+        }
+
+        public string CreateNewUser(string locale)
+        {
+            return null;
+        }
+
+        public void TakeRegisterScreenshot()
+        {
+            
+        }
+
+        public string YouCanLogin(string locale)
+        {
+            return null;
+        }
+
+        public string RetryLoggingIn(string locale)
+        {
+            return null;
+        }
+
+        public void TakeRetryScreenshot()
+        {
+
+        }
+
+        public void TakeStatisticsScreenshot()
+        {
+
+        }
+
         public string YouCanSeeTheRemainingTime(string locale)
         {
             Resources.Culture = new CultureInfo(locale);
