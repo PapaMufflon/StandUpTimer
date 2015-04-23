@@ -14,7 +14,7 @@ Target "DeployWindowsDesktopApp" (fun _ ->
     let version =
         ExecProcess(fun info ->
             info.FileName <- "./tools/ReplaceVersionString/bin/debug/ReplaceVersionString"
-            info.Arguments <- "build\\StandUpTimer.exe StandUpTimer\\StandUpTimer.nuspec"
+            info.Arguments <- "build\\StandUpTimer.exe StandUpTimer\\StandUpTimer.nuspec $version$"
         ) (TimeSpan.FromSeconds 10.)
 
     MoveFile buildDir "./StandUpTimer/StandUpTimer.nuspec"
