@@ -34,7 +34,8 @@ namespace StandUpTimer
                     StandingTime = TimeSpan.FromMinutes(20),
                     SittingTime = TimeSpan.FromHours(1)
                 },
-                Update = true
+                Update = true,
+                BaseUrl = Settings.Default.BaseUrl
             };
 
             var p = new FluentCommandLineParser();
@@ -47,6 +48,9 @@ namespace StandUpTimer
 
             p.Setup<bool>("noUpdate")
                 .Callback(x => result.Update = false);
+
+            p.Setup<string>("baseUrl")
+                .Callback(x => result.BaseUrl = x);
 
             p.Parse(args);
 
@@ -63,11 +67,12 @@ namespace StandUpTimer
         {
             public DeskStateTimes DeskStateTimes { get; set; }
             public bool Update { get; set; }
+            public string BaseUrl { get; set; }
         }
 
         private void Bootstrap(CommandLineArguments commandLineArguments)
         {
-            var server = BootstrapServer();
+            var server = BootstrapServer(commandLineArguments.BaseUrl);
             statusPublisher = new StatusPublisher(server);
 
             var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), commandLineArguments.DeskStateTimes.SittingTime, commandLineArguments.DeskStateTimes.StandingTime);
@@ -90,7 +95,7 @@ namespace StandUpTimer
                 updater = new Updater(MainWindow.Close);
         }
 
-        private static Server BootstrapServer()
+        private static Server BootstrapServer(string baseUrl)
         {
             var cookieContainer = new CookieContainer();
 
@@ -102,7 +107,7 @@ namespace StandUpTimer
 
             var httpClient = new HttpClient(handler)
             {
-                BaseAddress = new Uri(Settings.Default.BaseUrl)
+                BaseAddress = new Uri(baseUrl)
             };
 
             return new Server(httpClient, cookieContainer);

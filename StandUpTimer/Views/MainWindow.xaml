@@ -63,6 +63,10 @@
             <TextBlock Text="{Binding CurrentImage}"
                        Foreground="Transparent"
                        x:Name="CurrentImageFileName" />
+
+            <TextBlock Text="{Binding AuthenticationStatus}"
+                       Foreground="Transparent"
+                       x:Name="CurrentAuthenticationStatusFileName" />
             
             <Image Source="{Binding CurrentImage}"
                    Height="253"
@@ -100,7 +104,8 @@
                 <Button Style="{StaticResource FadeOutStyle}"
                         Template="{StaticResource ImageButton}"
                         Command="{Binding LoginCommand}"
-                        Margin="4,0,0,0">
+                        Margin="4,0,0,0"
+                        x:Name="LoginButton">
                     <Image Source="{Binding AuthenticationStatus}" />
                 </Button>
             </StackPanel>

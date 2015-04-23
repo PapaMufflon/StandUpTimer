@@ -1,17 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Threading;
 using System.Windows;
 using Concordion.Runners.NUnit;
 using NUnit.Framework;
 using StandUpTimer.Specs.Properties;
-using TestStack.White;
-using TestStack.White.Factory;
-using TestStack.White.UIItems;
-using TestStack.White.WindowsAPI;
-using Image = TestStack.White.UIItems.Image;
 
 namespace StandUpTimer.Specs
 {
@@ -22,23 +15,19 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                var currentImage = window.Get<Image>("CurrentImage");
+                var currentImage = standUpTimer.CurrentImage;
 
                 if (currentImage == null)
                     return "No image loaded.";
 
-                var currentImageFileName = window.Get<Label>("CurrentImageFileName");
+                var currentImageFileName = standUpTimer.CurrentImageFileName;
 
                 if (currentImageFileName == null)
                     return "Cannot determine current image.";
 
-                return currentImageFileName.Text.Equals("..\\Images\\sitting.png")
+                return currentImageFileName.Equals("..\\Images\\sitting.png")
                            ? Resources.ItBeginsWithTheSittingPhase
                            : "It does not begin with the sitting phase.";
             }
@@ -48,13 +37,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                var closeButton = window.Get<Button>("CloseButton");
+                var closeButton = standUpTimer.CloseButton;
 
                 if (closeButton == null)
                     return "There is no close button.";
@@ -69,13 +54,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                var skipButton = window.Get<Button>("SkipButton");
+                var skipButton = standUpTimer.SkipButton;
 
                 if (skipButton == null)
                     return "There is no skip button.";
@@ -90,13 +71,9 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                var attributionButton = window.Get<Button>("AttributionButton");
+                var attributionButton = standUpTimer.AttributionButton;
 
                 if (attributionButton == null)
                     return "There is no attribution button.";
@@ -107,17 +84,174 @@ namespace StandUpTimer.Specs
             }
         }
 
+        public string YouCanSeeTheLoginButton(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                var loginButton = standUpTimer.LoginButton;
+
+                if (loginButton == null)
+                    return "There is no login button.";
+
+                return loginButton.Visible
+                           ? Resources.TheLoginButton
+                           : "The login button is not visible.";
+            }
+        }
+
+        public string TheLoginDialogHasTheRegisterLink(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return errorMessage;
+
+                var registerLink = loginDialog.RegisterLink;
+
+                if (registerLink == null)
+                    return "There is no register link";
+
+                return registerLink.Visible
+                    ? Resources.TheLoginDialogHasTheRegisterLink
+                    : "The register link is not visible";
+            }
+        }
+
+        public void TakeLoginScreenshot()
+        {
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return;
+
+                loginDialog.TakeScreenshot("login.png");
+            }
+        }
+
+        public string CreateNewUser(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return errorMessage;
+
+                loginDialog.RegisterLink.Click();
+            }
+
+            var homePage = Host.Instance.NavigateToInitialPage<HomePage>()
+                .GoToRegisterPage()
+                .RegisterUser(new RegisterModel("test@example.com", "password", "password"));
+
+            return homePage != null
+                ? Resources.CreateNewUser
+                : "Could not create a new user account via the website";
+        }
+
+        public void TakeRegisterScreenshot()
+        {
+            Host.Instance.NavigateToInitialPage<HomePage>()
+                .GoToRegisterPage();
+
+            Host.Camera.TakeScreenshot("register.png");
+        }
+
+        public string YouCanLogin(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return errorMessage;
+
+                loginDialog.LogIn("test@example.com", "password");
+
+                standUpTimer.WaitUntilLoggedIn();
+
+                var currentAuthenticationStatusFileName = standUpTimer.CurrentAuthenticationStatusFileName;
+
+                return currentAuthenticationStatusFileName.Equals("..\\Images\\loggedInButton.png")
+                           ? Resources.YouCanLogin
+                           : "It was not possible to log you in.";
+            }
+        }
+
+        public string RetryLoggingIn(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return errorMessage;
+
+                loginDialog.LogIn("test@example.com", "wrongPassword");
+
+                var secondLoginDialog = standUpTimer.FindLoginDialog();
+
+                return secondLoginDialog != null
+                    ? Resources.RetryLoggingIn
+                    : "Didn't get the second login dialog with the error message.";
+            }
+        }
+
+        public void TakeRetryScreenshot(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return;
+
+                loginDialog.LogIn("test@example.com", "wrongPassword");
+
+                var secondLoginDialog = standUpTimer.FindLoginDialog();
+                secondLoginDialog.TakeScreenshot("retry.png");
+            }
+        }
+
+        public void TakeStatisticsScreenshot()
+        {
+            Host.Instance.NavigateToInitialPage<HomePage>()
+                .GoToLoginPage()
+                .Login(new LoginModel("test@example.com", "password"))
+                .GoToStatisticsPage();
+
+            Host.Camera.TakeScreenshot("statistics.png");
+        }
+
         public string YouCanSeeTheRemainingTime(string locale)
         {
             Resources.Culture = new CultureInfo(locale);
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                var progressBar = window.Get<ProgressBar>("ProgressBar");
+                var progressBar = standUpTimer.ProgressBar;
 
                 if (progressBar == null)
                     return "There is no progress bar.";
@@ -125,9 +259,9 @@ namespace StandUpTimer.Specs
                 if (!progressBar.Visible)
                     return "The progress bar is not visible.";
 
-                var progressText = window.Get<Label>("ProgressText");
+                var progressText = standUpTimer.ProgressBarText;
 
-                return string.IsNullOrEmpty(progressText.Text)
+                return string.IsNullOrEmpty(progressText)
                            ? "No progress information available"
                            : Resources.YouCanSeeTheRemainingTime;
             }
@@ -135,16 +269,9 @@ namespace StandUpTimer.Specs
 
         public void TakeStartScreenshot()
         {
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
-
-                Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-                File.Move("screenshot.png", @"results\StandUpTimer\Specs\start.png");
+                standUpTimer.TakeScreenshot("start.png");
             }
         }
 
@@ -153,20 +280,17 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
                 Thread.Sleep(sittingWaitTime);
 
-                var currentImageFileName = window.Get<Label>("CurrentImageFileName");
+                var currentImageFileName = standUpTimer.CurrentImageFileName;
 
                 if (currentImageFileName == null)
                     return "Cannot determine current image.";
 
-                return currentImageFileName.Text.Equals("..\\Images\\standing.png")
+                return currentImageFileName.Equals("..\\Images\\standing.png")
                            ? Resources.WaitForTheTimeToElapse
                            : "There was a wrong image after waiting the sitting time.";
             }
@@ -176,21 +300,19 @@ namespace StandUpTimer.Specs
         {
             Resources.Culture = new CultureInfo(locale);
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+                string errorMessage;
 
-                var skipButton = window.Get<Button>("SkipButton");
-                skipButton.Click();
+                if (!standUpTimer.TryGoToNextPosition(out errorMessage))
+                    return errorMessage;
 
-                var currentImageFileName = window.Get<Label>("CurrentImageFileName");
+                var currentImageFileName = standUpTimer.CurrentImageFileName;
 
                 if (currentImageFileName == null)
                     return "Cannot determine current image.";
 
-                return currentImageFileName.Text.Equals("..\\Images\\standing.png")
+                return currentImageFileName.Equals("..\\Images\\standing.png")
                            ? Resources.UseTheSkipButton
                            : "There was a wrong image after clicking the skip button.";
             }
@@ -201,18 +323,18 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
                 var psi = new ProcessStartInfo("notepad.exe") { WindowStyle = ProcessWindowStyle.Maximized };
                 var process = Process.Start(psi);
 
+                if (process == null)
+                    return "could not start notepad";
+
                 Thread.Sleep(sittingWaitTime);
 
-                var result = window.IsFocussed
+                var result = standUpTimer.IsFocussed
                                  ? Resources.TheAppWillGetIntoView
                                  : "the app didn't get into view";
 
@@ -227,15 +349,12 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
                 Thread.Sleep(sittingWaitTime);
 
-                var okButton = window.Get<Button>("OkButton");
+                var okButton = standUpTimer.OkButton;
 
                 if (okButton == null)
                     return "Cannot find the OK button.";
@@ -251,50 +370,35 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
 
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
                 Thread.Sleep(sittingWaitTime);
 
-                var okButton = window.Get<Button>("OkButton");
+                string errorMessage;
+                if (!standUpTimer.TryStopShaking(out errorMessage))
+                    return errorMessage;
 
-                if (okButton == null)
-                    return "Cannot find the OK button.";
+                standUpTimer.WaitUntilProgressBarTextIs("60\nmin");
+                var progressBarText = standUpTimer.ProgressBarText;
 
-                okButton.Click();
-
-                var progressText = window.Get<Label>("ProgressText");
-
-                WaitFor(() => progressText.Text.Equals("60\nmin"));
-
-                return progressText.Text.Equals("60\nmin")
+                return progressBarText.Equals("60\nmin")
                            ? Resources.TheTimeIsTickingAgain
-                           : "the time is not ticking correctly, " + progressText.Text + " was shown.";
+                           : "the time is not ticking correctly, " + progressBarText + " was shown.";
             }
         }
 
         public void TakeNextPhaseScreenshot()
         {
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+                string errorMessage;
 
-                var skipButton = window.Get<Button>("SkipButton");
-                skipButton.Click();
+                if (!standUpTimer.TryGoToNextPosition(out errorMessage))
+                    return;
 
-                var progressText = window.Get<Label>("ProgressText");
-
-                WaitFor(() => progressText.Text.Equals("20\nmin"));
-
-                window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
-
-                Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-                File.Move("screenshot.png", @"results\StandUpTimer\Specs\nextPhase.png");
+                standUpTimer.WaitUntilProgressBarTextIs("20\nmin");
+                standUpTimer.TakeScreenshot("nextPhase.png");
             }
         }
 
@@ -304,20 +408,14 @@ namespace StandUpTimer.Specs
 
             Point savedLocation;
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                savedLocation = window.Location;
+                savedLocation = standUpTimer.Location;
             }
 
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                return savedLocation == window.Location
+                return savedLocation == standUpTimer.Location
                            ? Resources.OnTheNextStartupTheAppStartOnThatPositionAgain
                            : "the app is not on the previous position.";
             }
@@ -325,32 +423,10 @@ namespace StandUpTimer.Specs
 
         public void TakeAttributionScreenshot()
         {
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", "--noUpdate");
-
-            using (var application = Application.Launch(processStartInfo))
+            using (var standUpTimer = StandUpTimer.Launch())
             {
-                var window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
-
-                var attributionButton = window.Get<Button>("AttributionButton");
-                window.Mouse.Location = attributionButton.ClickablePoint;
-
-                Thread.Sleep(200);
-
-                window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
-
-                Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-                File.Move("screenshot.png", @"results\StandUpTimer\Specs\attribution.png");
-            }
-        }
-
-        private void WaitFor(Func<bool> func)
-        {
-            var stopwatch = Stopwatch.StartNew();
-
-            while (stopwatch.Elapsed < TimeSpan.FromSeconds(5))
-            {
-                if (func())
-                    return;
+                standUpTimer.OpenAttributionBox();
+                standUpTimer.TakeScreenshot("attribution.png");
             }
         }
     }

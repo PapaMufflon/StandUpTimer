@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,19 +22,20 @@
         </Grid.ColumnDefinitions>
         
         <TextBlock Grid.Row="0" Grid.Column="0">Username</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Username}" />
+        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Username}" x:Name="UserNameTextBox" />
 
         <TextBlock Grid.Row="2" Grid.Column="0">Password</TextBlock>
         <PasswordBox Grid.Row="2" Grid.Column="2" x:Name="PasswordBox" />
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">No user? <Hyperlink NavigateUri="Account/Register" RequestNavigate="Hyperlink_OnRequestNavigate">Register</Hyperlink></TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">No user? <Hyperlink NavigateUri="Account/Register" RequestNavigate="Hyperlink_OnRequestNavigate" x:Name="Register">Register</Hyperlink></TextBlock>
         <StackPanel Grid.Row="4" Grid.Column="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Margin="0,0,8,0"
                     IsDefault="True"
                     Command="{Binding LoginCommand}"
-                    CommandParameter="{Binding ElementName=PasswordBox}">Login</Button>
+                    CommandParameter="{Binding ElementName=PasswordBox}"
+                    x:Name="LoginButton">Login</Button>
             <Button IsCancel="True">Cancel</Button>
         </StackPanel>
         

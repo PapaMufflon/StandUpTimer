@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateNewUser" xml:space="preserve">
+    <value>Click on the link and create a new user account</value>
+  </data>
   <data name="ItBeginsWithTheSittingPhase" xml:space="preserve">
     <value>It begins with the sitting phase.</value>
   </data>
   <data name="OnTheNextStartupTheAppStartOnThatPositionAgain" xml:space="preserve">
     <value>on the next startup, the app starts on that position again</value>
+  </data>
+  <data name="RetryLoggingIn" xml:space="preserve">
+    <value>When you entered wrong credentials, you will see an error message and you can retry.</value>
   </data>
   <data name="TheAppWillGetIntoView" xml:space="preserve">
     <value>the app will get into view</value>
@@ -131,6 +137,12 @@
   </data>
   <data name="TheCloseButton" xml:space="preserve">
     <value>The close button</value>
+  </data>
+  <data name="TheLoginButton" xml:space="preserve">
+    <value>The login button</value>
+  </data>
+  <data name="TheLoginDialogHasTheRegisterLink" xml:space="preserve">
+    <value>Open the login dialog in which the register link is</value>
   </data>
   <data name="TheOkButtonIsVisible" xml:space="preserve">
     <value>the OK button is visible</value>
@@ -146,6 +158,9 @@
   </data>
   <data name="WaitForTheTimeToElapse" xml:space="preserve">
     <value>Wait for the time to elapse</value>
+  </data>
+  <data name="YouCanLogin" xml:space="preserve">
+    <value>In case you created a user account, you can now login at the login dialog.</value>
   </data>
   <data name="YouCanSeeTheRemainingTime" xml:space="preserve">
     <value>You can see how much time is left before changing to another position.</value>
