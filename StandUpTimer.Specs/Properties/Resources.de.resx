@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreateNewUser" xml:space="preserve">
-    <value>klicke auf den link und erstelle ein neues Benutzerkonto</value>
+    <value>Klicke auf den link und erstelle ein neues Benutzerkonto</value>
   </data>
   <data name="ItBeginsWithTheSittingPhase" xml:space="preserve">
     <value>Es fängt mit der Sitzen-Phase an.</value>
@@ -160,7 +160,7 @@
     <value>Warte bis die Zeit verstrichen ist</value>
   </data>
   <data name="YouCanLogin" xml:space="preserve">
-    <value>Falls Du Dir ein Benutzerkonto erstellt hast, kannst Du Dich anmelden.</value>
+    <value>Falls Du Dir ein Benutzerkonto erstellt hast, kannst Du Dich jetzt im Anmelden Dialog anmelden.</value>
   </data>
   <data name="YouCanSeeTheRemainingTime" xml:space="preserve">
     <value>Man kann sehen, wie viel Zeit übrig ist, bevor man die Position wechseln muss.</value>

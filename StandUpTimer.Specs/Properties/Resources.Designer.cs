@@ -61,7 +61,7 @@ namespace StandUpTimer.Specs.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to click on the link and create a new user account.
+        ///   Looks up a localized string similar to Click on the link and create a new user account.
         /// </summary>
         internal static string CreateNewUser {
             get {
@@ -187,7 +187,7 @@ namespace StandUpTimer.Specs.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In case you created a user account, you can login now..
+        ///   Looks up a localized string similar to In case you created a user account, you can now login at the login dialog..
         /// </summary>
         internal static string YouCanLogin {
             get {

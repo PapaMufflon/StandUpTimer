@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreateNewUser" xml:space="preserve">
-    <value>click on the link and create a new user account</value>
+    <value>Click on the link and create a new user account</value>
   </data>
   <data name="ItBeginsWithTheSittingPhase" xml:space="preserve">
     <value>It begins with the sitting phase.</value>
@@ -160,7 +160,7 @@
     <value>Wait for the time to elapse</value>
   </data>
   <data name="YouCanLogin" xml:space="preserve">
-    <value>In case you created a user account, you can login now.</value>
+    <value>In case you created a user account, you can now login at the login dialog.</value>
   </data>
   <data name="YouCanSeeTheRemainingTime" xml:space="preserve">
     <value>You can see how much time is left before changing to another position.</value>
