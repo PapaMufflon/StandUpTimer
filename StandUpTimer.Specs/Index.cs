@@ -111,7 +111,7 @@ namespace StandUpTimer.Specs
                 var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
 
                 if (loginDialog == null)
-                   return errorMessage;
+                    return errorMessage;
 
                 var registerLink = loginDialog.RegisterLink;
 
@@ -151,14 +151,23 @@ namespace StandUpTimer.Specs
                     return errorMessage;
 
                 loginDialog.RegisterLink.Click();
-
-                TestStack.White.
             }
+
+            var homePage = Host.Instance.NavigateToInitialPage<HomePage>()
+                .GoToRegisterPage()
+                .RegisterUser(new RegisterModel("test@example.com", "password", "password"));
+
+            return homePage != null
+                ? Resources.CreateNewUser
+                : "Could not create a new user account via the website";
         }
 
         public void TakeRegisterScreenshot()
         {
-            
+            Host.Instance.NavigateToInitialPage<HomePage>()
+                .GoToRegisterPage();
+
+            Host.Camera.TakeScreenshot("register.png");
         }
 
         public string YouCanLogin(string locale)
@@ -173,24 +182,67 @@ namespace StandUpTimer.Specs
                 if (loginDialog == null)
                     return errorMessage;
 
-                loginDialog.LogIn("username", "password");
+                loginDialog.LogIn("test@example.com", "password");
+
+                standUpTimer.WaitUntilLoggedIn();
+
+                var currentAuthenticationStatusFileName = standUpTimer.CurrentAuthenticationStatusFileName;
+
+                return currentAuthenticationStatusFileName.Equals("..\\Images\\loggedInButton.png")
+                           ? Resources.YouCanLogin
+                           : "It was not possible to log you in.";
             }
-            return null;
         }
 
         public string RetryLoggingIn(string locale)
         {
-            return null;
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return errorMessage;
+
+                loginDialog.LogIn("test@example.com", "wrongPassword");
+
+                var secondLoginDialog = standUpTimer.FindLoginDialog();
+
+                return secondLoginDialog != null
+                    ? Resources.RetryLoggingIn
+                    : "Didn't get the second login dialog with the error message.";
+            }
         }
 
-        public void TakeRetryScreenshot()
+        public void TakeRetryScreenshot(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
 
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return;
+
+                loginDialog.LogIn("test@example.com", "wrongPassword");
+
+                var secondLoginDialog = standUpTimer.FindLoginDialog();
+                secondLoginDialog.TakeScreenshot("retry.png");
+            }
         }
 
         public void TakeStatisticsScreenshot()
         {
+            Host.Instance.NavigateToInitialPage<HomePage>()
+                .GoToLoginPage()
+                .Login(new LoginModel("test@example.com", "password"))
+                .GoToStatisticsPage();
 
+            Host.Camera.TakeScreenshot("statistics.png");
         }
 
         public string YouCanSeeTheRemainingTime(string locale)
@@ -228,7 +280,7 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            
+
             using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
             {
                 Thread.Sleep(sittingWaitTime);
@@ -318,7 +370,7 @@ namespace StandUpTimer.Specs
             Resources.Culture = new CultureInfo(locale);
 
             const int sittingWaitTime = 1000;
-            
+
             using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
             {
                 Thread.Sleep(sittingWaitTime);
@@ -332,7 +384,7 @@ namespace StandUpTimer.Specs
 
                 return progressBarText.Equals("60\nmin")
                            ? Resources.TheTimeIsTickingAgain
-                           : "the time is not ticking correctly, " + progressBarText+ " was shown.";
+                           : "the time is not ticking correctly, " + progressBarText + " was shown.";
             }
         }
 

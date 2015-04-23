@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateNewUser" xml:space="preserve">
+    <value>klicke auf den link und erstelle ein neues Benutzerkonto</value>
+  </data>
   <data name="ItBeginsWithTheSittingPhase" xml:space="preserve">
     <value>Es fängt mit der Sitzen-Phase an.</value>
   </data>
   <data name="OnTheNextStartupTheAppStartOnThatPositionAgain" xml:space="preserve">
     <value>beim nächsten Start wird das Programm an der gleichen Position wieder angezeigt</value>
+  </data>
+  <data name="RetryLoggingIn" xml:space="preserve">
+    <value>Hast Du falsche Anmeldedaten eingegeben, siehst Du eine Fehlermeldung und kannst es noch einmal versuchen.</value>
   </data>
   <data name="TheAppWillGetIntoView" xml:space="preserve">
     <value>in den Vordergrund kommen</value>
@@ -152,6 +158,9 @@
   </data>
   <data name="WaitForTheTimeToElapse" xml:space="preserve">
     <value>Warte bis die Zeit verstrichen ist</value>
+  </data>
+  <data name="YouCanLogin" xml:space="preserve">
+    <value>Falls Du Dir ein Benutzerkonto erstellt hast, kannst Du Dich anmelden.</value>
   </data>
   <data name="YouCanSeeTheRemainingTime" xml:space="preserve">
     <value>Man kann sehen, wie viel Zeit übrig ist, bevor man die Position wechseln muss.</value>

@@ -63,6 +63,10 @@
             <TextBlock Text="{Binding CurrentImage}"
                        Foreground="Transparent"
                        x:Name="CurrentImageFileName" />
+
+            <TextBlock Text="{Binding AuthenticationStatus}"
+                       Foreground="Transparent"
+                       x:Name="CurrentAuthenticationStatusFileName" />
             
             <Image Source="{Binding CurrentImage}"
                    Height="253"

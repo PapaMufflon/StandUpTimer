@@ -61,6 +61,15 @@ namespace StandUpTimer.Specs.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to click on the link and create a new user account.
+        /// </summary>
+        internal static string CreateNewUser {
+            get {
+                return ResourceManager.GetString("CreateNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It begins with the sitting phase..
         /// </summary>
         internal static string ItBeginsWithTheSittingPhase {
@@ -75,6 +84,15 @@ namespace StandUpTimer.Specs.Properties {
         internal static string OnTheNextStartupTheAppStartOnThatPositionAgain {
             get {
                 return ResourceManager.GetString("OnTheNextStartupTheAppStartOnThatPositionAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When you entered wrong credentials, you will see an error message and you can retry..
+        /// </summary>
+        internal static string RetryLoggingIn {
+            get {
+                return ResourceManager.GetString("RetryLoggingIn", resourceCulture);
             }
         }
         
@@ -165,6 +183,15 @@ namespace StandUpTimer.Specs.Properties {
         internal static string WaitForTheTimeToElapse {
             get {
                 return ResourceManager.GetString("WaitForTheTimeToElapse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In case you created a user account, you can login now..
+        /// </summary>
+        internal static string YouCanLogin {
+            get {
+                return ResourceManager.GetString("YouCanLogin", resourceCulture);
             }
         }
         

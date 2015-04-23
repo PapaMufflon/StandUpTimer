@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Navigation;
+using StandUpTimer.Properties;
 
 namespace StandUpTimer.Views
 {
@@ -12,7 +13,7 @@ namespace StandUpTimer.Views
 
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(Properties.Settings.Default.BaseUrl + e.Uri.OriginalString));
+            Process.Start(new ProcessStartInfo(Settings.Default.BaseUrl + e.Uri.OriginalString));
             e.Handled = true;
         }
     }

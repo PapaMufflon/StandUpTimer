@@ -1,13 +1,11 @@
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Threading;
 using System.Windows;
 using TestStack.White;
 using TestStack.White.Factory;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.WindowItems;
-using TestStack.White.WindowsAPI;
 
 namespace StandUpTimer.Specs
 {
@@ -25,7 +23,7 @@ namespace StandUpTimer.Specs
 
         public static StandUpTimer Launch(int sittingWaitTime = 1200000)
         {
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate", sittingWaitTime));
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate --baseUrl http://localhost:12346/", sittingWaitTime));
 
             return new StandUpTimer(Application.Launch(processStartInfo));
         }
@@ -68,6 +66,16 @@ namespace StandUpTimer.Specs
         public Button LoginButton
         {
             get { return window.Get<Button>("LoginButton"); }
+        }
+
+        public string CurrentAuthenticationStatusFileName
+        {
+            get
+            {
+                var currentAuthenticationStatusFileNameLabel = window.Get<Label>("CurrentAuthenticationStatusFileName");
+
+                return currentAuthenticationStatusFileNameLabel == null ? null : currentAuthenticationStatusFileNameLabel.Text;
+            }
         }
 
         public Button OkButton
@@ -165,15 +173,27 @@ namespace StandUpTimer.Specs
 
             loginButton.Click();
 
-            var loginWindow = application.GetWindow("Login", InitializeOption.NoCache);
-
             errorMessage = string.Empty;
+            return FindLoginDialog();
+        }
+
+        public LoginDialog FindLoginDialog()
+        {
+            Window loginWindow = null;
+
+            WaitFor(() => (loginWindow = application.GetWindow("Login", InitializeOption.NoCache)) != null);
+
             return new LoginDialog(loginWindow);
         }
 
         public void TakeScreenshot(string fileName)
         {
             window.TakeScreenshot(fileName);
+        }
+
+        public void WaitUntilLoggedIn()
+        {
+            WaitFor(() => CurrentAuthenticationStatusFileName.Equals("..\\Images\\loggedInButton.png"));
         }
     }
 }

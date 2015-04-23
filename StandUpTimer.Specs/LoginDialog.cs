@@ -1,4 +1,6 @@
+using TestStack.White.InputDevices;
 using TestStack.White.UIItems;
+using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.WindowItems;
 
 namespace StandUpTimer.Specs
@@ -20,6 +22,16 @@ namespace StandUpTimer.Specs
         public void TakeScreenshot(string fileName)
         {
             loginWindow.TakeScreenshot(fileName);
+        }
+
+        public void LogIn(string userName, string password)
+        {
+            loginWindow.Get<TextBox>("UserNameTextBox").Text = userName;
+
+            loginWindow.Get(SearchCriteria.ByAutomationId("PasswordBox")).Focus();
+            Keyboard.Instance.Enter(password);
+
+            loginWindow.Get<Button>("LoginButton").Click();
         }
     }
 }
