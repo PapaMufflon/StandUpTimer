@@ -101,19 +101,59 @@ namespace StandUpTimer.Specs
             }
         }
 
-        public string OpenTheLoginDialog(string locale)
+        public string TheLoginDialogHasTheRegisterLink(string locale)
         {
-            return null;
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                   return errorMessage;
+
+                var registerLink = loginDialog.RegisterLink;
+
+                if (registerLink == null)
+                    return "There is no register link";
+
+                return registerLink.Visible
+                    ? Resources.TheLoginDialogHasTheRegisterLink
+                    : "The register link is not visible";
+            }
         }
 
         public void TakeLoginScreenshot()
         {
-            
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return;
+
+                loginDialog.TakeScreenshot("login.png");
+            }
         }
 
         public string CreateNewUser(string locale)
         {
-            return null;
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return errorMessage;
+
+                loginDialog.RegisterLink.Click();
+
+                TestStack.White.
+            }
         }
 
         public void TakeRegisterScreenshot()
@@ -123,6 +163,18 @@ namespace StandUpTimer.Specs
 
         public string YouCanLogin(string locale)
         {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                string errorMessage;
+                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                if (loginDialog == null)
+                    return errorMessage;
+
+                loginDialog.LogIn("username", "password");
+            }
             return null;
         }
 

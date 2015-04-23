@@ -115,6 +115,15 @@ namespace StandUpTimer.Specs.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open the login dialog in which the register link is.
+        /// </summary>
+        internal static string TheLoginDialogHasTheRegisterLink {
+            get {
+                return ResourceManager.GetString("TheLoginDialogHasTheRegisterLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to the OK button is visible.
         /// </summary>
         internal static string TheOkButtonIsVisible {

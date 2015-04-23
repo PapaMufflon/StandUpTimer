@@ -6,7 +6,6 @@ using System.Windows;
 using TestStack.White;
 using TestStack.White.Factory;
 using TestStack.White.UIItems;
-using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.WindowItems;
 using TestStack.White.WindowsAPI;
 
@@ -98,14 +97,6 @@ namespace StandUpTimer.Specs
 
         public Point Location { get { return window.Location; } }
 
-        public void TakeScreenshot(string fileName)
-        {
-            window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
-
-            Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-            File.Copy("screenshot.png", string.Format(@"results\StandUpTimer\Specs\{0}", fileName), true);
-        }
-
         public void WaitUntilProgressBarTextIs(string text)
         {
             WaitFor(() => ProgressBarText.Equals("60\nmin"));
@@ -160,6 +151,29 @@ namespace StandUpTimer.Specs
 
             // wait to show
             Thread.Sleep(200);
+        }
+
+        public LoginDialog OpenLoginDialog(out string errorMessage)
+        {
+            var loginButton = LoginButton;
+
+            if (loginButton == null)
+            {
+                errorMessage = "Cannot find the login button.";
+                return null;
+            }
+
+            loginButton.Click();
+
+            var loginWindow = application.GetWindow("Login", InitializeOption.NoCache);
+
+            errorMessage = string.Empty;
+            return new LoginDialog(loginWindow);
+        }
+
+        public void TakeScreenshot(string fileName)
+        {
+            window.TakeScreenshot(fileName);
         }
     }
 }

@@ -106,9 +106,9 @@
                     <h4 lang="de">Anmelden</h4>
 
                     <p lang="en">
-                        If you like, you can create yourself in two steps a new user account:
+                        If you like, you can create yourself a new user account in two steps:
                         <ul lang="en">
-                            <li concordion:assertequals="OpenTheLoginDialog(#en)">Open the login dialog in which the register link is</li>
+                            <li concordion:assertequals="TheLoginDialogHasTheRegisterLink(#en)">Open the login dialog in which the register link is</li>
                             <li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png" /></li>
                             <li concordion:assertequals="CreateNewUser(#en)">click on the link and create a new user account</li>
                             <li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li>
@@ -117,7 +117,7 @@
                     <p lang="de">
                         Wenn Du willst, kannst Du Dir in zwei Schritten ein Benutzerkonto erstellen:
                         <ul lang="de">
-                            <li concordion:assertequals="OpenTheLoginDialog(#de)">&#214;ffne den Anmelden Dialog, in dem der Registrieren-link ist</li>
+                            <li concordion:assertequals="TheLoginDialogHasTheRegisterLink(#de)">&#214;ffne den Anmelden Dialog, in dem der Registrieren-link ist</li>
                             <li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png"/></li>
                             <li concordion:assertequals="CreateNewUser(#de)">klicke auf den link und erstelle ein neues Benutzerkonto</li>
                             <li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li>

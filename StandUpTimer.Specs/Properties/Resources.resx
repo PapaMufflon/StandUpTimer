@@ -135,6 +135,9 @@
   <data name="TheLoginButton" xml:space="preserve">
     <value>The login button</value>
   </data>
+  <data name="TheLoginDialogHasTheRegisterLink" xml:space="preserve">
+    <value>Open the login dialog in which the register link is</value>
+  </data>
   <data name="TheOkButtonIsVisible" xml:space="preserve">
     <value>the OK button is visible</value>
   </data>
