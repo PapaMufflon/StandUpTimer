@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 namespace ReplaceVersionString
@@ -15,7 +14,7 @@ namespace ReplaceVersionString
 
             File.WriteAllText(args[1], content);
 
-            Console.Write(version);
+            File.WriteAllText("version", version);
         }
     }
 }

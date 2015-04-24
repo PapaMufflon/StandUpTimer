@@ -11,22 +11,27 @@ let docDir = "./doc"
 Target "DeployWindowsDesktopApp" (fun _ ->
     CopyFile "./StandUpTimer/StandUpTimer.nuspec" "./StandUpTimer/StandUpTimer.nuspec.template"
 
-    let version =
+    let result =
         ExecProcess(fun info ->
             info.FileName <- "./tools/ReplaceVersionString/bin/debug/ReplaceVersionString"
             info.Arguments <- "build\\StandUpTimer.exe StandUpTimer\\StandUpTimer.nuspec $version$"
         ) (TimeSpan.FromSeconds 10.)
 
+    let version = File.ReadAllText "./version"
+
     MoveFile buildDir "./StandUpTimer/StandUpTimer.nuspec"
 
     NuGetPackDirectly (fun p ->
         {p with
+           WorkingDir = "."
+           Version = version.ToString()
            OutputPath = ".\\build"}) "./build/StandUpTimer.nuspec"
 
     let result =
         ExecProcess (fun info ->
             info.FileName <- "./packages/squirrel.windows.0.9.3/tools/squirrel.exe"
             info.Arguments <- "-releasify StandUpTimer." + version.ToString() + ".nupkg -r build -p build"
+            info.WorkingDirectory <- buildDir
         ) (TimeSpan.FromMinutes 1.)
 
     if result <> 0 then failwith "squirrel returned with a non-zero exit code"
