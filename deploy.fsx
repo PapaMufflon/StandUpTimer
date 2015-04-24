@@ -30,7 +30,7 @@ Target "DeployWindowsDesktopApp" (fun _ ->
     let result =
         ExecProcess (fun info ->
             info.FileName <- "./packages/squirrel.windows.0.9.3/tools/squirrel.exe"
-            info.Arguments <- "-releasify StandUpTimer." + version.ToString() + ".nupkg -r build -p build"
+            info.Arguments <- "-releasify StandUpTimer." + version.ToString() + ".nupkg"
             info.WorkingDirectory <- buildDir
         ) (TimeSpan.FromMinutes 1.)
 
