@@ -71,6 +71,7 @@ Target "Default" (fun _ ->
 
 "DeployWindowsDesktopApp"
   ==> "UpdateDocumentation"
+  ==> "DeployWebApp"
   ==> "Default"
 
 RunTargetOrDefault "Default"
