@@ -18,7 +18,7 @@ namespace StandUpTimer.Specs
         {
             this.application = application;
 
-            window = application.GetWindow("Stand-Up Timer", InitializeOption.NoCache);
+            window = application.Find(s => s.Contains("Stand-Up Timer"), InitializeOption.NoCache);
         }
 
         public static StandUpTimer Launch(int sittingWaitTime = 1200000)
@@ -31,6 +31,11 @@ namespace StandUpTimer.Specs
         public void Dispose()
         {
             application.Dispose();
+        }
+
+        public string Title
+        {
+            get { return window.Title; }
         }
 
         public Image CurrentImage

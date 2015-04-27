@@ -141,9 +141,21 @@
                     <h4 lang="en">Usage</h4>
                     <h4 lang="de">Verwendung</h4>
 
-                    <p lang="en" concordion:assertEquals="YouCanSeeTheRemainingTime(#en)">You can see how much time is left before changing to another position.</p>
-					<p lang="de" concordion:assertEquals="YouCanSeeTheRemainingTime(#de)">Man kann sehen, wie viel Zeit &#252;brig ist, bevor man die Position wechseln muss.</p>
-					
+                    <p lang="en">
+                        You can see in different places how much time is left before changing to another position:
+                        <ul lang="en">
+                            <li concordion:assertequals="YouCanSeeTheRemainingTimeInProgressBar(#en)">The progress bar shows the remaining time as bar and text</li>
+                            <li concordion:assertequals="YouCanSeeTheRemainingTimeInTaskbar(#en)">The taskbar shows the remaining time as a progress bar and as a part of the title</li>
+                        </ul>
+                    </p>
+                    <p lang="de">
+                        Man kann an verschiedenen Stellen sehen, wie viel Zeit &#252;brig ist, bevor man die Position wechseln muss:
+                        <ul lang="de">
+                            <li concordion:assertequals="YouCanSeeTheRemainingTimeInProgressBar(#de)">Der Fortschrittsbalken zeigt die Restzeit als Balken und als Text an</li>
+                            <li concordion:assertequals="YouCanSeeTheRemainingTimeInTaskbar(#de)">Die Taskbar zeigt die Restzeit als Fortschrittsbalken und als Teil des Titels</li>
+                        </ul>
+                    </p>
+
                     <p lang="en">
                         You have two choices to go to the next position:
                         <ul lang="en">

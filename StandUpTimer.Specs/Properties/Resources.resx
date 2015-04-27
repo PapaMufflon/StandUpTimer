@@ -162,7 +162,10 @@
   <data name="YouCanLogin" xml:space="preserve">
     <value>In case you created a user account, you can now login at the login dialog.</value>
   </data>
-  <data name="YouCanSeeTheRemainingTime" xml:space="preserve">
-    <value>You can see how much time is left before changing to another position.</value>
+  <data name="YouCanSeeTheRemainingTimeInProgressBar" xml:space="preserve">
+    <value>The progress bar shows the remaining time as bar and text</value>
+  </data>
+  <data name="YouCanSeeTheRemainingTimeInTaskbar" xml:space="preserve">
+    <value>The taskbar shows the remaining time as a progress bar and as a part of the title</value>
   </data>
 </root>

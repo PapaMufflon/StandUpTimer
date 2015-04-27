@@ -196,11 +196,20 @@ namespace StandUpTimer.Specs.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can see how much time is left before changing to another position..
+        ///   Looks up a localized string similar to The progress bar shows the remaining time as bar and text.
         /// </summary>
-        internal static string YouCanSeeTheRemainingTime {
+        internal static string YouCanSeeTheRemainingTimeInProgressBar {
             get {
-                return ResourceManager.GetString("YouCanSeeTheRemainingTime", resourceCulture);
+                return ResourceManager.GetString("YouCanSeeTheRemainingTimeInProgressBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The taskbar shows the remaining time as a progress bar and as a part of the title.
+        /// </summary>
+        internal static string YouCanSeeTheRemainingTimeInTaskbar {
+            get {
+                return ResourceManager.GetString("YouCanSeeTheRemainingTimeInTaskbar", resourceCulture);
             }
         }
     }

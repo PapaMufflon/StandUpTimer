@@ -245,7 +245,7 @@ namespace StandUpTimer.Specs
             Host.Camera.TakeScreenshot("statistics.png");
         }
 
-        public string YouCanSeeTheRemainingTime(string locale)
+        public string YouCanSeeTheRemainingTimeInProgressBar(string locale)
         {
             Resources.Culture = new CultureInfo(locale);
 
@@ -262,8 +262,22 @@ namespace StandUpTimer.Specs
                 var progressText = standUpTimer.ProgressBarText;
 
                 return string.IsNullOrEmpty(progressText)
-                           ? "No progress information available"
-                           : Resources.YouCanSeeTheRemainingTime;
+                           ? "No progress information available in progress bar"
+                           : Resources.YouCanSeeTheRemainingTimeInProgressBar;
+            }
+        }
+
+        public string YouCanSeeTheRemainingTimeInTaskbar(string locale)
+        {
+            Resources.Culture = new CultureInfo(locale);
+
+            using (var standUpTimer = StandUpTimer.Launch())
+            {
+                var title = standUpTimer.Title;
+
+                return title.Contains("60\nmin")
+                           ? "No progress information available in title"
+                           : Resources.YouCanSeeTheRemainingTimeInTaskbar;
             }
         }
 

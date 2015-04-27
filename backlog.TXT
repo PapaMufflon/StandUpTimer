@@ -2,6 +2,8 @@
 
 - remaining time in title to see it in taskbar
 
+- opencover
+
 - translations
 
 - detect hibernation/standby to send inactive status

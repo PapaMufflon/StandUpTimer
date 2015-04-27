@@ -162,7 +162,10 @@
   <data name="YouCanLogin" xml:space="preserve">
     <value>Falls Du Dir ein Benutzerkonto erstellt hast, kannst Du Dich jetzt im Anmelden Dialog anmelden.</value>
   </data>
-  <data name="YouCanSeeTheRemainingTime" xml:space="preserve">
-    <value>Man kann sehen, wie viel Zeit übrig ist, bevor man die Position wechseln muss.</value>
+  <data name="YouCanSeeTheRemainingTimeInProgressBar" xml:space="preserve">
+    <value>Der Fortschrittsbalken zeigt die Restzeit als Balken und als Text an</value>
+  </data>
+  <data name="YouCanSeeTheRemainingTimeInTaskbar" xml:space="preserve">
+    <value>Die Taskbar zeigt die Restzeit als Fortschrittsbalken und als Teil des Titels</value>
   </data>
 </root>
