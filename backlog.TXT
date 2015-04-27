@@ -1,9 +1,5 @@
 - certificate (http://stackoverflow.com/a/18959881)
 
-- deploy concordion logo
-
-- opencover
-
 - opencover
 
 - translations
