@@ -59,7 +59,13 @@ Target "UpdateDocumentation" (fun _ ->
 
     cloneSingleBranch repoDir "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
 
-    CopyFile (docDir + "/Index.html") (buildDir + "/results/StandUpTimer/Specs/Index.html")
+    CopyFile (docDir + "concordion-logo.png") (buildDir + "/results/image/concordion-logo.png")
+    let indexHtml = docDir + "/Index.html"
+    CopyFile indexHtml (buildDir + "/results/StandUpTimer/Specs/Index.html")
+
+    let index = File.ReadAllText indexHtml
+    let modifiedIndex = index.Replace("..\..\image\concordion-logo.png", "concordion-logo.png")
+    File.WriteAllText(indexHtml, modifiedIndex)
 
     StageAll docDir
 
