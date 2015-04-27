@@ -13,434 +13,626 @@ namespace StandUpTimer.Specs
     {
         public string ItBeginsWithTheSittingPhase(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                var currentImage = standUpTimer.CurrentImage;
+                Resources.Culture = new CultureInfo(locale);
 
-                if (currentImage == null)
-                    return "No image loaded.";
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    var currentImage = standUpTimer.CurrentImage;
 
-                var currentImageFileName = standUpTimer.CurrentImageFileName;
+                    if (currentImage == null)
+                        return "No image loaded.";
 
-                if (currentImageFileName == null)
-                    return "Cannot determine current image.";
+                    var currentImageFileName = standUpTimer.CurrentImageFileName;
 
-                return currentImageFileName.Equals("..\\Images\\sitting.png")
-                           ? Resources.ItBeginsWithTheSittingPhase
-                           : "It does not begin with the sitting phase.";
+                    if (currentImageFileName == null)
+                        return "Cannot determine current image.";
+
+                    return currentImageFileName.Equals("..\\Images\\sitting.png")
+                               ? Resources.ItBeginsWithTheSittingPhase
+                               : "It does not begin with the sitting phase.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string YouCanSeeTheCloseButton(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                var closeButton = standUpTimer.CloseButton;
+                Resources.Culture = new CultureInfo(locale);
 
-                if (closeButton == null)
-                    return "There is no close button.";
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    var closeButton = standUpTimer.CloseButton;
 
-                return closeButton.Visible
-                           ? Resources.TheCloseButton
-                           : "The close button is not visible.";
+                    if (closeButton == null)
+                        return "There is no close button.";
+
+                    return closeButton.Visible
+                               ? Resources.TheCloseButton
+                               : "The close button is not visible.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string YouCanSeeTheSkipButton(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                var skipButton = standUpTimer.SkipButton;
+                Resources.Culture = new CultureInfo(locale);
 
-                if (skipButton == null)
-                    return "There is no skip button.";
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    var skipButton = standUpTimer.SkipButton;
 
-                return skipButton.Visible
-                           ? Resources.TheSkipButton
-                           : "The skip button is not visible.";
+                    if (skipButton == null)
+                        return "There is no skip button.";
+
+                    return skipButton.Visible
+                               ? Resources.TheSkipButton
+                               : "The skip button is not visible.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string YouCanSeeTheAttributionButton(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                var attributionButton = standUpTimer.AttributionButton;
+                Resources.Culture = new CultureInfo(locale);
 
-                if (attributionButton == null)
-                    return "There is no attribution button.";
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    var attributionButton = standUpTimer.AttributionButton;
 
-                return attributionButton.Visible
-                           ? Resources.TheAttributionButton
-                           : "The attribution button is not visible.";
+                    if (attributionButton == null)
+                        return "There is no attribution button.";
+
+                    return attributionButton.Visible
+                               ? Resources.TheAttributionButton
+                               : "The attribution button is not visible.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string YouCanSeeTheLoginButton(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                var loginButton = standUpTimer.LoginButton;
+                Resources.Culture = new CultureInfo(locale);
 
-                if (loginButton == null)
-                    return "There is no login button.";
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    var loginButton = standUpTimer.LoginButton;
 
-                return loginButton.Visible
-                           ? Resources.TheLoginButton
-                           : "The login button is not visible.";
+                    if (loginButton == null)
+                        return "There is no login button.";
+
+                    return loginButton.Visible
+                               ? Resources.TheLoginButton
+                               : "The login button is not visible.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string TheLoginDialogHasTheRegisterLink(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
-                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+                Resources.Culture = new CultureInfo(locale);
 
-                if (loginDialog == null)
-                    return errorMessage;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
+                    var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
 
-                var registerLink = loginDialog.RegisterLink;
+                    if (loginDialog == null)
+                        return errorMessage;
 
-                if (registerLink == null)
-                    return "There is no register link";
+                    var registerLink = loginDialog.RegisterLink;
 
-                return registerLink.Visible
-                    ? Resources.TheLoginDialogHasTheRegisterLink
-                    : "The register link is not visible";
+                    if (registerLink == null)
+                        return "There is no register link";
+
+                    return registerLink.Visible
+                        ? Resources.TheLoginDialogHasTheRegisterLink
+                        : "The register link is not visible";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public void TakeLoginScreenshot()
         {
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
-                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
+                    var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
 
-                if (loginDialog == null)
-                    return;
+                    if (loginDialog == null)
+                        return;
 
-                loginDialog.TakeScreenshot("login.png");
+                    loginDialog.TakeScreenshot("login.png");
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string CreateNewUser(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
-                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+                Resources.Culture = new CultureInfo(locale);
 
-                if (loginDialog == null)
-                    return errorMessage;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
+                    var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
 
-                loginDialog.RegisterLink.Click();
+                    if (loginDialog == null)
+                        return errorMessage;
+
+                    loginDialog.RegisterLink.Click();
+                }
+
+                var homePage = Host.Instance.NavigateToInitialPage<HomePage>()
+                    .GoToRegisterPage()
+                    .RegisterUser(new RegisterModel("test@example.com", "password", "password"));
+
+                return homePage != null
+                    ? Resources.CreateNewUser
+                    : "Could not create a new user account via the website";
             }
-
-            var homePage = Host.Instance.NavigateToInitialPage<HomePage>()
-                .GoToRegisterPage()
-                .RegisterUser(new RegisterModel("test@example.com", "password", "password"));
-
-            return homePage != null
-                ? Resources.CreateNewUser
-                : "Could not create a new user account via the website";
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
+            }
         }
 
         public void TakeRegisterScreenshot()
         {
-            Host.Instance.NavigateToInitialPage<HomePage>()
-                .GoToRegisterPage();
+            try
+            {
+                Host.Instance.NavigateToInitialPage<HomePage>()
+                    .GoToRegisterPage();
 
-            Host.Camera.TakeScreenshot("register.png");
+                Host.Camera.TakeScreenshot("register.png");
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
+            }
         }
 
         public string YouCanLogin(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
-                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+                Resources.Culture = new CultureInfo(locale);
 
-                if (loginDialog == null)
-                    return errorMessage;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
+                    var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
 
-                loginDialog.LogIn("test@example.com", "password");
+                    if (loginDialog == null)
+                        return errorMessage;
 
-                standUpTimer.WaitUntilLoggedIn();
+                    loginDialog.LogIn("test@example.com", "password");
 
-                var currentAuthenticationStatusFileName = standUpTimer.CurrentAuthenticationStatusFileName;
+                    standUpTimer.WaitUntilLoggedIn();
 
-                return currentAuthenticationStatusFileName.Equals("..\\Images\\loggedInButton.png")
-                           ? Resources.YouCanLogin
-                           : "It was not possible to log you in.";
+                    var currentAuthenticationStatusFileName = standUpTimer.CurrentAuthenticationStatusFileName;
+
+                    return currentAuthenticationStatusFileName.Equals("..\\Images\\loggedInButton.png")
+                               ? Resources.YouCanLogin
+                               : "It was not possible to log you in.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string RetryLoggingIn(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
-                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+                Resources.Culture = new CultureInfo(locale);
 
-                if (loginDialog == null)
-                    return errorMessage;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
+                    var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
 
-                loginDialog.LogIn("test@example.com", "wrongPassword");
+                    if (loginDialog == null)
+                        return errorMessage;
 
-                var secondLoginDialog = standUpTimer.FindLoginDialog();
+                    loginDialog.LogIn("test@example.com", "wrongPassword");
 
-                return secondLoginDialog != null
-                    ? Resources.RetryLoggingIn
-                    : "Didn't get the second login dialog with the error message.";
+                    var secondLoginDialog = standUpTimer.FindLoginDialog();
+
+                    return secondLoginDialog != null
+                        ? Resources.RetryLoggingIn
+                        : "Didn't get the second login dialog with the error message.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public void TakeRetryScreenshot(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
-                var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+                Resources.Culture = new CultureInfo(locale);
 
-                if (loginDialog == null)
-                    return;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
+                    var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
 
-                loginDialog.LogIn("test@example.com", "wrongPassword");
+                    if (loginDialog == null)
+                        return;
 
-                var secondLoginDialog = standUpTimer.FindLoginDialog();
-                secondLoginDialog.TakeScreenshot("retry.png");
+                    loginDialog.LogIn("test@example.com", "wrongPassword");
+
+                    var secondLoginDialog = standUpTimer.FindLoginDialog();
+                    secondLoginDialog.TakeScreenshot("retry.png");
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public void TakeStatisticsScreenshot()
         {
-            Host.Instance.NavigateToInitialPage<HomePage>()
-                .GoToLoginPage()
-                .Login(new LoginModel("test@example.com", "password"))
-                .GoToStatisticsPage();
+            try
+            {
+                Host.Instance.NavigateToInitialPage<HomePage>()
+                    .GoToLoginPage()
+                    .Login(new LoginModel("test@example.com", "password"))
+                    .GoToStatisticsPage();
 
-            Host.Camera.TakeScreenshot("statistics.png");
+                Host.Camera.TakeScreenshot("statistics.png");
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
+            }
         }
 
         public string YouCanSeeTheRemainingTimeInProgressBar(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                var progressBar = standUpTimer.ProgressBar;
+                Resources.Culture = new CultureInfo(locale);
 
-                if (progressBar == null)
-                    return "There is no progress bar.";
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    var progressBar = standUpTimer.ProgressBar;
 
-                if (!progressBar.Visible)
-                    return "The progress bar is not visible.";
+                    if (progressBar == null)
+                        return "There is no progress bar.";
 
-                var progressText = standUpTimer.ProgressBarText;
+                    if (!progressBar.Visible)
+                        return "The progress bar is not visible.";
 
-                return string.IsNullOrEmpty(progressText)
-                           ? "No progress information available in progress bar"
-                           : Resources.YouCanSeeTheRemainingTimeInProgressBar;
+                    var progressText = standUpTimer.ProgressBarText;
+
+                    return string.IsNullOrEmpty(progressText)
+                               ? "No progress information available in progress bar"
+                               : Resources.YouCanSeeTheRemainingTimeInProgressBar;
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string YouCanSeeTheRemainingTimeInTaskbar(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                var title = standUpTimer.Title;
+                Resources.Culture = new CultureInfo(locale);
 
-                return title.Contains("60\nmin")
-                           ? "No progress information available in title"
-                           : Resources.YouCanSeeTheRemainingTimeInTaskbar;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    var title = standUpTimer.Title;
+
+                    return title.Contains("60\nmin")
+                               ? "No progress information available in title"
+                               : Resources.YouCanSeeTheRemainingTimeInTaskbar;
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public void TakeStartScreenshot()
         {
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                standUpTimer.TakeScreenshot("start.png");
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    standUpTimer.TakeScreenshot("start.png");
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string WaitForTheTimeToElapseToGoToTheNextPosition(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            const int sittingWaitTime = 1000;
-
-            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+            try
             {
-                Thread.Sleep(sittingWaitTime);
+                Resources.Culture = new CultureInfo(locale);
 
-                var currentImageFileName = standUpTimer.CurrentImageFileName;
+                const int sittingWaitTime = 1000;
 
-                if (currentImageFileName == null)
-                    return "Cannot determine current image.";
+                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                {
+                    Thread.Sleep(2 * sittingWaitTime);
 
-                return currentImageFileName.Equals("..\\Images\\standing.png")
-                           ? Resources.WaitForTheTimeToElapse
-                           : "There was a wrong image after waiting the sitting time.";
+                    var currentImageFileName = standUpTimer.CurrentImageFileName;
+                    System.IO.File.AppendAllText("error.txt", currentImageFileName);
+                    if (currentImageFileName == null)
+                        return "Cannot determine current image.";
+
+                    return currentImageFileName.Equals("..\\Images\\standing.png")
+                               ? Resources.WaitForTheTimeToElapse
+                               : "There was a wrong image after waiting the sitting time.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string UseTheSkipButtonToGoToTheNextPosition(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
+                Resources.Culture = new CultureInfo(locale);
 
-                if (!standUpTimer.TryGoToNextPosition(out errorMessage))
-                    return errorMessage;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
 
-                var currentImageFileName = standUpTimer.CurrentImageFileName;
+                    if (!standUpTimer.TryGoToNextPosition(out errorMessage))
+                        return errorMessage;
 
-                if (currentImageFileName == null)
-                    return "Cannot determine current image.";
+                    var currentImageFileName = standUpTimer.CurrentImageFileName;
 
-                return currentImageFileName.Equals("..\\Images\\standing.png")
-                           ? Resources.UseTheSkipButton
-                           : "There was a wrong image after clicking the skip button.";
+                    if (currentImageFileName == null)
+                        return "Cannot determine current image.";
+
+                    return currentImageFileName.Equals("..\\Images\\standing.png")
+                               ? Resources.UseTheSkipButton
+                               : "There was a wrong image after clicking the skip button.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string AfterTheTimeElapsedTheAppGetsIntoView(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            const int sittingWaitTime = 1000;
-
-            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+            try
             {
-                var psi = new ProcessStartInfo("notepad.exe") { WindowStyle = ProcessWindowStyle.Maximized };
-                var process = Process.Start(psi);
+                Resources.Culture = new CultureInfo(locale);
 
-                if (process == null)
-                    return "could not start notepad";
+                const int sittingWaitTime = 1000;
 
-                Thread.Sleep(sittingWaitTime);
+                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                {
+                    var psi = new ProcessStartInfo("notepad.exe") { WindowStyle = ProcessWindowStyle.Maximized };
+                    var process = Process.Start(psi);
 
-                var result = standUpTimer.IsFocussed
-                                 ? Resources.TheAppWillGetIntoView
-                                 : "the app didn't get into view";
+                    if (process == null)
+                        return "could not start notepad";
 
-                process.Kill();
+                    Thread.Sleep(sittingWaitTime);
 
-                return result;
+                    var result = standUpTimer.IsFocussed
+                                     ? Resources.TheAppWillGetIntoView
+                                     : "the app didn't get into view";
+
+                    process.Kill();
+
+                    return result;
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string AfterTheTimeElapsedTheOkButtonIsVisible(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            const int sittingWaitTime = 1000;
-
-            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+            try
             {
-                Thread.Sleep(sittingWaitTime);
+                Resources.Culture = new CultureInfo(locale);
 
-                var okButton = standUpTimer.OkButton;
+                const int sittingWaitTime = 1000;
 
-                if (okButton == null)
-                    return "Cannot find the OK button.";
+                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                {
+                    Thread.Sleep(sittingWaitTime);
 
-                return okButton.Visible
-                           ? Resources.TheOkButtonIsVisible
-                           : "the OK button is not visible";
+                    var okButton = standUpTimer.OkButton;
+
+                    if (okButton == null)
+                        return "Cannot find the OK button.";
+
+                    return okButton.Visible
+                               ? Resources.TheOkButtonIsVisible
+                               : "the OK button is not visible";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string AfterClickingOkTheTimeTicksAgain(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            const int sittingWaitTime = 1000;
-
-            using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+            try
             {
-                Thread.Sleep(sittingWaitTime);
+                Resources.Culture = new CultureInfo(locale);
 
-                string errorMessage;
-                if (!standUpTimer.TryStopShaking(out errorMessage))
-                    return errorMessage;
+                const int sittingWaitTime = 1000;
 
-                standUpTimer.WaitUntilProgressBarTextIs("60\nmin");
-                var progressBarText = standUpTimer.ProgressBarText;
+                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                {
+                    Thread.Sleep(sittingWaitTime);
 
-                return progressBarText.Equals("60\nmin")
-                           ? Resources.TheTimeIsTickingAgain
-                           : "the time is not ticking correctly, " + progressBarText + " was shown.";
+                    string errorMessage;
+                    if (!standUpTimer.TryStopShaking(out errorMessage))
+                        return errorMessage;
+
+                    standUpTimer.WaitUntilProgressBarTextIs("60\nmin");
+                    var progressBarText = standUpTimer.ProgressBarText;
+
+                    return progressBarText.Equals("60\nmin")
+                               ? Resources.TheTimeIsTickingAgain
+                               : "the time is not ticking correctly, " + progressBarText + " was shown.";
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public void TakeNextPhaseScreenshot()
         {
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                string errorMessage;
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
 
-                if (!standUpTimer.TryGoToNextPosition(out errorMessage))
-                    return;
+                    if (!standUpTimer.TryGoToNextPosition(out errorMessage))
+                        return;
 
-                standUpTimer.WaitUntilProgressBarTextIs("20\nmin");
-                standUpTimer.TakeScreenshot("nextPhase.png");
+                    standUpTimer.WaitUntilProgressBarTextIs("20\nmin");
+                    standUpTimer.TakeScreenshot("nextPhase.png");
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public string TheAppStartsOnTheSamePosition(string locale)
         {
-            Resources.Culture = new CultureInfo(locale);
-
-            Point savedLocation;
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                savedLocation = standUpTimer.Location;
+                Resources.Culture = new CultureInfo(locale);
+
+                Point savedLocation;
+
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    savedLocation = standUpTimer.Location;
+                }
+
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    return savedLocation == standUpTimer.Location
+                               ? Resources.OnTheNextStartupTheAppStartOnThatPositionAgain
+                               : "the app is not on the previous position.";
+                }
             }
-
-            using (var standUpTimer = StandUpTimer.Launch())
+            catch (System.Exception e)
             {
-                return savedLocation == standUpTimer.Location
-                           ? Resources.OnTheNextStartupTheAppStartOnThatPositionAgain
-                           : "the app is not on the previous position.";
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
 
         public void TakeAttributionScreenshot()
         {
-            using (var standUpTimer = StandUpTimer.Launch())
+            try
             {
-                standUpTimer.OpenAttributionBox();
-                standUpTimer.TakeScreenshot("attribution.png");
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    standUpTimer.OpenAttributionBox();
+                    standUpTimer.TakeScreenshot("attribution.png");
+                }
+            }
+            catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
             }
         }
     }

@@ -12,13 +12,19 @@ namespace StandUpTimer.Specs
     internal class StandUpTimer : IDisposable
     {
         private readonly Application application;
-        private readonly Window window;
+        private Window window;
 
         private StandUpTimer(Application application)
         {
             this.application = application;
+        }
 
-            window = application.Find(s => s.Contains("Stand-Up Timer"), InitializeOption.NoCache);
+        private Window Window
+        {
+            get
+            {
+                return window ?? (window = application.Find(s => s.Contains("Stand-Up Timer"), InitializeOption.NoCache));
+            }
         }
 
         public static StandUpTimer Launch(int sittingWaitTime = 1200000)
@@ -28,6 +34,29 @@ namespace StandUpTimer.Specs
             return new StandUpTimer(Application.Launch(processStartInfo));
         }
 
+        private T TryAction<T>(Func<T> action)
+        {
+            var tries = 0;
+            AutomationException lastException = null;
+
+            while (tries < 5)
+            {
+                try
+                {
+                    var result = action();
+                    return result;
+                }
+                catch (AutomationException e)
+                {
+                    lastException = e;
+                    window = null;
+                    tries++;
+                }
+            }
+
+            throw lastException;
+        }
+
         public void Dispose()
         {
             application.Dispose();
@@ -35,19 +64,19 @@ namespace StandUpTimer.Specs
 
         public string Title
         {
-            get { return window.Title; }
+            get { return TryAction(() => Window.Title); }
         }
 
         public Image CurrentImage
         {
-            get { return window.Get<Image>("CurrentImage"); }
+            get { return TryAction(() => Window.Get<Image>("CurrentImage")); }
         }
 
         public string CurrentImageFileName
         {
             get
             {
-                var currentImageFileNameLabel = window.Get<Label>("CurrentImageFileName");
+                var currentImageFileNameLabel = TryAction(() => Window.Get<Label>("CurrentImageFileName"));
 
                 return currentImageFileNameLabel == null ? null : currentImageFileNameLabel.Text;
             }
@@ -55,29 +84,29 @@ namespace StandUpTimer.Specs
 
         public Button CloseButton
         {
-            get { return window.Get<Button>("CloseButton"); }
+            get { return TryAction(() => Window.Get<Button>("CloseButton")); }
         }
         
         public Button SkipButton
         {
-            get { return window.Get<Button>("SkipButton"); }
+            get { return TryAction(() => Window.Get<Button>("SkipButton")); }
         }
 
         public Button AttributionButton
         {
-            get { return window.Get<Button>("AttributionButton"); }
+            get { return TryAction(() => Window.Get<Button>("AttributionButton")); }
         }
 
         public Button LoginButton
         {
-            get { return window.Get<Button>("LoginButton"); }
+            get { return TryAction(() => Window.Get<Button>("LoginButton")); }
         }
 
         public string CurrentAuthenticationStatusFileName
         {
             get
             {
-                var currentAuthenticationStatusFileNameLabel = window.Get<Label>("CurrentAuthenticationStatusFileName");
+                var currentAuthenticationStatusFileNameLabel = TryAction(() => Window.Get<Label>("CurrentAuthenticationStatusFileName"));
 
                 return currentAuthenticationStatusFileNameLabel == null ? null : currentAuthenticationStatusFileNameLabel.Text;
             }
@@ -85,19 +114,19 @@ namespace StandUpTimer.Specs
 
         public Button OkButton
         {
-            get { return window.Get<Button>("OkButton"); }
+            get { return TryAction(() => Window.Get<Button>("OkButton")); }
         }
 
         public ProgressBar ProgressBar
         {
-            get { return window.Get<ProgressBar>("ProgressBar"); }
+            get { return TryAction(() => Window.Get<ProgressBar>("ProgressBar")); }
         }
 
         public string ProgressBarText
         {
             get
             {
-                var progressBarTextLabel = window.Get<Label>("ProgressText");
+                var progressBarTextLabel = TryAction(() => Window.Get<Label>("ProgressText"));
 
                 return progressBarTextLabel == null ? null : progressBarTextLabel.Text;
             }
@@ -105,10 +134,10 @@ namespace StandUpTimer.Specs
 
         public bool IsFocussed
         {
-            get { return window.IsFocussed; }
+            get { return TryAction(() => Window.IsFocussed); }
         }
 
-        public Point Location { get { return window.Location; } }
+        public Point Location { get { return Window.Location; } }
 
         public void WaitUntilProgressBarTextIs(string text)
         {
@@ -160,7 +189,7 @@ namespace StandUpTimer.Specs
 
         public void OpenAttributionBox()
         {
-            window.Mouse.Location = AttributionButton.ClickablePoint;
+            Window.Mouse.Location = AttributionButton.ClickablePoint;
 
             // wait to show
             Thread.Sleep(200);
@@ -193,7 +222,7 @@ namespace StandUpTimer.Specs
 
         public void TakeScreenshot(string fileName)
         {
-            window.TakeScreenshot(fileName);
+            Window.TakeScreenshot(fileName);
         }
 
         public void WaitUntilLoggedIn()
