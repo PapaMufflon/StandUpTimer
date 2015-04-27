@@ -65,7 +65,7 @@ Target "UpdateDocumentation" (fun _ ->
 
     CopyFile (docDir + "/concordion-logo.png") (buildDir + "/results/image/concordion-logo.png")
     let indexHtml = docDir + "/Index.html"
-    CopyFile indexHtml (buildDir + "/results/StandUpTimer/Specs/Index.html")
+    Copy docDir !! (buildDir + "/results/StandUpTimer/Specs/**")
 
     let index = File.ReadAllText indexHtml
     let modifiedIndex = index.Replace("..\..\image\concordion-logo.png", "concordion-logo.png")
