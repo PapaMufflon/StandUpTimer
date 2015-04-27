@@ -230,7 +230,6 @@
     <Compile Include="Services\SecureStringExtension.cs" />
     <Compile Include="Services\Server.cs" />
     <Compile Include="Services\StatusPublisher.cs" />
-    <Compile Include="Services\Updater.cs" />
     <Compile Include="ViewModels\IBringToForeground.cs" />
     <Compile Include="ViewModels\ICanHandleDeskStateStarts.cs" />
     <Compile Include="ViewModels\ICanSkip.cs" />

@@ -1,9 +1,9 @@
+- rework squirrel integration
+
 - web statistics
   - test update
 
-- switch to fake
-
-- tag released git commit
+- tag released git commit automatically
 
 - certificate (http://stackoverflow.com/a/18959881)
 

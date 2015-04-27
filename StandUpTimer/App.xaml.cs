@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows;
 using Fclp;
+using Squirrel;
 using StandUpTimer.Models;
 using StandUpTimer.Properties;
 using StandUpTimer.Services;
@@ -14,7 +16,6 @@ namespace StandUpTimer
     public partial class App : IBringToForeground
     {
         private StatusPublisher statusPublisher;
-        private Updater updater;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -92,7 +93,11 @@ namespace StandUpTimer
             MainWindow.Show();
 
             if (commandLineArguments.Update)
-                updater = new Updater(MainWindow.Close);
+                Task.Run(async () =>
+                {
+                    using (var mgr = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
+                        await mgr.UpdateApp();
+                });
         }
 
         private static Server BootstrapServer(string baseUrl)

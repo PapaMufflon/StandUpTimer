@@ -8,7 +8,7 @@ open Fake.NuGet
 let buildDir = "./build"
 let docDir = "./doc"
 
-Target "DeployWindowsDesktopApp" (fun _ ->
+Target "ReleasifyWindowsDesktopApp" (fun _ ->
     CopyFile "./StandUpTimer/StandUpTimer.nuspec" "./StandUpTimer/StandUpTimer.nuspec.template"
 
     let result =
@@ -35,7 +35,9 @@ Target "DeployWindowsDesktopApp" (fun _ ->
         ) (TimeSpan.FromMinutes 1.)
 
     if result <> 0 then failwith "squirrel returned with a non-zero exit code"
+)
 
+Target "DeployWindowsDesktopAppToAzure" (fun _ ->
     let azureKey = File.ReadAllText "./azure.key"
 
     let result =
@@ -69,7 +71,8 @@ Target "Default" (fun _ ->
     trace "Have fun deploying the Stand-Up Timer!!!"
 )
 
-"DeployWindowsDesktopApp"
+"ReleasifyWindowsDesktopApp"
+  ==> "DeployWindowsDesktopAppToAzure"
   ==> "UpdateDocumentation"
   ==> "DeployWebApp"
   ==> "Default"
