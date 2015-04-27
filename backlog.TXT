@@ -1,10 +1,4 @@
-- update readme about squirrel
-
-- tag released git commit automatically
-
 - certificate (http://stackoverflow.com/a/18959881)
-
-- web ui tests
 
 - remaining time in title to see it in taskbar
 
