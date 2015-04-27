@@ -9,33 +9,37 @@ let buildDir = "./build"
 let docDir = "./doc"
 let repoDir = "."
 
+let replaceInsideFile file (stringToReplace:string) (stringToReplaceWith:string) =
+    let content = File.ReadAllText file
+    let modifiedContent = content.Replace(stringToReplace, stringToReplaceWith)
+
+    File.WriteAllText(file, modifiedContent)
+
 Target "DeployWebApp" (fun _ ->
     pushBranch repoDir "azure" "master"
 )
 
 Target "ReleasifyWindowsDesktopApp" (fun _ ->
+    let version = (GetAssemblyVersion "build\\StandUpTimer.exe").ToString()
+    let lastVersion = getLastTag()
+
+    if ("v" + version).StartsWith(lastVersion) then failwith "this version and the last version is the same!"
+
     CopyFile "./StandUpTimer/StandUpTimer.nuspec" "./StandUpTimer/StandUpTimer.nuspec.template"
-
-    let result =
-        ExecProcess(fun info ->
-            info.FileName <- "./tools/ReplaceVersionString/bin/debug/ReplaceVersionString"
-            info.Arguments <- "build\\StandUpTimer.exe StandUpTimer\\StandUpTimer.nuspec $version$"
-        ) (TimeSpan.FromSeconds 10.)
-
-    let version = File.ReadAllText "./version"
+    replaceInsideFile "StandUpTimer\\StandUpTimer.nuspec" "$version$" version
 
     MoveFile buildDir "./StandUpTimer/StandUpTimer.nuspec"
 
     NuGetPackDirectly (fun p ->
         {p with
            WorkingDir = repoDir
-           Version = version.ToString()
+           Version = version
            OutputPath = ".\\build"}) "./build/StandUpTimer.nuspec"
 
     let result =
         ExecProcess (fun info ->
             info.FileName <- "./packages/squirrel.windows.0.9.3/tools/squirrel.exe"
-            info.Arguments <- "-releasify StandUpTimer." + version.ToString() + ".nupkg"
+            info.Arguments <- "-releasify StandUpTimer." + version + ".nupkg"
             info.WorkingDirectory <- buildDir
         ) (TimeSpan.FromMinutes 1.)
 
@@ -59,7 +63,7 @@ Target "UpdateDocumentation" (fun _ ->
 
     cloneSingleBranch repoDir "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
 
-    CopyFile (docDir + "concordion-logo.png") (buildDir + "/results/image/concordion-logo.png")
+    CopyFile (docDir + "/concordion-logo.png") (buildDir + "/results/image/concordion-logo.png")
     let indexHtml = docDir + "/Index.html"
     CopyFile indexHtml (buildDir + "/results/StandUpTimer/Specs/Index.html")
 
@@ -82,7 +86,7 @@ Target "Tag" (fun _ ->
     let version = GetAssemblyVersion "build\\StandUpTimer.exe"
     let versionTag = "v" + version.ToString()
 
-    tag repoDir ("-a " + versionTag)
+    tag repoDir versionTag
 
     pushTag repoDir "origin" versionTag
 )
