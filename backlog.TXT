@@ -1,7 +1,4 @@
-- rework squirrel integration
-
-- web statistics
-  - test update
+- update readme about squirrel
 
 - tag released git commit automatically
 

@@ -52,9 +52,9 @@ Target "DeployWindowsDesktopAppToAzure" (fun _ ->
 Target "UpdateDocumentation" (fun _ ->
     CleanDir docDir
 
-    cloneSingleBranch docDir "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
+    cloneSingleBranch "" "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
 
-    CopyFile (docDir + "/StandUpTimer") (buildDir + "/results/StandUpTimer/Specs/Index.html")
+    CopyFile (docDir + "/Index.html") (buildDir + "/results/StandUpTimer/Specs/Index.html")
 
     StageAll docDir
 
