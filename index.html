@@ -235,6 +235,8 @@ ins {
             </a>
                         Wie man den Stand-Up Timer verwendet.
                     </h3>
+          <h4 lang="en">Overview</h4>
+          <h4 lang="de">Überblick</h4>
           <p lang="en">After installation, the program starts immediately.</p>
           <p lang="de">Nach der Installation startet das Programm sofort.</p>
           <p lang="en" concordion:assertEquals="ItBeginsWithTheSittingPhase(#en)" class="success">It begins with the sitting phase.</p>
@@ -242,10 +244,29 @@ ins {
           <img concordion:execute="TakeStartScreenshot()" src="start.png" />
           <p lang="en">
                         When you move the mouse over the image, you can see the available controls:
-                        <ul lang="en"><li concordion:assertEquals="YouCanSeeTheCloseButton(#en)" class="success">The close button</li><li concordion:assertEquals="YouCanSeeTheSkipButton(#en)" class="success">The skip button</li><li concordion:assertEquals="YouCanSeeTheAttributionButton(#en)" class="success">The attribution button</li></ul></p>
+                        <ul lang="en"><li concordion:assertEquals="YouCanSeeTheCloseButton(#en)" class="success">The close button</li><li concordion:assertEquals="YouCanSeeTheSkipButton(#en)" class="success">The skip button</li><li concordion:assertEquals="YouCanSeeTheAttributionButton(#en)" class="success">The attribution button</li><li concordion:assertEquals="YouCanSeeTheLoginButton(#en)" class="success">The login button</li></ul></p>
           <p lang="de">
-					    Wenn Du Deine Maus über das Bild bewegst, kannst Du die vorhandenen Schaltflächen sehen:
-                        <ul lang="de"><li concordion:assertEquals="YouCanSeeTheCloseButton(#de)" class="success">Die Schließen Schaltfläche</li><li concordion:assertEquals="YouCanSeeTheSkipButton(#de)" class="success">Die Überspringen Schaltfläche</li><li concordion:assertEquals="YouCanSeeTheAttributionButton(#de)" class="success">Die Attribuierung Schaltfläche</li></ul></p>
+                        Wenn Du Deine Maus über das Bild bewegst, kannst Du die vorhandenen Schaltflächen sehen:
+                        <ul lang="de"><li concordion:assertEquals="YouCanSeeTheCloseButton(#de)" class="success">Die Schließen Schaltfläche</li><li concordion:assertEquals="YouCanSeeTheSkipButton(#de)" class="success">Die Überspringen Schaltfläche</li><li concordion:assertEquals="YouCanSeeTheAttributionButton(#de)" class="success">Die Attribuierung Schaltfläche</li><li concordion:assertequals="YouCanSeeTheLoginButton(#de)" class="success">Die Anmelden Schaltfläche</li></ul></p>
+          <h4 lang="en">Login</h4>
+          <h4 lang="de">Anmelden</h4>
+          <p lang="en">
+                        If you like, you can create yourself a new user account in two steps:
+                        <ul lang="en"><li concordion:assertequals="TheLoginDialogHasTheRegisterLink(#en)" class="success">Open the login dialog in which the register link is</li><li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png" /></li><li concordion:assertequals="CreateNewUser(#en)" class="success">Click on the link and create a new user account</li><li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li></ul></p>
+          <p lang="de">
+                        Wenn Du willst, kannst Du Dir in zwei Schritten ein Benutzerkonto erstellen:
+                        <ul lang="de"><li concordion:assertequals="TheLoginDialogHasTheRegisterLink(#de)" class="success">Öffne den Anmelden Dialog, in dem der Registrieren-link ist</li><li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png" /></li><li concordion:assertequals="CreateNewUser(#de)" class="success">Klicke auf den link und erstelle ein neues Benutzerkonto</li><li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li></ul></p>
+          <p lang="en" concordion:assertequals="YouCanLogin(#en)" class="success">In case you created a user account, you can now login at the login dialog.</p>
+          <p lang="de" concordion:assertequals="YouCanLogin(#de)" class="success">Falls Du Dir ein Benutzerkonto erstellt hast, kannst Du Dich jetzt im Anmelden Dialog anmelden.</p>
+          <p lang="en" concordion:assertequals="RetryLoggingIn(#en)" class="success">When you entered wrong credentials, you will see an error message and you can retry.</p>
+          <p lang="de" concordion:assertequals="RetryLoggingIn(#de)" class="success">Hast Du falsche Anmeldedaten eingegeben, siehst Du eine Fehlermeldung und kannst es noch einmal versuchen.</p>
+          <img lang="en" concordion:execute="TakeRetryScreenshot(#en)" src="retry.png" />
+          <img lang="de" concordion:execute="TakeRetryScreenshot(#de)" src="retry.png" />
+          <p lang="en">You can see on the <a href="http://stand-uptimer.azurewebsites.net/Statistics">internet</a> how virtuous you are.</p>
+          <p lang="de">Im <a href="http://stand-uptimer.azurewebsites.net/Statistics">Internet</a> kannst Du sehen, wie tugendhaft Du bist.</p>
+          <img concordion:execute="TakeStatisticsScreenshot()" src="statistics.png" />
+          <h4 lang="en">Usage</h4>
+          <h4 lang="de">Verwendung</h4>
           <p lang="en" concordion:assertEquals="YouCanSeeTheRemainingTime(#en)" class="success">You can see how much time is left before changing to another position.</p>
           <p lang="de" concordion:assertEquals="YouCanSeeTheRemainingTime(#de)" class="success">Man kann sehen, wie viel Zeit übrig ist, bevor man die Position wechseln muss.</p>
           <p lang="en">
@@ -269,6 +290,8 @@ ins {
           <img concordion:execute="TakeNextPhaseScreenshot()" src="nextPhase.png" />
           <p lang="en">When you close the application, the screen position will be saved and <span concordion:assertEquals="TheAppStartsOnTheSamePosition(#en)" class="success">on the next startup, the app starts on that position again</span>.</p>
           <p lang="de">Wenn Du das Programm schließt, wird die Bildschirmposition gespeichert und <span concordion:assertEquals="TheAppStartsOnTheSamePosition(#de)" class="success">beim nächsten Start wird das Programm an der gleichen Position wieder angezeigt</span>.</p>
+          <h4 lang="en">Miscellaneous</h4>
+          <h4 lang="de">Verschiedenes</h4>
           <p lang="en">You can see the attributions of the used images when moving the mouse on the attribution button:</p>
           <p lang="de">Du kannst die Attribuierungen der verwendeten Bilder sehen, wenn Du die Maus auf die Attribuierung Schaltfläche bewegst:</p>
           <img concordion:execute="TakeAttributionScreenshot()" src="attribution.png" />
@@ -303,7 +326,7 @@ ins {
           <p lang="de" class="repo-owner">
             <a href="https://github.com/PapaMufflon/StandUpTimer"></a>wird gepflegt von <a href="https://github.com/PapaMufflon">PapaMufflon</a>.</p>
           <p lang="en">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-          <p lang="en">Diese Seite wurde von <a href="https://pages.github.com">GitHub Pages</a> generiert mittels dem Architect theme von <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+          <p lang="de">Diese Seite wurde von <a href="https://pages.github.com">GitHub Pages</a> generiert mittels dem Architect theme von <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
       </div>
     </div>
@@ -322,6 +345,6 @@ ins {
 	        select_language("de");
 		});
 	</script>
-    <div class="footer">Results generated by <a href="http://www.concordion.org"><img src="..\..\image\concordion-logo.png" alt="Concordion" border="0" /></a><div class="testTime">in 203030302 ms 20.11.2014 13:23:02</div></div>
+    <div class="footer">Results generated by <a href="http://www.concordion.org"><img src="..\..\image\concordion-logo.png" alt="Concordion" border="0" /></a><div class="testTime">in 522141528 ms 27.04.2015 10:34:24</div></div>
   </body>
 </html>
