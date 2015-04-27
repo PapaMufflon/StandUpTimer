@@ -7,6 +7,11 @@ open Fake.NuGet
 
 let buildDir = "./build"
 let docDir = "./doc"
+let repoDir = "."
+
+Target "DeployWebApp" (fun _ ->
+    pushBranch repoDir "azure" "master"
+)
 
 Target "ReleasifyWindowsDesktopApp" (fun _ ->
     CopyFile "./StandUpTimer/StandUpTimer.nuspec" "./StandUpTimer/StandUpTimer.nuspec.template"
@@ -23,7 +28,7 @@ Target "ReleasifyWindowsDesktopApp" (fun _ ->
 
     NuGetPackDirectly (fun p ->
         {p with
-           WorkingDir = "."
+           WorkingDir = repoDir
            Version = version.ToString()
            OutputPath = ".\\build"}) "./build/StandUpTimer.nuspec"
 
@@ -52,7 +57,7 @@ Target "DeployWindowsDesktopAppToAzure" (fun _ ->
 Target "UpdateDocumentation" (fun _ ->
     CleanDir docDir
 
-    cloneSingleBranch "" "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
+    cloneSingleBranch repoDir "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
 
     CopyFile (docDir + "/Index.html") (buildDir + "/results/StandUpTimer/Specs/Index.html")
 
@@ -63,18 +68,29 @@ Target "UpdateDocumentation" (fun _ ->
     push docDir
 )
 
-Target "DeployWebApp" (fun _ ->
-    pushBranch "." "azure" "master"
+Target "PushToOrigin" (fun _ ->
+    pushBranch repoDir "origin" "master"
+)
+
+Target "Tag" (fun _ ->
+    let version = GetAssemblyVersion "build\\StandUpTimer.exe"
+    let versionTag = "v" + version.ToString()
+
+    tag repoDir ("-a " + versionTag)
+
+    pushTag repoDir "origin" versionTag
 )
 
 Target "Default" (fun _ ->
     trace "Have fun deploying the Stand-Up Timer!!!"
 )
 
-"ReleasifyWindowsDesktopApp"
+"DeployWebApp"
+  ==> "ReleasifyWindowsDesktopApp"
   ==> "DeployWindowsDesktopAppToAzure"
   ==> "UpdateDocumentation"
-  ==> "DeployWebApp"
+  ==> "PushToOrigin"
+  ==> "Tag"
   ==> "Default"
 
 RunTargetOrDefault "Default"
