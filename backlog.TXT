@@ -1,6 +1,8 @@
 - certificate (http://stackoverflow.com/a/18959881)
 
-- remaining time in title to see it in taskbar
+- deploy concordion logo
+
+- opencover
 
 - opencover
 
