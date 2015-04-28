@@ -1,7 +1,5 @@
 - certificate (http://stackoverflow.com/a/18959881)
 
-- opencover
-
 - translations
 
 - detect hibernation/standby to send inactive status
