@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
@@ -10,6 +11,7 @@ using System.Windows.Threading;
 using StandUpTimer.Annotations;
 using StandUpTimer.Common;
 using StandUpTimer.Models;
+using StandUpTimer.Properties;
 using StandUpTimer.Services;
 
 namespace StandUpTimer.ViewModels
@@ -125,6 +127,11 @@ namespace StandUpTimer.ViewModels
             get { return authenticationService.IsLoggedIn ? @"..\Images\loggedInButton.png" : @"..\Images\loginButton.png"; }
         }
 
+        public string AuthenticationStatusText
+        {
+            get { return authenticationService.IsLoggedIn ? Resources.Logout : Resources.Login; }
+        }
+
         public Visibility ExitButtonVisibility
         {
             get { return exitButtonVisibility; }
@@ -197,6 +204,35 @@ namespace StandUpTimer.ViewModels
 
                     OnPropertyChanged(() => AuthenticationStatus);
                 }));
+            }
+        }
+
+        public List<Artist> Artists
+        {
+            get
+            {
+                return new List<Artist>
+                {
+                    new Artist("Convoy", new Uri("http://www.thenounproject.com/convoy"), "Skip"),
+                    new Artist("Alex S. Lakas", new Uri("http://www.thenounproject.com/alex.s.lakas"), "Close"),
+                    new Artist("Austin Condiff", new Uri("http://www.thenounproject.com/acondiff"), "Creative Commons"),
+                    new Artist("Ricardo Augusto Cherem", new Uri("http://www.thenounproject.com/ricardo.cherem"), "Check Mark"),
+                    new Artist("Simon", new Uri("http://www.thenounproject.com/simon.david"), "User Mark"),
+                };
+            }
+        }
+
+        internal class Artist
+        {
+            public string Name { get; private set; }
+            public Uri Profile { get; private set; }
+            public string Item { get; private set; }
+
+            public Artist(string name, Uri profile, string item)
+            {
+                Name = name;
+                Profile = profile;
+                Item = item;
             }
         }
 

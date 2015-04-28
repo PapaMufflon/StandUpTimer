@@ -118,57 +118,57 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AllOtherItems" xml:space="preserve">
-    <value>All other images are created by artists from the</value>
+    <value>Alle anderen Grafiken wurden erstellt von Künstlern des</value>
   </data>
   <data name="Breu" xml:space="preserve">
     <value>Breu Bürotechnik</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="CommunicationFailed" xml:space="preserve">
-    <value>The communication with the server failed.</value>
+    <value>Die Kommunikation mit dem Server war nicht möglich</value>
   </data>
   <data name="DesignedBy" xml:space="preserve">
-    <value>designed by</value>
+    <value>gestaltet von</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Anmelden</value>
   </data>
   <data name="LoginFailed" xml:space="preserve">
-    <value>Wrong credentials!</value>
+    <value>Falsche Anmeldedaten</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>Logout</value>
+    <value>Abmelden</value>
   </data>
   <data name="MainImagesCopyright" xml:space="preserve">
-    <value>Standing up and sitting down images ©</value>
+    <value>Steh- und Sitzbild ©</value>
   </data>
   <data name="NounProject" xml:space="preserve">
     <value>Noun Project</value>
   </data>
   <data name="NoUser" xml:space="preserve">
-    <value>No user?</value>
+    <value>Kein Benutzer?</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Kennwort</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>Registrieren</value>
   </data>
   <data name="Skip" xml:space="preserve">
-    <value>Skip</value>
+    <value>Überspringen</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Stand-Up Timer - {0} to go</value>
+    <value>Stand-Up Timer - noch {0}</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Benutzername</value>
   </data>
 </root>

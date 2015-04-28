@@ -3,7 +3,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:StandUpTimer.Views"
-        Title="{Binding RemainingTimeToChangeAsString, StringFormat=Stand-Up Timer - {0} to go}"
+        xmlns:res="clr-namespace:StandUpTimer.Properties"
+        Title="{Binding RemainingTimeToChangeAsString, StringFormat={x:Static res:Resources.Title}}"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -37,6 +38,7 @@
                         Command="ApplicationCommands.Close"
                         Style="{StaticResource FadeOutStyle}"
                         Template="{StaticResource ImageButton}"
+                        ToolTip="{x:Static res:Resources.Close}"
                         x:Name="CloseButton">
                     <Image Source="..\Images\closeButton.png" />
                 </Button>
@@ -67,7 +69,7 @@
             <TextBlock Text="{Binding AuthenticationStatus}"
                        Foreground="Transparent"
                        x:Name="CurrentAuthenticationStatusFileName" />
-            
+
             <Image Source="{Binding CurrentImage}"
                    Height="253"
                    x:Name="CurrentImage" />
@@ -78,6 +80,7 @@
                     Visibility="{Binding OkButtonVisibility, Converter={StaticResource InverseVisibilityConverter}}"
                     Template="{StaticResource ImageButton}"
                     Command="{Binding SkipCommand}"
+                    ToolTip="{x:Static res:Resources.Skip}"
                     x:Name="SkipButton">
                 <Image Source="..\Images\skipButton.png" />
             </Button>
@@ -87,10 +90,11 @@
                     Visibility="{Binding OkButtonVisibility}"
                     Template="{StaticResource ImageButton}"
                     Command="{Binding OkCommand}"
+                    ToolTip="{x:Static res:Resources.Ok}"
                     x:Name="OkButton" >
                 <Image Source="..\Images\okButton.png" />
             </Button>
-            
+
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom">
@@ -105,6 +109,7 @@
                         Template="{StaticResource ImageButton}"
                         Command="{Binding LoginCommand}"
                         Margin="4,0,0,0"
+                        ToolTip="{Binding AuthenticationStatusText}"
                         x:Name="LoginButton">
                     <Image Source="{Binding AuthenticationStatus}" />
                 </Button>
@@ -120,16 +125,36 @@
                                 Width="250">
                         <TextBlock TextWrapping="Wrap"
                                    Margin="2 0">
-                            Standing up and sitting down images &#169; <Hyperlink NavigateUri="http://www.breu-buerotechnik.de/" RequestNavigate="Hyperlink_OnRequestNavigate">Breu B&#252;rotechnik</Hyperlink>.
+                            <Run Text="{x:Static res:Resources.MainImagesCopyright}" />
+                            <Hyperlink NavigateUri="http://www.breu-buerotechnik.de/" RequestNavigate="Hyperlink_OnRequestNavigate"><Run Text="{x:Static res:Resources.Breu}" /></Hyperlink>.
+                            <Run Text="{x:Static res:Resources.AllOtherItems}" />
+                            <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">
+                                <Run Text="{x:Static res:Resources.NounProject}" />
+                            </Hyperlink>:
                         </TextBlock>
-                        <TextBlock TextWrapping="Wrap"
-                                   Margin="2 0">
-                            Skip designed by <Hyperlink NavigateUri="http://www.thenounproject.com/convoy" RequestNavigate="Hyperlink_OnRequestNavigate">Convoy</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
-                            Close designed by <Hyperlink NavigateUri="http://www.thenounproject.com/alex.s.lakas" RequestNavigate="Hyperlink_OnRequestNavigate">Alex S. Lakas</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
-                            Creative Commons designed by <Hyperlink NavigateUri="http://www.thenounproject.com/acondiff" RequestNavigate="Hyperlink_OnRequestNavigate">Austin Condiff</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
-                            Check Mark designed by <Hyperlink NavigateUri="http://www.thenounproject.com/ricardo.cherem" RequestNavigate="Hyperlink_OnRequestNavigate">Ricardo Augusto Cherem</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
-                            User Mark designed by <Hyperlink NavigateUri="http://www.thenounproject.com/simon.david" RequestNavigate="Hyperlink_OnRequestNavigate">Simon</Hyperlink> from the <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">Noun Project</Hyperlink>.
-                        </TextBlock>
+                        
+                        <ListBox ItemsSource="{Binding Artists}"
+                                 Margin="2 0"
+                                 Background="Transparent"
+                                 BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <BulletDecorator Width="Auto">
+                                        <BulletDecorator.Bullet>
+                                            <Ellipse Fill="Black" Width="4" Height="4" Margin="0,2,0,0"/>
+                                        </BulletDecorator.Bullet>
+                                        <TextBlock Width="200" TextWrapping="Wrap">
+                                            <Run Text="{Binding Item, Mode=OneWay,StringFormat='&quot;{0}&quot;'}" />
+                                            <Run Text="{x:Static res:Resources.DesignedBy}" />
+                                            <Hyperlink NavigateUri="{Binding Profile, Mode=OneWay}" RequestNavigate="Hyperlink_OnRequestNavigate">
+                                                <Run Text="{Binding Name, Mode=OneWay}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </BulletDecorator>
+                                    
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                         <TextBlock HorizontalAlignment="Right"
                                    VerticalAlignment="Bottom"
                                    Text="{Binding VersionNumber}" />
