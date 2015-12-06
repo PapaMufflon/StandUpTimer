@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Windows.Input;
 
 namespace StandUpTimer.Common
@@ -12,13 +11,10 @@ namespace StandUpTimer.Common
 
         public RelayCommand(Action<object> execute) : this(execute, null)
         {
-            Contract.Requires(execute != null);
         }
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            Contract.Requires(execute != null);
-
             this.execute = execute;
             this.canExecute = canExecute;           
         }

@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -10,8 +9,6 @@ namespace StandUpTimer.Services
         // taken from http://blogs.msdn.com/b/fpintos/archive/2009/06/12/how-to-properly-convert-securestring-to-string.aspx
         public static string ConvertToUnsecureString(this SecureString securePassword)
         {
-            Contract.Requires(securePassword != null);
-
             IntPtr unmanagedString = IntPtr.Zero;
             try
             {
@@ -26,8 +23,6 @@ namespace StandUpTimer.Services
 
         public static SecureString GetSecureString(this string password)
         {
-            Contract.Requires(!string.IsNullOrEmpty(password));
-
             var secureString = new SecureString();
 
             foreach (var c in password)

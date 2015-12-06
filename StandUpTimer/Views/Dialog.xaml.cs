@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using StandUpTimer.ViewModels;
@@ -10,8 +9,6 @@ namespace StandUpTimer.Views
     {
         public Dialog(IDialogViewModel dataContext)
         {
-            Contract.Requires(dataContext != null);
-
             WeakEventManager<IDialogViewModel, RequestCloseEventArgs>.AddHandler(dataContext, "RequestClose", OnRequestClose);
 
             DataContext = dataContext;

@@ -434,7 +434,7 @@ namespace StandUpTimer.Specs
                     if (currentImageFileName == null)
                         return "Cannot determine current image.";
 
-                    return currentImageFileName.Equals("..\\Images\\standing.png")
+                    return currentImageFileName.Equals("..\\Images\\standingTobi.png")
                                ? Resources.WaitForTheTimeToElapse
                                : "There was a wrong image after waiting the sitting time.";
                 }
@@ -464,7 +464,7 @@ namespace StandUpTimer.Specs
                     if (currentImageFileName == null)
                         return "Cannot determine current image.";
 
-                    return currentImageFileName.Equals("..\\Images\\standing.png")
+                    return currentImageFileName.Equals("..\\Images\\standingTobi.png")
                                ? Resources.UseTheSkipButton
                                : "There was a wrong image after clicking the skip button.";
                 }

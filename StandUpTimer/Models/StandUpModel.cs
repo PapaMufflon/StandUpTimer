@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using StandUpTimer.Common;
 using StandUpTimer.ViewModels;
 
@@ -19,10 +18,6 @@ namespace StandUpTimer.Models
 
         public StandUpModel(ITimer timer, TimeSpan sittingTime, TimeSpan standingTime)
         {
-            Contract.Requires(timer != null);
-            Contract.Requires(sittingTime != TimeSpan.Zero);
-            Contract.Requires(standingTime != TimeSpan.Zero);
-
             DeskState = DeskState.Sitting;
 
             ChangeTime = TestableDateTime.Now.Add(sittingTime);

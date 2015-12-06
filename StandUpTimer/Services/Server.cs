@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -19,9 +18,6 @@ namespace StandUpTimer.Services
 
         public Server(HttpClient httpClient, CookieContainer cookieContainer)
         {
-            Contract.Requires(httpClient != null);
-            Contract.Requires(cookieContainer != null);
-
             this.httpClient = httpClient;
             this.cookieContainer = cookieContainer;
         }

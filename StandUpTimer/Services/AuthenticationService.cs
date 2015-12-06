@@ -1,4 +1,3 @@
-using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 using StandUpTimer.ViewModels;
 
@@ -13,9 +12,6 @@ namespace StandUpTimer.Services
 
         public AuthenticationService(IServer server, IDialogPresenter dialogPresenter)
         {
-            Contract.Requires(server != null);
-            Contract.Requires(dialogPresenter != null);
-
             this.server = server;
             this.dialogPresenter = dialogPresenter;
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -33,10 +32,6 @@ namespace StandUpTimer.ViewModels
 
         public StandUpViewModel(StandUpModel model, AuthenticationService authenticationService, IBringToForeground bringToForeground)
         {
-            Contract.Requires(model != null);
-            Contract.Requires(authenticationService != null);
-            Contract.Requires(bringToForeground != null);
-
             this.model = model;
             this.authenticationService = authenticationService;
             this.bringToForeground = bringToForeground;

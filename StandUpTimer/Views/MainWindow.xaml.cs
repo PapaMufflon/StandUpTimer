@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -17,8 +16,6 @@ namespace StandUpTimer.Views
 
         public MainWindow(StandUpViewModel standUpViewModel)
         {
-            Contract.Requires(standUpViewModel != null);
-
             DataContext = this.standUpViewModel = standUpViewModel;
 
             Left = Settings.Default.Left;

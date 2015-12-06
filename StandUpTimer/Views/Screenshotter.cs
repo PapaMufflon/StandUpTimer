@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -12,9 +11,6 @@ namespace StandUpTimer.Views
     {
         public static byte[] GetJpgImage(this UIElement source, double scale)
         {
-            Contract.Requires(source != null);
-            Contract.Requires(scale > 0);
-
             var actualHeight = source.RenderSize.Height;
             var actualWidth = source.RenderSize.Width;
 

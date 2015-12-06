@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 using StandUpTimer.Common;
 using StandUpTimer.Web.Contract;
@@ -13,8 +12,6 @@ namespace StandUpTimer.Services
 
         public StatusPublisher(IServer server)
         {
-            Contract.Requires(server != null);
-
             this.server = server;
 
 #pragma warning disable 4014
