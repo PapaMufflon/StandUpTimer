@@ -29,7 +29,7 @@ namespace StandUpTimer.Specs
                     if (currentImageFileName == null)
                         return "Cannot determine current image.";
 
-                    return currentImageFileName.Equals("..\\Images\\sitting.png")
+                    return currentImageFileName.Equals("..\\Images\\sittingTobi.png")
                                ? Resources.ItBeginsWithTheSittingPhase
                                : "It does not begin with the sitting phase.";
                 }

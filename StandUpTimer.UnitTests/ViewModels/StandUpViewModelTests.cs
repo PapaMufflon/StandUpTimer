@@ -19,11 +19,11 @@ namespace StandUpTimer.UnitTests.ViewModels
             var model = Model;
             var target = new StandUpViewModel(model, A.Fake<AuthenticationService>(), A.Fake<IBringToForeground>());
 
-            Assert.That(target.CurrentImage, Is.StringContaining("sitting"));
+            Assert.That(target.CurrentImage, Does.Contain("sitting"));
 
             model.Skip();
 
-            Assert.That(target.CurrentImage, Is.StringContaining("standing"));
+            Assert.That(target.CurrentImage, Does.Contain("standing"));
         }
 
         [Test]

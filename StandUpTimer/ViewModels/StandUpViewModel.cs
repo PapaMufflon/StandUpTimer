@@ -70,10 +70,10 @@ namespace StandUpTimer.ViewModels
             switch (model.DeskState)
             {
                 case DeskState.Sitting:
-                    CurrentImage = @"..\Images\sitting.png";
+                    CurrentImage = @"..\Images\sittingTobi.png";
                     break;
                 case DeskState.Standing:
-                    CurrentImage = @"..\Images\standing.png";
+                    CurrentImage = @"..\Images\standingTobi.png";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -95,7 +95,7 @@ namespace StandUpTimer
             if (commandLineArguments.Update)
                 Task.Run(async () =>
                 {
-                    using (var mgr = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer", FrameworkVersion.Net45))
+                    using (var mgr = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer"))
                         await mgr.UpdateApp();
                 });
         }
