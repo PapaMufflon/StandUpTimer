@@ -1,6 +1,10 @@
-- C# 6!!!
-
 - translations
+  - login dialog
+
+- maybe update squirrel code!?
+  - lock if necessary
+
+- think about afk handling
 
 - fix statistics image in documentation (no items)
 
