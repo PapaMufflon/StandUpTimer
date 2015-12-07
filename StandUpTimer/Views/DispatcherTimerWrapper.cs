@@ -18,8 +18,7 @@ namespace StandUpTimer.Views
 
         protected virtual void OnTick()
         {
-            var handler = Tick;
-            if (handler != null) handler(this, EventArgs.Empty);
+            Tick?.Invoke(this, EventArgs.Empty);
         }
 
         public TimeSpan Interval

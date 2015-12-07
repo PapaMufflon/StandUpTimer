@@ -10,9 +10,9 @@ namespace StandUpTimer.ViewModels
                 return string.Empty;
 
             if (remainingTime < TimeSpan.FromMinutes(1))
-                return string.Format("{0:0}\nsec", remainingTime.TotalSeconds);
+                return $"{remainingTime.TotalSeconds:0}\nsec";
 
-            return string.Format("{0:0}\nmin", remainingTime.TotalMinutes);
+            return $"{remainingTime.TotalMinutes:0}\nmin";
         }
 
         public static double PercentageTo(this TimeSpan remainingTime, TimeSpan totalTime)

@@ -11,7 +11,8 @@ namespace StandUpTimer.Services
 {
     internal class Server : IServer
     {
-        private const string AccountLoginUrl = "Account/Login";
+        private const string AccountLogInUrl = "Account/Login";
+        private const string AccountLogOffUrl = "Account/LogOff";
         private const string StatisticsRoute = "statistics";
 
         private readonly HttpClient httpClient;
@@ -44,7 +45,7 @@ namespace StandUpTimer.Services
 
             try
             {
-                await httpClient.PostAsync(AccountLoginUrl, content);
+                await httpClient.PostAsync(AccountLogInUrl, content);
             }
             catch (HttpRequestException)
             {
@@ -79,7 +80,8 @@ namespace StandUpTimer.Services
         public async Task<bool> TryLogOff(string accountToken)
         {
             var content = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("__RequestVerificationToken", accountToken) });
-            var response = await httpClient.PostAsync("Account/LogOff", content);
+            
+            var response = await httpClient.PostAsync(AccountLogOffUrl, content);
 
             return response.IsSuccessStatusCode;
         }
@@ -90,7 +92,7 @@ namespace StandUpTimer.Services
 
             try
             {
-                returnedSite = await httpClient.GetStringAsync(AccountLoginUrl);
+                returnedSite = await httpClient.GetStringAsync(AccountLogInUrl);
             }
             catch (HttpRequestException)
             {

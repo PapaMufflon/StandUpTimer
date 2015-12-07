@@ -10,7 +10,7 @@ namespace StandUpTimer.ViewModels
     {
         public event EventHandler<RequestCloseEventArgs> RequestClose;
 
-        public string Title { get { return "Login"; } }
+        public string Title => "Login";
         public string Username { get; set; }
         public SecureString Password { get; set; }
         public string ErrorMessage { get; set; }
@@ -32,8 +32,7 @@ namespace StandUpTimer.ViewModels
 
         protected virtual void OnRequestClose(RequestCloseEventArgs e)
         {
-            var handler = RequestClose;
-            if (handler != null) handler(this, e);
+            RequestClose?.Invoke(this, e);
         }
     }
 }

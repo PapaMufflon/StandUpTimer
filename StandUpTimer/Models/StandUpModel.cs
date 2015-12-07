@@ -10,7 +10,7 @@ namespace StandUpTimer.Models
 
         public DeskState DeskState { get; set; }
         public DateTime ChangeTime { get; set; }
-        public TimeSpan CurrentLeg { get { return changeTimer.Interval; } }
+        public TimeSpan CurrentLeg => changeTimer.Interval;
 
         private readonly ITimer changeTimer;
         private readonly TimeSpan sittingTime;
@@ -65,8 +65,7 @@ namespace StandUpTimer.Models
 
         protected virtual void OnDeskStateChanged()
         {
-            var handler = DeskStateChanged;
-            if (handler != null) handler(this, new DeskStateChangedEventArgs(DeskState));
+            DeskStateChanged?.Invoke(this, new DeskStateChangedEventArgs(DeskState));
         }
 
         public void NewDeskStateStarted()

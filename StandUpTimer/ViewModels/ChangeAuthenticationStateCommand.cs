@@ -32,15 +32,7 @@ namespace StandUpTimer.ViewModels
         {
             do
             {
-                try
-                {
-                    loginViewModel.Password?.Clear();
-                }
-                catch (Exception e)
-                {
-
-                    throw;
-                }
+                loginViewModel.Password?.Clear();
 
                 if (dialogPresenter.ShowModal(loginViewModel) != true)
                     return;

@@ -94,20 +94,11 @@ namespace StandUpTimer.ViewModels
             model.NewDeskStateStarted();
         }
 
-        public string RemainingTimeToChangeAsString
-        {
-            get { return model.ChangeTime.Subtract(TestableDateTime.Now).FormatRemainingTime(); }
-        }
+        public string RemainingTimeToChangeAsString => model.ChangeTime.Subtract(TestableDateTime.Now).FormatRemainingTime();
 
-        public double RemainingTimeToChangeInPercent
-        {
-            get { return model.ChangeTime.Subtract(TestableDateTime.Now).PercentageTo(model.CurrentLeg); }
-        }
+        public double RemainingTimeToChangeInPercent => model.ChangeTime.Subtract(TestableDateTime.Now).PercentageTo(model.CurrentLeg);
 
-        public double TimeOfLegInFraction
-        {
-            get { return model.ChangeTime.Subtract(TestableDateTime.Now).FractionTo(model.CurrentLeg); }
-        }
+        public double TimeOfLegInFraction => model.ChangeTime.Subtract(TestableDateTime.Now).FractionTo(model.CurrentLeg);
 
         public string CurrentImage
         {
@@ -119,15 +110,9 @@ namespace StandUpTimer.ViewModels
             }
         }
 
-        public string AuthenticationStatus
-        {
-            get { return authenticationService.IsLoggedIn ? @"..\Images\loggedInButton.png" : @"..\Images\loginButton.png"; }
-        }
+        public string AuthenticationStatus => authenticationService.IsLoggedIn ? @"..\Images\loggedInButton.png" : @"..\Images\loginButton.png";
 
-        public string AuthenticationStatusText
-        {
-            get { return authenticationService.IsLoggedIn ? Resources.Logout : Resources.Login; }
-        }
+        public string AuthenticationStatusText => authenticationService.IsLoggedIn ? Resources.Logout : Resources.Login;
 
         public Visibility ExitButtonVisibility
         {
@@ -169,50 +154,27 @@ namespace StandUpTimer.ViewModels
             }
         }
 
-        public string VersionNumber { get { return "V" + Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
+        public string VersionNumber => "V" + Assembly.GetExecutingAssembly().GetName().Version;
 
-        public ICommand OkCommand
-        {
-            get
-            {
-                return okCommand ?? (okCommand = new RelayCommand(_ => DeskStateStarted()));
-            }
-        }
+        public ICommand OkCommand => okCommand ?? (okCommand = new RelayCommand(_ => DeskStateStarted()));
 
-        public ICommand SkipCommand
+        public ICommand SkipCommand => skipCommand ?? (skipCommand = new RelayCommand(_ =>
         {
-            get
-            {
-                return skipCommand ?? (skipCommand = new RelayCommand(_ =>
-                {
-                    model.Skip();
-                    DeskStateStarted();
-                }));
-            }
-        }
+            model.Skip();
+            DeskStateStarted();
+        }));
 
-        public ICommand ChangeAuthenticationStateCommand
-        {
-            get
-            {
-                return changeAuthenticationStateCommand ?? (changeAuthenticationStateCommand = new ChangeAuthenticationStateCommand(authenticationService, new DialogPresenter(), new LoginViewModel()));
-            }
-        }
+        public ICommand ChangeAuthenticationStateCommand => changeAuthenticationStateCommand
+            ?? (changeAuthenticationStateCommand = new ChangeAuthenticationStateCommand(authenticationService, new DialogPresenter(), new LoginViewModel()));
 
-        public List<Artist> Artists
+        public List<Artist> Artists => new List<Artist>
         {
-            get
-            {
-                return new List<Artist>
-                {
-                    new Artist("Convoy", new Uri("http://www.thenounproject.com/convoy"), "Skip"),
-                    new Artist("Alex S. Lakas", new Uri("http://www.thenounproject.com/alex.s.lakas"), "Close"),
-                    new Artist("Austin Condiff", new Uri("http://www.thenounproject.com/acondiff"), "Creative Commons"),
-                    new Artist("Ricardo Augusto Cherem", new Uri("http://www.thenounproject.com/ricardo.cherem"), "Check Mark"),
-                    new Artist("Simon", new Uri("http://www.thenounproject.com/simon.david"), "User Mark"),
-                };
-            }
-        }
+            new Artist("Convoy", new Uri("http://www.thenounproject.com/convoy"), "Skip"),
+            new Artist("Alex S. Lakas", new Uri("http://www.thenounproject.com/alex.s.lakas"), "Close"),
+            new Artist("Austin Condiff", new Uri("http://www.thenounproject.com/acondiff"), "Creative Commons"),
+            new Artist("Ricardo Augusto Cherem", new Uri("http://www.thenounproject.com/ricardo.cherem"), "Check Mark"),
+            new Artist("Simon", new Uri("http://www.thenounproject.com/simon.david"), "User Mark"),
+        };
 
         internal class Artist
         {
@@ -233,8 +195,7 @@ namespace StandUpTimer.ViewModels
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void OnPropertyChanged<T>(Expression<Func<T>> exp)
@@ -242,8 +203,7 @@ namespace StandUpTimer.ViewModels
             var memberExpression = (MemberExpression)exp.Body;
             var propertyName = memberExpression.Member.Name;
 
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

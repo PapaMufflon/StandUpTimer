@@ -60,7 +60,7 @@ namespace StandUpTimer.Services
                 case DeskState.Standing:
                     return Web.Contract.DeskState.Standing;
                 default:
-                    throw new ArgumentOutOfRangeException("deskState");
+                    throw new ArgumentOutOfRangeException(nameof(deskState));
             }
         }
     }
