@@ -79,6 +79,15 @@ namespace StandUpTimer.Specs.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You just need to log in once. Next time, you will be logged in automatically..
+        /// </summary>
+        internal static string LoginWillBeSaved {
+            get {
+                return ResourceManager.GetString("LoginWillBeSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to on the next startup, the app starts on that position again.
         /// </summary>
         internal static string OnTheNextStartupTheAppStartOnThatPositionAgain {

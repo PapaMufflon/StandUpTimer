@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
+using StandUpTimer.Services;
 using TestStack.White;
 using TestStack.White.Factory;
 using TestStack.White.UIItems;
@@ -27,8 +28,11 @@ namespace StandUpTimer.Specs
             }
         }
 
-        public static StandUpTimer Launch(int sittingWaitTime = 1200000)
+        public static StandUpTimer Launch(int sittingWaitTime = 1200000, bool deleteCookies = true)
         {
+            if (deleteCookies)
+                CookieContainerPersistance.DeleteCookiesFromDisk();
+
             var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate --baseUrl http://localhost:12346/", sittingWaitTime));
 
             return new StandUpTimer(Application.Launch(processStartInfo));
@@ -99,7 +103,7 @@ namespace StandUpTimer.Specs
 
         public Button LoginButton
         {
-            get { return TryAction(() => Window.Get<Button>("LoginButton")); }
+            get { return TryAction(() => Window.Get<Button>("ChangeAuthenticationStateButton")); }
         }
 
         public string CurrentAuthenticationStatusFileName

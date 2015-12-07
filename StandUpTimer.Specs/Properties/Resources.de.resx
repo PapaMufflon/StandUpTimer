@@ -123,6 +123,9 @@
   <data name="ItBeginsWithTheSittingPhase" xml:space="preserve">
     <value>Es fängt mit der Sitzen-Phase an.</value>
   </data>
+  <data name="LoginWillBeSaved" xml:space="preserve">
+    <value>Die Anmeldung muss nur einmal durchgeführt werden. Das nächste Mal wirst Du automatisch angemeldet.</value>
+  </data>
   <data name="OnTheNextStartupTheAppStartOnThatPositionAgain" xml:space="preserve">
     <value>beim nächsten Start wird das Programm an der gleichen Position wieder angezeigt</value>
   </data>

@@ -1,21 +1,36 @@
+using System;
 using System.Threading.Tasks;
 using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.Services
 {
-    internal class AuthenticationService
+    internal class AuthenticationService : IAuthenticationService
     {
-        public bool IsLoggedIn { get; private set; }
+        public event EventHandler AuthenticationStateChanged;
 
         private readonly IServer server;
         private readonly IDialogPresenter dialogPresenter;
+        private bool isLoggedIn;
 
         public AuthenticationService(IServer server, IDialogPresenter dialogPresenter)
         {
             this.server = server;
             this.dialogPresenter = dialogPresenter;
 
-            IsLoggedIn = false;
+            Task.Run(async () =>
+            {
+                IsLoggedIn = await server.IsLoggedIn();
+            });
+        }
+
+        public bool IsLoggedIn
+        {
+            get { return isLoggedIn; }
+            private set
+            {
+                isLoggedIn = value;
+                OnAuthenticationStateChanged();
+            }
         }
 
         public async Task ChangeState()
@@ -61,6 +76,11 @@ namespace StandUpTimer.Services
                 else
                     loginViewModel.ErrorMessage = communicationResult.Message;
             } while (!IsLoggedIn);
+        }
+
+        protected virtual void OnAuthenticationStateChanged()
+        {
+            AuthenticationStateChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

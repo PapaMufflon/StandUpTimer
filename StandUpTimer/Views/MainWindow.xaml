@@ -107,10 +107,10 @@
 
                 <Button Style="{StaticResource FadeOutStyle}"
                         Template="{StaticResource ImageButton}"
-                        Command="{Binding LoginCommand}"
+                        Command="{Binding ChangeAuthenticationStateCommand}"
                         Margin="4,0,0,0"
                         ToolTip="{Binding AuthenticationStatusText}"
-                        x:Name="LoginButton">
+                        x:Name="ChangeAuthenticationStateButton">
                     <Image Source="{Binding AuthenticationStatus}" />
                 </Button>
             </StackPanel>

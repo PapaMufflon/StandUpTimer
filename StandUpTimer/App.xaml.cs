@@ -74,12 +74,14 @@ namespace StandUpTimer
         private void Bootstrap(CommandLineArguments commandLineArguments)
         {
             var server = BootstrapServer(commandLineArguments.BaseUrl);
-            statusPublisher = new StatusPublisher(server);
+            var authenticationService = new AuthenticationService(server, new DialogPresenter());
+
+            statusPublisher = new StatusPublisher(server, authenticationService);
 
             var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), commandLineArguments.DeskStateTimes.SittingTime, commandLineArguments.DeskStateTimes.StandingTime);
             standUpModel.DeskStateChanged += (s, f) => statusPublisher.PublishChangedDeskState(f.NewDeskState);
 
-            var standUpViewModel = new StandUpViewModel(standUpModel, new AuthenticationService(server, new DialogPresenter()), this);
+            var standUpViewModel = new StandUpViewModel(standUpModel, authenticationService, this);
             standUpViewModel.PropertyChanged += (sender, eventArgs) =>
             {
                 if (eventArgs.PropertyName.Equals("AuthenticationStatus"))
@@ -102,7 +104,7 @@ namespace StandUpTimer
 
         private static Server BootstrapServer(string baseUrl)
         {
-            var cookieContainer = new CookieContainer();
+            var cookieContainer = CookieContainerPersistance.ReadCookiesFromDisk();
 
             var handler = new HttpClientHandler
             {

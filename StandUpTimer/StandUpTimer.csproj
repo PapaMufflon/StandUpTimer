@@ -154,7 +154,9 @@
     </Compile>
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\CommunicationResult.cs" />
+    <Compile Include="Services\CookieContainerPersistance.cs" />
     <Compile Include="Services\DialogPresenter.cs" />
+    <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IDialogPresenter.cs" />
     <Compile Include="Services\IServer.cs" />
     <Compile Include="Services\SecureStringExtension.cs" />

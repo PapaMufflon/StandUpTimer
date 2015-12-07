@@ -17,7 +17,7 @@ namespace StandUpTimer.UnitTests.Services
         private const string BaseUrl = "http://localhost/";
 
         [Test]
-        public void You_can_send_the_current_desk_state_although_the_user_is_not_logged_in()
+        public void You_can_send_the_current_desk_state_although_the_user_is_not_logged_in() // because the server object does not know if the user is logged in, it has no state.
         {
             var client = new HttpClient(new FakeResponseHandler()) { BaseAddress = new Uri(BaseUrl) };
             var target = new Server(client, new CookieContainer());
@@ -45,30 +45,30 @@ namespace StandUpTimer.UnitTests.Services
             var fakeResponseHandler = new FakeResponseHandler();
             fakeResponseHandler.AddFakeResponse(r => r.Method == HttpMethod.Get && r.RequestUri.Equals(new Uri(BaseUrl + "Account/Login")), new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(@"<input name=""__RequestVerificationToken"" type=""hidden"" value=""antiForgeryToken"" />") });
             fakeResponseHandler.AddFakeResponse(r =>
+            {
+                var formUrlEncodedContent = r.Content as FormUrlEncodedContent;
+
+                if (formUrlEncodedContent == null)
+                    return false;
+
+                var queryString = formUrlEncodedContent.ReadAsStringAsync().Result;
+
+                if (r.Method == HttpMethod.Post &&
+                    r.RequestUri.Equals(new Uri(BaseUrl + "Account/Login")) &&
+                    queryString.Equals("Email=username&Password=password&__RequestVerificationToken=antiForgeryToken"))
                 {
-                    var formUrlEncodedContent = r.Content as FormUrlEncodedContent;
-
-                    if (formUrlEncodedContent == null)
-                        return false;
-
-                    var queryString = formUrlEncodedContent.ReadAsStringAsync().Result;
-
-                    if (r.Method == HttpMethod.Post &&
-                        r.RequestUri.Equals(new Uri(BaseUrl + "Account/Login")) &&
-                        queryString.Equals("Email=username&Password=password&__RequestVerificationToken=antiForgeryToken"))
-                    {
-                        cookieContainer.Add(new Cookie(".AspNet.ApplicationCookie", "whatever", "/", "localhost"));
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                },
-                new HttpResponseMessage(HttpStatusCode.OK)
+                    cookieContainer.Add(new Cookie(".AspNet.ApplicationCookie", "whatever", "/", "localhost"));
+                    return true;
+                }
+                else
                 {
-                    Content = new StringContent(@"<input name=""__RequestVerificationToken"" type=""hidden"" value=""antiForgeryToken"" />")
-                });
+                    return false;
+                }
+            },
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"<input name=""__RequestVerificationToken"" type=""hidden"" value=""antiForgeryToken"" />")
+            });
 
             var client = new HttpClient(fakeResponseHandler) { BaseAddress = new Uri(BaseUrl) };
             var target = new Server(client, cookieContainer);
@@ -106,10 +106,10 @@ namespace StandUpTimer.UnitTests.Services
                     return false;
                 }
             },
-                new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new StringContent(@"<input name=""__RequestVerificationToken"" type=""hidden"" value=""antiForgeryToken"" />")
-                });
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"<input name=""__RequestVerificationToken"" type=""hidden"" value=""antiForgeryToken"" />")
+            });
 
             var client = new HttpClient(fakeResponseHandler) { BaseAddress = new Uri(BaseUrl) };
             var target = new Server(client, cookieContainer);

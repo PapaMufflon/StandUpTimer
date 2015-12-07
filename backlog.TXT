@@ -1,6 +1,14 @@
-- certificate (http://stackoverflow.com/a/18959881)
+- keep me logged in
+  - test
+
+- AuthenticationService refactoring
+  - move stuff from Server to here
+
+- C# 6!!!
 
 - translations
+
+- fix statistics image in documentation (no items)
 
 - detect hibernation/standby to send inactive status
 

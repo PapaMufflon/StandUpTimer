@@ -12,6 +12,7 @@ namespace StandUpTimer.Services
     internal class Server : IServer
     {
         private const string AccountLoginUrl = "Account/Login";
+        private const string StatisticsRoute = "statistics";
 
         private readonly HttpClient httpClient;
         private readonly CookieContainer cookieContainer;
@@ -22,9 +23,21 @@ namespace StandUpTimer.Services
             this.cookieContainer = cookieContainer;
         }
 
+        public async Task<bool> IsLoggedIn()
+        {
+            var response = await httpClient.GetAsync(StatisticsRoute);
+
+            if (!response.IsSuccessStatusCode)
+                return false;
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return !content.Contains("<title>Log in");
+        }
+
         public async Task SendDeskState(Status status)
         {
-            await httpClient.PostAsJsonAsync("statistics", status);
+            await httpClient.PostAsJsonAsync(StatisticsRoute, status);
         }
 
         public async Task<CommunicationResult> LogIn(string username, SecureString password)
@@ -38,12 +51,7 @@ namespace StandUpTimer.Services
                     Message = Properties.Resources.CommunicationFailed
                 };
 
-            var content = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("Email", username),
-                new KeyValuePair<string, string>("Password", password.ConvertToUnsecureString()),
-                new KeyValuePair<string, string>("__RequestVerificationToken", result.AccountToken)
-            });
+            var content = CompileContent(username, password, result.AccountToken);
 
             try
             {
@@ -58,9 +66,35 @@ namespace StandUpTimer.Services
                 };
             }
 
-            return cookieContainer.GetCookies(httpClient.BaseAddress).Cast<Cookie>().Any(x => x.Name.Equals(".AspNet.ApplicationCookie"))
-                ? new CommunicationResult { Success = true }
-                : new CommunicationResult { Success = false, Message = Properties.Resources.LoginFailed };
+            if (!ContainsApplicationCookie())
+            {
+                return new CommunicationResult
+                {
+                    Success = false,
+                    Message = Properties.Resources.LoginFailed
+                };
+            }
+
+            cookieContainer.WriteCookiesToDisk();
+
+            return new CommunicationResult { Success = true };
+        }
+
+        private static FormUrlEncodedContent CompileContent(string username, SecureString password, string accountToken)
+        {
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("Email", username),
+                new KeyValuePair<string, string>("Password", password.ConvertToUnsecureString()),
+                new KeyValuePair<string, string>("__RequestVerificationToken", accountToken)
+            });
+
+            return content;
+        }
+
+        private bool ContainsApplicationCookie()
+        {
+            return cookieContainer.GetCookies(httpClient.BaseAddress).Cast<Cookie>().Any(x => x.Name.Equals(".AspNet.ApplicationCookie"));
         }
 
         public async Task<CommunicationResult> LogOut()

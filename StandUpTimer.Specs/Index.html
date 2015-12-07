@@ -109,9 +109,9 @@
                         If you like, you can create yourself a new user account in two steps:
                         <ul lang="en">
                             <li concordion:assertequals="TheLoginDialogHasTheRegisterLink(#en)">Open the login dialog in which the register link is</li>
-                            <li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png" /></li>
+                            <li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png"/></li>
                             <li concordion:assertequals="CreateNewUser(#en)">Click on the link and create a new user account</li>
-                            <li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li>
+                            <li style="list-style-type: none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png"/></li>
                         </ul>
                     </p>
                     <p lang="de">
@@ -120,9 +120,12 @@
                             <li concordion:assertequals="TheLoginDialogHasTheRegisterLink(#de)">&#214;ffne den Anmelden Dialog, in dem der Registrieren-link ist</li>
                             <li style="list-style-type: none"><img concordion:execute="TakeLoginScreenshot()" src="login.png"/></li>
                             <li concordion:assertequals="CreateNewUser(#de)">Klicke auf den link und erstelle ein neues Benutzerkonto</li>
-                            <li style="list-style-type:none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png" /></li>
+                            <li style="list-style-type: none"><img concordion:execute="TakeRegisterScreenshot()" src="register.png"/></li>
                         </ul>
                     </p>
+
+                    <p lang="en">A user account is not mandatory - only the statistics are not available then.</p>
+                    <p lang="de">Ein Benutzerkonto ist nicht zwingend notwendig - lediglich die Statistiken stehen Dir sonst nicht zur Verf&#252;gung.</p>
 
                     <p lang="en" concordion:assertequals="YouCanLogin(#en)">In case you created a user account, you can now login at the login dialog.</p>
                     <p lang="de" concordion:assertequals="YouCanLogin(#de)">Falls Du Dir ein Benutzerkonto erstellt hast, kannst Du Dich jetzt im Anmelden Dialog anmelden.</p>
@@ -137,6 +140,9 @@
                     <p lang="de">Im <a href="http://stand-uptimer.azurewebsites.net/Statistics">Internet</a> kannst Du sehen, wie tugendhaft Du bist.</p>
 
                     <img concordion:execute="TakeStatisticsScreenshot()" src="statistics.png" />
+
+                    <p lang="en" concordion:assertequals="LoginWillBeSaved(#en)">You just need to log in once. Next time, you will be logged in automatically.</p>
+                    <p lang="de" concordion:assertequals="LoginWillBeSaved(#de)">Die Anmeldung muss nur einmal durchgef&#252;hrt werden. Das n&#228;chste Mal wirst Du automatisch angemeldet.</p>
 
                     <h4 lang="en">Usage</h4>
                     <h4 lang="de">Verwendung</h4>

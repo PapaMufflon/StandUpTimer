@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Windows;
 using FakeItEasy;
 using NUnit.Framework;
@@ -17,7 +16,7 @@ namespace StandUpTimer.UnitTests.ViewModels
         public void When_the_desk_state_of_the_model_changes_Set_the_according_image()
         {
             var model = Model;
-            var target = new StandUpViewModel(model, A.Fake<AuthenticationService>(), A.Fake<IBringToForeground>());
+            var target = new StandUpViewModel(model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
             Assert.That(target.CurrentImage, Is.StringContaining("sitting"));
 
@@ -30,7 +29,7 @@ namespace StandUpTimer.UnitTests.ViewModels
         public void When_the_desk_state_ended_Bring_the_app_into_the_foreground()
         {
             var bringToForeground = A.Fake<IBringToForeground>();
-            var target = new StandUpViewModel(Model, A.Fake<AuthenticationService>(), bringToForeground);
+            var target = new StandUpViewModel(Model, A.Fake<IAuthenticationService>(), bringToForeground);
 
             target.DeskStateEnded();
 
@@ -40,7 +39,7 @@ namespace StandUpTimer.UnitTests.ViewModels
         [Test]
         public void When_the_desk_state_ended_Show_the_OK_button()
         {
-            var target = new StandUpViewModel(Model, A.Fake<AuthenticationService>(), A.Fake<IBringToForeground>());
+            var target = new StandUpViewModel(Model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
             Assert.That(target.OkButtonVisibility, Is.EqualTo(Visibility.Collapsed));
 
@@ -52,7 +51,7 @@ namespace StandUpTimer.UnitTests.ViewModels
         [Test]
         public void When_a_new_desk_state_started_Hide_the_OK_button()
         {
-            var target = new StandUpViewModel(Model, A.Fake<AuthenticationService>(), A.Fake<IBringToForeground>());
+            var target = new StandUpViewModel(Model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
             target.DeskStateEnded();
             target.DeskStateStarted();
@@ -63,7 +62,7 @@ namespace StandUpTimer.UnitTests.ViewModels
         [Test]
         public void You_cannot_end_a_desk_state_without_starting_it_first()
         {
-            var target = new StandUpViewModel(Model, A.Fake<AuthenticationService>(), A.Fake<IBringToForeground>());
+            var target = new StandUpViewModel(Model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
             target.DeskStateEnded();
 
@@ -73,7 +72,7 @@ namespace StandUpTimer.UnitTests.ViewModels
         [Test]
         public void You_cannot_start_a_desk_state_when_it_already_runs()
         {
-            var target = new StandUpViewModel(Model, A.Fake<AuthenticationService>(), A.Fake<IBringToForeground>());
+            var target = new StandUpViewModel(Model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
             Assert.Throws<InvalidOperationException>(target.DeskStateStarted);
         }
@@ -81,7 +80,7 @@ namespace StandUpTimer.UnitTests.ViewModels
         [Test]
         public void Skipping_a_desk_state_ends_it_and_starts_the_new_leg()
         {
-            var target = new StandUpViewModel(Model, A.Fake<AuthenticationService>(), A.Fake<IBringToForeground>());
+            var target = new StandUpViewModel(Model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
             Assert.That(target.CurrentImage, Is.StringContaining("sitting"));
 
@@ -89,6 +88,24 @@ namespace StandUpTimer.UnitTests.ViewModels
 
             Assert.That(target.CurrentImage, Is.StringContaining("standing"));
             Assert.That(target.OkButtonVisibility, Is.EqualTo(Visibility.Collapsed));
+        }
+
+        [Test]
+        public void When_the_authentication_state_changes_Propagate_that_event()
+        {
+            var authenticationService = A.Fake<IAuthenticationService>();
+            var raised = false;
+
+            var target = new StandUpViewModel(Model, authenticationService, A.Fake<IBringToForeground>());
+
+            target.PropertyChanged += (sender, args) =>
+            {
+                raised = args.PropertyName.Equals("AuthenticationStatus");
+            };
+
+            authenticationService.AuthenticationStateChanged += Raise.WithEmpty();
+
+            Assert.That(raised, Is.True);
         }
 
         private static StandUpModel Model

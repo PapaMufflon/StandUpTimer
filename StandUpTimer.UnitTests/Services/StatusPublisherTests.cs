@@ -11,11 +11,24 @@ namespace StandUpTimer.UnitTests.Services
     public class StatusPublisherTests
     {
         [Test]
-        public void When_creating_an_instance_publish_a_sitting_state_to_the_server()
+        public void Do_not_send_a_state_to_the_server_when_not_logged_in()
         {
             var server = A.Fake<IServer>();
+            var authenticationStatus = A.Fake<IAuthenticationStatus>();
 
-            new StatusPublisher(server);
+            A.CallTo(() => authenticationStatus.IsLoggedIn).Returns(false);
+
+            new StatusPublisher(server, authenticationStatus);
+        }
+        [Test]
+        public void When_creating_an_instance_Publish_a_sitting_state_to_the_server()
+        {
+            var server = A.Fake<IServer>();
+            var authenticationStatus = A.Fake<IAuthenticationStatus>();
+
+            A.CallTo(() => authenticationStatus.IsLoggedIn).Returns(true);
+
+            new StatusPublisher(server, authenticationStatus);
 
             A.CallTo(() => server.SendDeskState(A<Status>.That.Matches(x => x.DeskState == DeskState.Sitting)))
              .MustHaveHappened();
@@ -25,8 +38,11 @@ namespace StandUpTimer.UnitTests.Services
         public void You_can_publish_a_new_state()
         {
             var server = A.Fake<IServer>();
+            var authenticationStatus = A.Fake<IAuthenticationStatus>();
 
-            var target = new StatusPublisher(server);
+            A.CallTo(() => authenticationStatus.IsLoggedIn).Returns(true);
+
+            var target = new StatusPublisher(server, authenticationStatus);
 
             target.PublishChangedDeskState(StandUpTimer.Models.DeskState.Standing);
 
@@ -41,8 +57,11 @@ namespace StandUpTimer.UnitTests.Services
             A.CallTo(() => TestableDateTime.DateTime.Now).Returns(new DateTime(2015, 4, 21, 12, 19, 0));
 
             var server = A.Fake<IServer>();
+            var authenticationStatus = A.Fake<IAuthenticationStatus>();
 
-            var target = new StatusPublisher(server);
+            A.CallTo(() => authenticationStatus.IsLoggedIn).Returns(true);
+
+            var target = new StatusPublisher(server, authenticationStatus);
 
             target.PublishChangedDeskState(StandUpTimer.Models.DeskState.Standing);
 
@@ -54,8 +73,11 @@ namespace StandUpTimer.UnitTests.Services
         public void You_can_publish_the_end_of_a_session()
         {
             var server = A.Fake<IServer>();
+            var authenticationStatus = A.Fake<IAuthenticationStatus>();
 
-            var target = new StatusPublisher(server);
+            A.CallTo(() => authenticationStatus.IsLoggedIn).Returns(true);
+
+            var target = new StatusPublisher(server, authenticationStatus);
 
             target.PublishEndOfSession();
 

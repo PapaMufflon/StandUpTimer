@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows;
@@ -343,6 +344,43 @@ namespace StandUpTimer.Specs
                 Host.Camera.TakeScreenshot("statistics.png");
             }
             catch (System.Exception e)
+            {
+                System.IO.File.AppendAllText("error.txt", e.ToString());
+                throw;
+            }
+        }
+
+        public string LoginWillBeSaved(string locale)
+        {
+            try
+            {
+                Resources.Culture = new CultureInfo(locale);
+
+                using (var standUpTimer = StandUpTimer.Launch())
+                {
+                    string errorMessage;
+                    var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
+
+                    if (loginDialog == null)
+                        return errorMessage;
+
+                    loginDialog.LogIn("test@example.com", "password");
+
+                    standUpTimer.WaitUntilLoggedIn();
+                }
+
+                using (var standUpTimer = StandUpTimer.Launch(deleteCookies: false))
+                {
+                    standUpTimer.WaitUntilLoggedIn();
+
+                    var currentAuthenticationStatusFileName = standUpTimer.CurrentAuthenticationStatusFileName;
+
+                    return currentAuthenticationStatusFileName.Equals("..\\Images\\loggedInButton.png")
+                               ? Resources.LoginWillBeSaved
+                               : "It was not possible to log you in automatically.";
+                }
+            }
+            catch (Exception e)
             {
                 System.IO.File.AppendAllText("error.txt", e.ToString());
                 throw;

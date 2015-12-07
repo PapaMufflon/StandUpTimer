@@ -9,15 +9,20 @@ namespace StandUpTimer.Services
     internal class StatusPublisher
     {
         private readonly IServer server;
+        private readonly IAuthenticationStatus authenticationStatus;
 
-        public StatusPublisher(IServer server)
+        public StatusPublisher(IServer server, IAuthenticationStatus authenticationStatus)
         {
             this.server = server;
+            this.authenticationStatus = authenticationStatus;
 
+            if (authenticationStatus.IsLoggedIn)
+            {
 #pragma warning disable 4014
-            // fire and forget
-            SendDeskState();
+                // fire and forget
+                SendDeskState();
 #pragma warning restore 4014
+            }
         }
 
         public async Task PublishChangedDeskState(DeskState newDeskState)
@@ -27,11 +32,15 @@ namespace StandUpTimer.Services
 
         private async Task SendDeskState(Web.Contract.DeskState deskState = Web.Contract.DeskState.Sitting)
         {
-            await server.SendDeskState(new Status
+            if (authenticationStatus.IsLoggedIn)
             {
-                DateTime = TestableDateTime.Now.ToString(Status.DateTimeFormat),
-                DeskState = deskState
-            });
+                await server.SendDeskState(
+                    new Status
+                    {
+                        DateTime = TestableDateTime.Now.ToString(Status.DateTimeFormat),
+                        DeskState = deskState
+                    });
+            }
         }
 
         public async Task PublishEndOfSession()

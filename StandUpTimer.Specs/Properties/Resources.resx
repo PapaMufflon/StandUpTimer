@@ -123,6 +123,9 @@
   <data name="ItBeginsWithTheSittingPhase" xml:space="preserve">
     <value>It begins with the sitting phase.</value>
   </data>
+  <data name="LoginWillBeSaved" xml:space="preserve">
+    <value>You just need to log in once. Next time, you will be logged in automatically.</value>
+  </data>
   <data name="OnTheNextStartupTheAppStartOnThatPositionAgain" xml:space="preserve">
     <value>on the next startup, the app starts on that position again</value>
   </data>

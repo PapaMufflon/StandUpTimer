@@ -24,13 +24,13 @@ namespace StandUpTimer.ViewModels
         private Visibility creativeCommonsVisibility;
         private bool shake;
         private readonly StandUpModel model;
-        private readonly AuthenticationService authenticationService;
+        private readonly IAuthenticationService authenticationService;
         private readonly IBringToForeground bringToForeground;
         private ICommand okCommand;
         private ICommand skipCommand;
-        private ICommand loginCommand;
+        private ICommand changeAuthenticationStateCommand;
 
-        public StandUpViewModel(StandUpModel model, AuthenticationService authenticationService, IBringToForeground bringToForeground)
+        public StandUpViewModel(StandUpModel model, IAuthenticationService authenticationService, IBringToForeground bringToForeground)
         {
             this.model = model;
             this.authenticationService = authenticationService;
@@ -42,6 +42,8 @@ namespace StandUpTimer.ViewModels
             ExitButtonVisibility = Visibility.Hidden;
             OkButtonVisibility = Visibility.Collapsed;
             CreativeCommonsVisibility = Visibility.Hidden;
+
+            authenticationService.AuthenticationStateChanged += (sender, args) => OnPropertyChanged(() => AuthenticationStatus);
 
             updateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             updateTimer.Tick += OnUpdateTimerTicked;
@@ -189,11 +191,11 @@ namespace StandUpTimer.ViewModels
             }
         }
 
-        public ICommand LoginCommand
+        public ICommand ChangeAuthenticationStateCommand
         {
             get
             {
-                return loginCommand ?? (loginCommand = new RelayCommand(async _ =>
+                return changeAuthenticationStateCommand ?? (changeAuthenticationStateCommand = new RelayCommand(async _ =>
                 {
                     await authenticationService.ChangeState();
 
