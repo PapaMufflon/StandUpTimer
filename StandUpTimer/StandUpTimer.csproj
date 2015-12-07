@@ -152,6 +152,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Services\AccountTokenResult.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\CommunicationResult.cs" />
     <Compile Include="Services\CookieContainerPersistance.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Services\SecureStringExtension.cs" />
     <Compile Include="Services\Server.cs" />
     <Compile Include="Services\StatusPublisher.cs" />
+    <Compile Include="ViewModels\ChangeAuthenticationStateCommand.cs" />
     <Compile Include="ViewModels\IBringToForeground.cs" />
     <Compile Include="ViewModels\ICanHandleDeskStateStarts.cs" />
     <Compile Include="ViewModels\ICanSkip.cs" />

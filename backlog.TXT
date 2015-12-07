@@ -1,9 +1,3 @@
-- keep me logged in
-  - test
-
-- AuthenticationService refactoring
-  - move stuff from Server to here
-
 - C# 6!!!
 
 - translations

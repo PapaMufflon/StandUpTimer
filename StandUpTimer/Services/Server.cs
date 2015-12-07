@@ -23,16 +23,14 @@ namespace StandUpTimer.Services
             this.cookieContainer = cookieContainer;
         }
 
-        public async Task<bool> IsLoggedIn()
+        public async Task<string> GetStatisticsPage()
         {
             var response = await httpClient.GetAsync(StatisticsRoute);
 
             if (!response.IsSuccessStatusCode)
-                return false;
+                return null;
 
-            var content = await response.Content.ReadAsStringAsync();
-
-            return !content.Contains("<title>Log in");
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task SendDeskState(Status status)
@@ -40,18 +38,9 @@ namespace StandUpTimer.Services
             await httpClient.PostAsJsonAsync(StatisticsRoute, status);
         }
 
-        public async Task<CommunicationResult> LogIn(string username, SecureString password)
+        public async Task<bool> TrySendCredentials(string username, SecureString password, string accountToken)
         {
-            var result = await TryGetAntiForgeryToken();
-
-            if (!result.Success)
-                return new CommunicationResult
-                {
-                    Success = false,
-                    Message = Properties.Resources.CommunicationFailed
-                };
-
-            var content = CompileContent(username, password, result.AccountToken);
+            var content = CompileContent(username, password, accountToken);
 
             try
             {
@@ -59,25 +48,10 @@ namespace StandUpTimer.Services
             }
             catch (HttpRequestException)
             {
-                return new CommunicationResult
-                {
-                    Success = false,
-                    Message = Properties.Resources.CommunicationFailed
-                };
+                return false;
             }
 
-            if (!ContainsApplicationCookie())
-            {
-                return new CommunicationResult
-                {
-                    Success = false,
-                    Message = Properties.Resources.LoginFailed
-                };
-            }
-
-            cookieContainer.WriteCookiesToDisk();
-
-            return new CommunicationResult { Success = true };
+            return true;
         }
 
         private static FormUrlEncodedContent CompileContent(string username, SecureString password, string accountToken)
@@ -92,31 +66,25 @@ namespace StandUpTimer.Services
             return content;
         }
 
-        private bool ContainsApplicationCookie()
+        public bool ContainsCookie(string cookieName)
         {
-            return cookieContainer.GetCookies(httpClient.BaseAddress).Cast<Cookie>().Any(x => x.Name.Equals(".AspNet.ApplicationCookie"));
+            return cookieContainer.GetCookies(httpClient.BaseAddress).Cast<Cookie>().Any(x => x.Name.Equals(cookieName));
         }
 
-        public async Task<CommunicationResult> LogOut()
+        public void WriteCookiesToDisk()
         {
-            var result = await TryGetAntiForgeryToken();
+            cookieContainer.WriteCookiesToDisk();
+        }
 
-            if (!result.Success)
-                return new CommunicationResult
-                {
-                    Success = false,
-                    Message = Properties.Resources.CommunicationFailed
-                };
-
-            var content = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("__RequestVerificationToken", result.AccountToken) });
+        public async Task<bool> TryLogOff(string accountToken)
+        {
+            var content = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("__RequestVerificationToken", accountToken) });
             var response = await httpClient.PostAsync("Account/LogOff", content);
 
-            return response.IsSuccessStatusCode
-                ? new CommunicationResult { Success = true }
-                : new CommunicationResult { Success = false, Message = Properties.Resources.CommunicationFailed };
+            return response.IsSuccessStatusCode;
         }
 
-        private async Task<AccountTokenResult> TryGetAntiForgeryToken()
+        public async Task<AccountTokenResult> TryGetAntiForgeryToken()
         {
             string returnedSite;
 
@@ -137,12 +105,6 @@ namespace StandUpTimer.Services
                 Success = true,
                 AccountToken = token
             };
-        }
-
-        private class AccountTokenResult
-        {
-            public bool Success { get; set; }
-            public string AccountToken { get; set; }
         }
     }
 }

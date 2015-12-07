@@ -74,7 +74,7 @@ namespace StandUpTimer
         private void Bootstrap(CommandLineArguments commandLineArguments)
         {
             var server = BootstrapServer(commandLineArguments.BaseUrl);
-            var authenticationService = new AuthenticationService(server, new DialogPresenter());
+            var authenticationService = new AuthenticationService(server);
 
             statusPublisher = new StatusPublisher(server, authenticationService);
 

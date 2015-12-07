@@ -1,4 +1,5 @@
 using System;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace StandUpTimer.Services
@@ -7,7 +8,8 @@ namespace StandUpTimer.Services
     {
         event EventHandler AuthenticationStateChanged;
 
-        Task ChangeState();
+        Task<CommunicationResult> LogIn(string username, SecureString password);
+        Task<CommunicationResult> LogOff();
     }
 
     internal interface IAuthenticationStatus

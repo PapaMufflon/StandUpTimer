@@ -21,7 +21,7 @@ namespace StandUpTimer.Services
             }
         }
 
-        public static SecureString GetSecureString(this string password)
+        public static SecureString GetSecureString(this string password, bool readOnly = true)
         {
             var secureString = new SecureString();
 
@@ -30,7 +30,9 @@ namespace StandUpTimer.Services
                 secureString.AppendChar(c);
             }
 
-            secureString.MakeReadOnly();
+            if (readOnly)
+                secureString.MakeReadOnly();
+
             return secureString;
         }
     }

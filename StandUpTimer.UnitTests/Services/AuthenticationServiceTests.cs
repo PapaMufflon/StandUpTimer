@@ -1,4 +1,6 @@
 ﻿using System.Security;
+using System.Threading;
+using System.Threading.Tasks;
 using FakeItEasy;
 using NUnit.Framework;
 using StandUpTimer.Services;
@@ -10,125 +12,122 @@ namespace StandUpTimer.UnitTests.Services
     public class AuthenticationServiceTests
     {
         [Test]
-        public void Initially_the_user_is_logged_out()
+        public void The_authentication_status_is_queried_at_creation_time()
         {
             var server = A.Fake<IServer>();
-            var dialogPresenter = A.Fake<IDialogPresenter>();
 
-            var target = new AuthenticationService(server, dialogPresenter);
+            A.CallTo(() => server.GetStatisticsPage()).Returns("logged in");
 
-            Assert.That(target.IsLoggedIn, Is.False);
-        }
+            var target = new AuthenticationService(server);
 
-        [Test]
-        public async void Changing_the_state_when_logged_out_logs_in()
-        {
-            var server = A.Fake<IServer>();
-            var dialogPresenter = A.Fake<IDialogPresenter>();
-
-            A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
-
-            var target = new AuthenticationService(server, dialogPresenter);
-
-            await target.ChangeState();
+            while (!target.IsLoggedIn)
+            {
+                // uh - oh, it's asynchronous...
+                Thread.Sleep(100);
+            }
 
             Assert.That(target.IsLoggedIn, Is.True);
         }
 
         [Test]
-        public async void You_can_cancel_logging_in()
+        public async void Without_an_anti_forgery_token_You_cannot_log_in()
         {
             var server = A.Fake<IServer>();
-            var dialogPresenter = A.Fake<IDialogPresenter>();
 
-            A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(false);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
+            A.CallTo(() => server.TryGetAntiForgeryToken()).Returns(Task.FromResult(new AccountTokenResult { Success = false }));
 
-            var target = new AuthenticationService(server, dialogPresenter);
+            var target = new AuthenticationService(server);
 
-            await target.ChangeState();
+            var result = await target.LogIn("username", "password".GetSecureString());
 
-            Assert.That(target.IsLoggedIn, Is.False);
+            Assert.That(result.Success, Is.False);
         }
 
         [Test]
-        public async void Wrong_credentials_lets_you_retry()
+        public async void You_cannot_log_in_when_there_are_communication_difficulties()
         {
             var server = A.Fake<IServer>();
-            var dialogPresenter = A.Fake<IDialogPresenter>();
 
-            A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).ReturnsNextFromSequence(new CommunicationResult { Success = false }, new CommunicationResult { Success = true });
+            A.CallTo(() => server.TryGetAntiForgeryToken()).Returns(Task.FromResult(new AccountTokenResult { Success = true}));
+            A.CallTo(() => server.TrySendCredentials(A<string>._, A<SecureString>._, A<string>._)).Returns(Task.FromResult(false));
 
-            var target = new AuthenticationService(server, dialogPresenter);
+            var target = new AuthenticationService(server);
 
-            await target.ChangeState();
+            var result = await target.LogIn("username", "password".GetSecureString());
+
+            Assert.That(result.Success, Is.False);
+        }
+
+        [Test]
+        public async void You_are_loggeed_in_when_you_got_the_application_cookie()
+        {
+            var server = A.Fake<IServer>();
+
+            A.CallTo(() => server.TryGetAntiForgeryToken()).Returns(Task.FromResult(new AccountTokenResult { Success = true }));
+            A.CallTo(() => server.TrySendCredentials(A<string>._, A<SecureString>._, A<string>._)).Returns(Task.FromResult(true));
+            A.CallTo(() => server.ContainsCookie(A<string>._)).Returns(true);
+
+            var target = new AuthenticationService(server);
+
+            Assert.That(target.IsLoggedIn, Is.False);
+
+            var result = await target.LogIn("username", "password".GetSecureString());
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(target.IsLoggedIn, Is.True);
+            A.CallTo(() => server.WriteCookiesToDisk()).MustHaveHappened();
+        }
+
+        [Test]
+        public async void Without_an_anti_forgery_token_You_cannot_log_off()
+        {
+            var server = A.Fake<IServer>();
+
+            A.CallTo(() => server.TryGetAntiForgeryToken()).Returns(Task.FromResult(new AccountTokenResult { Success = false }));
+
+            var target = new AuthenticationService(server);
+
+            var result = await target.LogOff();
+
+            Assert.That(result.Success, Is.False);
+        }
+
+        [Test]
+        public async void You_cannot_log_off_when_there_are_communication_difficulties()
+        {
+            var server = A.Fake<IServer>();
+
+            A.CallTo(() => server.TryGetAntiForgeryToken()).Returns(Task.FromResult(new AccountTokenResult { Success = true }));
+            A.CallTo(() => server.TryLogOff(A<string>._)).Returns(Task.FromResult(false));
+
+            var target = new AuthenticationService(server);
+
+            var result = await target.LogOff();
+
+            Assert.That(result.Success, Is.False);
+        }
+
+        [Test]
+        public async void Logging_off_changes_the_corresponding_property()
+        {
+            var server = A.Fake<IServer>();
+
+            A.CallTo(() => server.GetStatisticsPage()).Returns("logged in");
+
+            A.CallTo(() => server.TryGetAntiForgeryToken()).Returns(Task.FromResult(new AccountTokenResult { Success = true }));
+            A.CallTo(() => server.TryLogOff(A<string>._)).Returns(Task.FromResult(true));
+
+            var target = new AuthenticationService(server);
+
+            while (!target.IsLoggedIn)
+                Thread.Sleep(100);
 
             Assert.That(target.IsLoggedIn, Is.True);
-        }
 
-        [Test]
-        public async void Changing_the_state_when_logged_in_logs_out()
-        {
-            var server = A.Fake<IServer>();
-            var dialogPresenter = A.Fake<IDialogPresenter>();
+            var result = await target.LogOff();
 
-            A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
-            A.CallTo(() => server.LogOut()).Returns(new CommunicationResult { Success = true });
-
-            var target = new AuthenticationService(server, dialogPresenter);
-
-            await target.ChangeState();
-            await target.ChangeState();
-
+            Assert.That(result.Success, Is.True);
             Assert.That(target.IsLoggedIn, Is.False);
-        }
-
-        [Test]
-        public async void Logging_out_is_automatically_retried()
-        {
-            var server = A.Fake<IServer>();
-            var dialogPresenter = A.Fake<IDialogPresenter>();
-
-            A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
-            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(
-                new CommunicationResult { Success = false },
-                new CommunicationResult { Success = false },
-                new CommunicationResult { Success = true });
-
-            var target = new AuthenticationService(server, dialogPresenter);
-
-            await target.ChangeState();
-            await target.ChangeState();
-
-            Assert.That(target.IsLoggedIn, Is.False);
-        }
-
-        [Test]
-        public async void Logging_out_is_automatically_retried_5_times()
-        {
-            var server = A.Fake<IServer>();
-            var dialogPresenter = A.Fake<IDialogPresenter>();
-
-            A.CallTo(() => dialogPresenter.ShowModal(A<IDialogViewModel>._)).Returns(true);
-            A.CallTo(() => server.LogIn(A<string>._, A<SecureString>._)).Returns(new CommunicationResult { Success = true });
-            A.CallTo(() => server.LogOut()).ReturnsNextFromSequence(
-                new CommunicationResult { Success = false },
-                new CommunicationResult { Success = false },
-                new CommunicationResult { Success = false },
-                new CommunicationResult { Success = false },
-                new CommunicationResult { Success = false },
-                new CommunicationResult { Success = true });
-
-            var target = new AuthenticationService(server, dialogPresenter);
-
-            await target.ChangeState();
-            await target.ChangeState();
-
-            Assert.That(target.IsLoggedIn, Is.True);
         }
     }
 }

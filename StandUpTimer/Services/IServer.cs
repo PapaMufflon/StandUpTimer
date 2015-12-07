@@ -6,9 +6,13 @@ namespace StandUpTimer.Services
 {
     internal interface IServer
     {
-        Task<bool> IsLoggedIn();
+        Task<string> GetStatisticsPage();
         Task SendDeskState(Status status);
-        Task<CommunicationResult> LogIn(string username, SecureString password);
-        Task<CommunicationResult> LogOut();
+
+        Task<AccountTokenResult> TryGetAntiForgeryToken();
+        Task<bool> TrySendCredentials(string username, SecureString password, string accountToken);
+        bool ContainsCookie(string cookieName);
+        void WriteCookiesToDisk();
+        Task<bool> TryLogOff(string accountToken);
     }
 }

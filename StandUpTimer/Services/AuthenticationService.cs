@@ -1,6 +1,7 @@
 using System;
+using System.Security;
 using System.Threading.Tasks;
-using StandUpTimer.ViewModels;
+using StandUpTimer.Properties;
 
 namespace StandUpTimer.Services
 {
@@ -9,18 +10,23 @@ namespace StandUpTimer.Services
         public event EventHandler AuthenticationStateChanged;
 
         private readonly IServer server;
-        private readonly IDialogPresenter dialogPresenter;
         private bool isLoggedIn;
 
-        public AuthenticationService(IServer server, IDialogPresenter dialogPresenter)
+        public AuthenticationService(IServer server)
         {
             this.server = server;
-            this.dialogPresenter = dialogPresenter;
 
             Task.Run(async () =>
             {
-                IsLoggedIn = await server.IsLoggedIn();
+                IsLoggedIn = await IsCurrentlyLoggedIn();
             });
+        }
+
+        private async Task<bool> IsCurrentlyLoggedIn()
+        {
+            var content = await server.GetStatisticsPage();
+
+            return !content.Contains("<title>Log in");
         }
 
         public bool IsLoggedIn
@@ -33,49 +39,66 @@ namespace StandUpTimer.Services
             }
         }
 
-        public async Task ChangeState()
+        public async Task<CommunicationResult> LogIn(string username, SecureString password)
         {
-            if (IsLoggedIn)
-                await TryLogOut();
-            else
-                await TryLogIn();
-        }
+            var antiForgeryResult = await server.TryGetAntiForgeryToken();
 
-        private async Task TryLogOut()
-        {
-            var tries = 0;
-
-            do
-            {
-                if ((await server.LogOut()).Success)
+            if (!antiForgeryResult.Success)
+                return new CommunicationResult
                 {
-                    IsLoggedIn = false;
-                    return;
-                }
+                    Success = false,
+                    Message = Resources.CommunicationFailed
+                };
 
-                tries++;
-            } while (tries < 5);
+            var credentialsSendSuccessfully = await server.TrySendCredentials(username, password, antiForgeryResult.AccountToken);
+
+            if (!credentialsSendSuccessfully)
+                return new CommunicationResult
+                {
+                    Success = false,
+                    Message = Resources.CommunicationFailed
+                };
+
+            if (!server.ContainsCookie(".AspNet.ApplicationCookie"))
+            {
+                return new CommunicationResult
+                {
+                    Success = false,
+                    Message = Resources.LoginFailed
+                };
+            }
+
+            server.WriteCookiesToDisk();
+            IsLoggedIn = true;
+
+            return new CommunicationResult { Success = true };
         }
 
-        private async Task TryLogIn()
+        public async Task<CommunicationResult> LogOff()
         {
-            var loginViewModel = new LoginViewModel();
+            var antiForgeryResult = await server.TryGetAntiForgeryToken();
 
-            do
+            if (!antiForgeryResult.Success)
+                return new CommunicationResult
+                {
+                    Success = false,
+                    Message = Resources.CommunicationFailed
+                };
+
+            var loggedOffSuccessfully = await server.TryLogOff(antiForgeryResult.AccountToken);
+
+            if (!loggedOffSuccessfully)
             {
-                if (loginViewModel.Password != null)
-                    loginViewModel.Password.Clear();
+                return new CommunicationResult
+                {
+                    Success = false,
+                    Message = Resources.CommunicationFailed
+                };
+            }
 
-                if (dialogPresenter.ShowModal(loginViewModel) != true)
-                    return;
+            IsLoggedIn = false;
 
-                var communicationResult = await server.LogIn(loginViewModel.Username, loginViewModel.Password);
-
-                if (communicationResult.Success)
-                    IsLoggedIn = true;
-                else
-                    loginViewModel.ErrorMessage = communicationResult.Message;
-            } while (!IsLoggedIn);
+            return new CommunicationResult { Success = true };
         }
 
         protected virtual void OnAuthenticationStateChanged()

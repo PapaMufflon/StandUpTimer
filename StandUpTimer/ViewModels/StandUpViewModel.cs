@@ -195,12 +195,7 @@ namespace StandUpTimer.ViewModels
         {
             get
             {
-                return changeAuthenticationStateCommand ?? (changeAuthenticationStateCommand = new RelayCommand(async _ =>
-                {
-                    await authenticationService.ChangeState();
-
-                    OnPropertyChanged(() => AuthenticationStatus);
-                }));
+                return changeAuthenticationStateCommand ?? (changeAuthenticationStateCommand = new ChangeAuthenticationStateCommand(authenticationService, new DialogPresenter(), new LoginViewModel()));
             }
         }
 
