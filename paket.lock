@@ -1,0 +1,115 @@
+NUGET
+  remote: https://nuget.org/api/v2
+  specs:
+    Antlr (3.5.0.2) - framework: >= net45
+    bootstrap (3.3.6) - framework: >= net45
+      jQuery (>= 1.9.1 < 3.0)
+    Castle.Core (3.3.3) - framework: >= net451
+    DeltaCompressionDotNet (1.0.0) - framework: >= net46
+    EntityFramework (6.1.3) - framework: >= net45
+    FAKE (4.10.3)
+    FakeItEasy (1.25.3) - framework: >= net46
+    FluentCommandLineParser (1.4.3) - framework: >= net46
+    jQuery (2.1.4) - framework: >= net45
+    jQuery.Validation (1.14.0) - framework: >= net45
+      jQuery (>= 1.4.4)
+    Microsoft.AspNet.Identity.Core (2.2.1) - framework: >= net45
+    Microsoft.AspNet.Identity.EntityFramework (2.2.1) - framework: >= net45
+      EntityFramework (>= 6.1.0)
+      Microsoft.AspNet.Identity.Core (>= 2.2.1)
+    Microsoft.AspNet.Identity.Owin (2.2.1) - framework: >= net45
+      Microsoft.AspNet.Identity.Core (>= 2.2.1)
+      Microsoft.Owin.Security (>= 2.1.0)
+      Microsoft.Owin.Security.Cookies (>= 2.1.0)
+      Microsoft.Owin.Security.OAuth (>= 2.1.0)
+    Microsoft.AspNet.Mvc (5.2.3)
+      Microsoft.AspNet.Razor (>= 3.2.3 < 3.3.0)
+      Microsoft.AspNet.WebPages (>= 3.2.3 < 3.3.0)
+    Microsoft.AspNet.Razor (3.2.3)
+    Microsoft.AspNet.Web.Optimization (1.1.3) - framework: >= net45
+      Microsoft.Web.Infrastructure (>= 1.0.0)
+      WebGrease (>= 1.5.2)
+    Microsoft.AspNet.WebApi.Client (5.2.3) - framework: >= net451
+      Newtonsoft.Json (>= 6.0.4) - framework: >= net45, portable-wp80+win+net45+wp81+wpa81
+    Microsoft.AspNet.WebPages (3.2.3)
+      Microsoft.AspNet.Razor (>= 3.2.3 < 3.3.0)
+      Microsoft.Web.Infrastructure (>= 1.0.0.0)
+    Microsoft.jQuery.Unobtrusive.Validation (3.2.3) - framework: >= net45
+      jQuery (>= 1.8)
+      jQuery.Validation (>= 1.8.0.1)
+    Microsoft.Owin (3.0.1) - framework: >= net45
+      Owin (>= 1.0)
+    Microsoft.Owin.Host.SystemWeb (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.Security (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.Security.Cookies (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Microsoft.Owin.Security (>= 3.0.1)
+      Owin (>= 1.0)
+    Microsoft.Owin.Security.Facebook (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Microsoft.Owin.Security (>= 3.0.1)
+      Newtonsoft.Json (>= 6.0.4)
+      Owin (>= 1.0)
+    Microsoft.Owin.Security.Google (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Microsoft.Owin.Security (>= 3.0.1)
+      Newtonsoft.Json (>= 6.0.4)
+      Owin (>= 1.0)
+    Microsoft.Owin.Security.MicrosoftAccount (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Microsoft.Owin.Security (>= 3.0.1)
+      Newtonsoft.Json (>= 6.0.4)
+      Owin (>= 1.0)
+    Microsoft.Owin.Security.OAuth (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Microsoft.Owin.Security (>= 3.0.1)
+      Newtonsoft.Json (>= 6.0.4)
+      Owin (>= 1.0)
+    Microsoft.Owin.Security.Twitter (3.0.1) - framework: >= net45
+      Microsoft.Owin (>= 3.0.1)
+      Microsoft.Owin.Security (>= 3.0.1)
+      Newtonsoft.Json (>= 6.0.4)
+      Owin (>= 1.0)
+    Microsoft.Web.Infrastructure (1.0.0)
+    Microsoft.Web.Xdt (2.1.1) - framework: >= net46
+    Modernizr (2.8.3) - framework: >= net45
+    Mono.Cecil (0.9.6.1) - framework: >= net46
+    Newtonsoft.Json (7.0.1) - framework: >= net45
+    NuGet.CommandLine (3.3.0)
+    NuGet.Core (2.10.1) - framework: >= net46
+      Microsoft.Web.Xdt (>= 2.1.0)
+    NUnit (3.0.1)
+    NUnit.Console (3.0.1)
+    OpenCover (4.6.166)
+    Owin (1.0) - framework: >= net45
+    ReportGenerator (2.3.5)
+    Respond (1.4.2) - framework: >= net45
+    Selenium.Support (2.48.2) - framework: >= net451
+      Selenium.WebDriver (>= 2.48.2)
+    Selenium.WebDriver (2.48.2) - framework: >= net451
+    Splat (1.6.2) - framework: >= net46
+    squirrel.windows (1.2.1) - framework: >= net46
+      DeltaCompressionDotNet (>= 1.0.0)
+      Mono.Cecil (>= 0.9.6.1)
+      Splat (>= 1.6.2)
+    TestStack.Seleno (0.9.11) - framework: >= net451
+      Castle.Core (>= 3.3.3)
+      Selenium.Support (>= 2.45.0)
+      Selenium.WebDriver (>= 2.45.0)
+    TestStack.White (0.13.3) - framework: >= net451
+      Castle.Core (>= 3.3.0)
+    WebGrease (1.6.0) - framework: >= net45
+      Antlr (>= 3.4.1.9004)
+      Newtonsoft.Json (>= 5.0.4)
+
+GROUP Concordion
+NUGET
+  remote: https://nuget.org/api/v2
+  specs:
+    Concordion.NET (1.3.0) - framework: >= net46
+      NUnit (2.6.4)
+    NUnit (2.6.4) - framework: >= net46

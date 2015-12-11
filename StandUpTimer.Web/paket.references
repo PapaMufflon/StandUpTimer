@@ -1,0 +1,13 @@
+bootstrap
+Microsoft.AspNet.Identity.EntityFramework
+Microsoft.AspNet.Identity.Owin
+Microsoft.AspNet.Mvc
+Microsoft.AspNet.Web.Optimization
+Microsoft.jQuery.Unobtrusive.Validation
+Microsoft.Owin.Host.SystemWeb
+Microsoft.Owin.Security.Facebook
+Microsoft.Owin.Security.Google
+Microsoft.Owin.Security.MicrosoftAccount
+Microsoft.Owin.Security.Twitter
+Modernizr
+Respond

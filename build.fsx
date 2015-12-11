@@ -4,9 +4,11 @@ open Fake
 open Fake.ReportGeneratorHelper
 open Fake.OpenCoverHelper
 
-RestorePackages()
+#load "NUnit3.fsx"
+open NUnit3
 
 let buildDir = "./build"
+let specsDir = "./build/specs"
 
 Target "Clean" (fun _ ->
     CleanDir buildDir
@@ -18,9 +20,15 @@ Target "BuildApp" (fun _ ->
       |> Log "AppBuild-Output: "
 )
 
+Target "BuildSpecs" (fun _ ->
+    !! "./**/*.Specs.csproj"
+      |> MSBuildRelease specsDir "Build"
+      |> Log "AppBuild-Output: "
+)
+
 Target "Test" (fun _ ->
     !! (buildDir + "/*.UnitTests.dll")
-      |> NUnit (fun p ->
+      |> NUnit3 (fun p ->
           {p with
              DisableShadowCopy = true;
              OutputFile = buildDir + "/TestResults.xml" })
@@ -30,16 +38,16 @@ Target "Coverage" (fun _ ->
     for x in !! (buildDir + "/*.UnitTests.dll") do
         OpenCover (fun p ->
             { p with
-                ExePath = "./packages/OpenCover.4.5.3723/OpenCover.Console.exe"
-                TestRunnerExePath = "./packages/NUnit.Runners.2.6.3/tools/nunit-console.exe"
+                ExePath = "./packages/OpenCover/tools/OpenCover.Console.exe"
+                TestRunnerExePath = "./packages/NUnit.Console/tools/nunit3-console.exe"
                 Register = RegisterType.RegisterUser
                 Output = buildDir + "/coverage.xml"
                 Filter = "+[StandUpTimer*]* -[StandUpTimer*]StandUpTimer.Annotations*"})
-            (x.ToString() + " /config:Release /noshadow /framework:net-4.5")
+            (x.ToString() + " /config:Release /framework:net-4.5")
 
         ReportGenerator (fun p ->
             {p with
-               ExePath = "./packages/ReportGenerator.2.1.4.0/ReportGenerator.exe"
+               ExePath = "./packages/ReportGenerator/tools/ReportGenerator.exe"
                ReportTypes = [ReportGeneratorReportType.Html]
                TargetDir = buildDir + "/coverage/" + System.IO.Path.GetFileNameWithoutExtension(x)
                })
@@ -47,15 +55,15 @@ Target "Coverage" (fun _ ->
 )
 
 Target "Spec" (fun _ ->
-    CreateDir "./packages/NUnit.Runners.2.6.3/tools/addins"
+    CreateDir "./packages/concordion/NUnit/tools/addins"
 
-    CopyFile "./packages/NUnit.Runners.2.6.3/tools/addins" "./packages/Concordion.NET.1.2.0/tools/Concordion.NUnit.dll"
+    CopyFile "./packages/NUnit.Console/tools/addins" "./packages/concordion/Concordion.NET/tools/Concordion.NUnit.dll"
 
-    !! (buildDir + "/*.Specs.dll")
-      |> NUnit (fun p ->
+    !! (specsDir + "/*.Specs.dll")
+      |> NUnit3 (fun p ->
           {p with
              DisableShadowCopy = true;
-             OutputFile = buildDir + "/SpecResults.xml" })
+             OutputFile = specsDir + "/SpecResults.xml" })
 )
 
 Target "Default" (fun _ ->
@@ -66,6 +74,7 @@ Target "Default" (fun _ ->
   ==> "BuildApp"
   ==> "Test"
   ==> "Coverage"
+  ==> "BuildSpecs"
   ==> "Spec"
   ==> "Default"
 

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using FakeItEasy;
 using NUnit.Framework;
 using StandUpTimer.Services;
-using StandUpTimer.ViewModels;
 
 namespace StandUpTimer.UnitTests.Services
 {
@@ -30,7 +29,7 @@ namespace StandUpTimer.UnitTests.Services
         }
 
         [Test]
-        public async void Without_an_anti_forgery_token_You_cannot_log_in()
+        public async Task Without_an_anti_forgery_token_You_cannot_log_in()
         {
             var server = A.Fake<IServer>();
 
@@ -44,7 +43,7 @@ namespace StandUpTimer.UnitTests.Services
         }
 
         [Test]
-        public async void You_cannot_log_in_when_there_are_communication_difficulties()
+        public async Task You_cannot_log_in_when_there_are_communication_difficulties()
         {
             var server = A.Fake<IServer>();
 
@@ -59,7 +58,7 @@ namespace StandUpTimer.UnitTests.Services
         }
 
         [Test]
-        public async void You_are_loggeed_in_when_you_got_the_application_cookie()
+        public async Task You_are_loggeed_in_when_you_got_the_application_cookie()
         {
             var server = A.Fake<IServer>();
 
@@ -79,7 +78,7 @@ namespace StandUpTimer.UnitTests.Services
         }
 
         [Test]
-        public async void Without_an_anti_forgery_token_You_cannot_log_off()
+        public async Task Without_an_anti_forgery_token_You_cannot_log_off()
         {
             var server = A.Fake<IServer>();
 
@@ -93,7 +92,7 @@ namespace StandUpTimer.UnitTests.Services
         }
 
         [Test]
-        public async void You_cannot_log_off_when_there_are_communication_difficulties()
+        public async Task You_cannot_log_off_when_there_are_communication_difficulties()
         {
             var server = A.Fake<IServer>();
 
@@ -108,7 +107,7 @@ namespace StandUpTimer.UnitTests.Services
         }
 
         [Test]
-        public async void Logging_off_changes_the_corresponding_property()
+        public async Task Logging_off_changes_the_corresponding_property()
         {
             var server = A.Fake<IServer>();
 

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.0.5813.39036" clr-version="4.0.30319.42000" start-time="2015-12-11 15:43:40Z" end-time="2015-12-11 15:44:33Z" duration="52.919884">
+  <command-line><![CDATA["C:\Users\tobiaswalter\src\StandUpTimer\packages\NUnit.Console\tools\nunit3-console.exe" "--result=nunit2" "C:\Users\tobiaswalter\src\StandUpTimer\build\specs\StandUpTimer.Specs.dll" "--out=./build/specs/SpecResults.xml" ]]></command-line>
+  <test-suite type="Assembly" id="1-1002" name="C:\Users\tobiaswalter\src\StandUpTimer\build\specs\StandUpTimer.Specs.dll" fullname="C:\Users\tobiaswalter\src\StandUpTimer\build\specs\StandUpTimer.Specs.dll" runstate="Runnable" testcasecount="1" result="Passed" duration="52.884520" total="1" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="_PID" value="8360" />
+      <property name="_APPDOMAIN" value="test-domain-" />
+    </properties>
+    <test-suite type="Namespace" id="1-1003" name="StandUpTimer" fullname="StandUpTimer" runstate="Runnable" testcasecount="1" result="Passed" duration="52.875924" total="1" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="Namespace" id="1-1004" name="Specs" fullname="StandUpTimer.Specs" runstate="Runnable" testcasecount="1" result="Passed" duration="52.875635" total="1" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="TestFixture" id="1-1000" name="Index" fullname="StandUpTimer.Specs.Index" runstate="Runnable" testcasecount="1" result="Passed" duration="52.874662" total="1" passed="0" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-case id="1-1001" name="ExecutableSpecification.ConcordionTest" fullname="StandUpTimer.Specs.Index.ExecutableSpecification.ConcordionTest" runstate="Runnable" result="Passed" duration="52.869112" asserts="0">
+            <reason>
+              <message><![CDATA[]]></message>
+            </reason>
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

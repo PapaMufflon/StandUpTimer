@@ -18,11 +18,11 @@ namespace StandUpTimer.UnitTests.ViewModels
             var model = Model;
             var target = new StandUpViewModel(model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
-            Assert.That(target.CurrentImage, Is.StringContaining("sitting"));
+            Assert.That(target.CurrentImage, Does.Contain("sitting"));
 
             model.Skip();
 
-            Assert.That(target.CurrentImage, Is.StringContaining("standing"));
+            Assert.That(target.CurrentImage, Does.Contain("standing"));
         }
 
         [Test]
@@ -82,11 +82,11 @@ namespace StandUpTimer.UnitTests.ViewModels
         {
             var target = new StandUpViewModel(Model, A.Fake<IAuthenticationService>(), A.Fake<IBringToForeground>());
 
-            Assert.That(target.CurrentImage, Is.StringContaining("sitting"));
+            Assert.That(target.CurrentImage, Does.Contain("sitting"));
 
             target.SkipCommand.Execute(null);
 
-            Assert.That(target.CurrentImage, Is.StringContaining("standing"));
+            Assert.That(target.CurrentImage, Does.Contain("standing"));
             Assert.That(target.OkButtonVisibility, Is.EqualTo(Visibility.Collapsed));
         }
 

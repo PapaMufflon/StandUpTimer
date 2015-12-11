@@ -78,7 +78,7 @@ namespace StandUpTimer
             statusPublisher = new StatusPublisher(server, authenticationService);
 
             var standUpModel = new StandUpModel(new DispatcherTimerWrapper(), commandLineArguments.DeskStateTimes.SittingTime, commandLineArguments.DeskStateTimes.StandingTime);
-            standUpModel.DeskStateChanged += (s, f) => statusPublisher.PublishChangedDeskState(f.NewDeskState);
+            standUpModel.DeskStateChanged += async (s, f) => await statusPublisher.PublishChangedDeskState(f.NewDeskState);
 
             var standUpViewModel = new StandUpViewModel(standUpModel, authenticationService, this);
             standUpViewModel.PropertyChanged += (sender, eventArgs) =>

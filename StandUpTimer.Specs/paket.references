@@ -1,0 +1,8 @@
+Microsoft.AspNet.Mvc
+NuGet.Core
+squirrel.windows
+TestStack.Seleno
+TestStack.White
+
+group Concordion
+	Concordion.NET

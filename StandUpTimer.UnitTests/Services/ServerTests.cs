@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using StandUpTimer.Services;
 using StandUpTimer.Web.Contract;
@@ -13,16 +14,23 @@ namespace StandUpTimer.UnitTests.Services
         private const string BaseUrl = "http://localhost/";
 
         [Test]
-        public void You_can_send_the_current_desk_state_although_the_user_is_not_logged_in() // because the server object does not know if the user is logged in, it has no state.
+        public async Task You_can_send_the_current_desk_state_although_the_user_is_not_logged_in() // because the server object does not know if the user is logged in, it has no state.
         {
             var client = new HttpClient(new FakeResponseHandler()) { BaseAddress = new Uri(BaseUrl) };
             var target = new Server(client, new CookieContainer());
 
-            Assert.DoesNotThrow(async () => await target.SendDeskState(new Status()));
+            try
+            {
+                await target.SendDeskState(new Status());
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("target.SendDeskState throw an exception: " + e);
+            }
         }
 
         [Test]
-        public async void You_can_get_an_anti_forgery_token()
+        public async Task You_can_get_an_anti_forgery_token()
         {
             var cookieContainer = new CookieContainer();
 
