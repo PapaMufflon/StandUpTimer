@@ -185,3 +185,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 
 azure.key
+.fake
