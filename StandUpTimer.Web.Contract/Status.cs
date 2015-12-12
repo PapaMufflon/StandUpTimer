@@ -6,5 +6,10 @@ namespace StandUpTimer.Web.Contract
 
         public string DateTime { get; set; }
         public DeskState DeskState { get; set; }
+
+        public override string ToString()
+        {
+            return DeskState.ToString();
+        }
     }
 }
