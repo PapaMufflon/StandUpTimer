@@ -6,6 +6,7 @@ open Fake.Git
 open Fake.NuGet
 
 let buildDir = "./build"
+let specsDir = "./build/specs"
 let docDir = "./doc"
 let repoDir = "."
 
@@ -38,7 +39,7 @@ Target "ReleasifyWindowsDesktopApp" (fun _ ->
 
     let result =
         ExecProcess (fun info ->
-            info.FileName <- "./packages/squirrel.windows.0.9.3/tools/squirrel.exe"
+            info.FileName <- "./packages/squirrel.windows/tools/squirrel.exe"
             info.Arguments <- "-releasify StandUpTimer." + version + ".nupkg"
             info.WorkingDirectory <- buildDir
         ) (TimeSpan.FromMinutes 1.)
@@ -63,9 +64,9 @@ Target "UpdateDocumentation" (fun _ ->
 
     cloneSingleBranch repoDir "https://github.com/PapaMufflon/StandUpTimer.git" "gh-pages" docDir
 
-    CopyFile (docDir + "/concordion-logo.png") (buildDir + "/results/image/concordion-logo.png")
+    CopyFile (docDir + "/concordion-logo.png") (specsDir + "/results/image/concordion-logo.png")
     let indexHtml = docDir + "/Index.html"
-    Copy docDir !! (buildDir + "/results/StandUpTimer/Specs/**")
+    Copy docDir !! (specsDir + "/results/StandUpTimer/Specs/**")
 
     let index = File.ReadAllText indexHtml
     let modifiedIndex = index.Replace("..\..\image\concordion-logo.png", "concordion-logo.png")
@@ -95,6 +96,10 @@ Target "Default" (fun _ ->
     trace "Have fun deploying the Stand-Up Timer!!!"
 )
 
+Target "CreateInstaller" (fun _ ->
+    trace "Creating installer..."
+)
+
 "DeployWebApp"
   ==> "ReleasifyWindowsDesktopApp"
   ==> "DeployWindowsDesktopAppToAzure"
@@ -102,5 +107,8 @@ Target "Default" (fun _ ->
   ==> "PushToOrigin"
   ==> "Tag"
   ==> "Default"
+
+"ReleasifyWindowsDesktopApp"
+  ==> "CreateInstaller"
 
 RunTargetOrDefault "Default"

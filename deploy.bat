@@ -1,5 +1,15 @@
 @echo off
 cls
-".nuget/NuGet.exe" "Install" "FAKE" "-OutputDirectory" "packages" "-ExcludeVersion"
+
+.paket\paket.bootstrapper.exe
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
+.paket\paket.exe restore
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
 "packages/FAKE/tools/Fake.exe" deploy.fsx
 pause
