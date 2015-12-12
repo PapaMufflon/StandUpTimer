@@ -33,7 +33,8 @@ namespace StandUpTimer.Specs
             if (deleteCookies)
                 CookieContainerPersistance.DeleteCookiesFromDisk();
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe", string.Format("--sit {0} --stand 3600000 --noUpdate --baseUrl http://localhost:12346/", sittingWaitTime));
+            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe",
+                $"--sit {sittingWaitTime} --stand 3600000 --noUpdate --baseUrl http://localhost:12346/");
 
             return new StandUpTimer(Application.Launch(processStartInfo));
         }
@@ -82,7 +83,7 @@ namespace StandUpTimer.Specs
             {
                 var currentImageFileNameLabel = TryAction(() => Window.Get<Label>("CurrentImageFileName"));
 
-                return currentImageFileNameLabel == null ? null : currentImageFileNameLabel.Text;
+                return currentImageFileNameLabel?.Text;
             }
         }
 
@@ -112,7 +113,7 @@ namespace StandUpTimer.Specs
             {
                 var currentAuthenticationStatusFileNameLabel = TryAction(() => Window.Get<Label>("CurrentAuthenticationStatusFileName"));
 
-                return currentAuthenticationStatusFileNameLabel == null ? null : currentAuthenticationStatusFileNameLabel.Text;
+                return currentAuthenticationStatusFileNameLabel?.Text;
             }
         }
 
@@ -132,7 +133,7 @@ namespace StandUpTimer.Specs
             {
                 var progressBarTextLabel = TryAction(() => Window.Get<Label>("ProgressText"));
 
-                return progressBarTextLabel == null ? null : progressBarTextLabel.Text;
+                return progressBarTextLabel?.Text;
             }
         }
 
@@ -141,7 +142,7 @@ namespace StandUpTimer.Specs
             get { return TryAction(() => Window.IsFocussed); }
         }
 
-        public Point Location { get { return Window.Location; } }
+        public Point Location => Window.Location;
 
         public void WaitUntilProgressBarTextIs(string text)
         {

@@ -84,10 +84,7 @@ namespace StandUpTimer
             standUpViewModel.PropertyChanged += (sender, eventArgs) =>
             {
                 if (eventArgs.PropertyName.Equals("AuthenticationStatus"))
-#pragma warning disable 4014
-                    // fire and forget
-                    statusPublisher.PublishChangedDeskState(standUpModel.DeskState);
-#pragma warning restore 4014
+                    Task.Run(async () => await statusPublisher.PublishChangedDeskState(standUpModel.DeskState));
             };
 
             MainWindow = new MainWindow(standUpViewModel);

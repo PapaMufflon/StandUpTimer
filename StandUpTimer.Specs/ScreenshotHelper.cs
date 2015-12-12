@@ -11,7 +11,7 @@ namespace StandUpTimer.Specs
             window.Keyboard.PressSpecialKey(KeyboardInput.SpecialKeys.PRINTSCREEN);
 
             Directory.CreateDirectory(@"results\StandUpTimer\Specs");
-            File.Copy("screenshot.png", string.Format(@"results\StandUpTimer\Specs\{0}", fileName), true);
+            File.Copy("screenshot.png", $@"results\StandUpTimer\Specs\{fileName}", true);
         }
     }
 }

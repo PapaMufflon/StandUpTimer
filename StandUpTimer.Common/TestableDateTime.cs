@@ -11,14 +11,8 @@ namespace StandUpTimer.Common
             DateTime = new DateTimeWrapper();
         }
 
-        public static DateTime Now
-        {
-            get { return DateTime.Now; }
-        }
+        public static DateTime Now => DateTime.Now;
 
-        public static DateTime Today
-        {
-            get { return DateTime.Today; }
-        }
+        public static DateTime Today => DateTime.Today;
     }
 }

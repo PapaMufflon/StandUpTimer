@@ -14,10 +14,7 @@ namespace StandUpTimer.Specs
             this.loginWindow = loginWindow;
         }
 
-        public Hyperlink RegisterLink
-        {
-            get { return loginWindow.Get<Hyperlink>("Register"); }
-        }
+        public Hyperlink RegisterLink => loginWindow.Get<Hyperlink>("Register");
 
         public void TakeScreenshot(string fileName)
         {

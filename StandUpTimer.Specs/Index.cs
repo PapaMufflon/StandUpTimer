@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Threading;
 using System.Windows;
 using Concordion.Runners.NUnit;
@@ -35,9 +36,9 @@ namespace StandUpTimer.Specs
                                : "It does not begin with the sitting phase.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -60,9 +61,9 @@ namespace StandUpTimer.Specs
                                : "The close button is not visible.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -85,9 +86,9 @@ namespace StandUpTimer.Specs
                                : "The skip button is not visible.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -110,9 +111,9 @@ namespace StandUpTimer.Specs
                                : "The attribution button is not visible.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -135,9 +136,9 @@ namespace StandUpTimer.Specs
                                : "The login button is not visible.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -166,9 +167,9 @@ namespace StandUpTimer.Specs
                         : "The register link is not visible";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -188,9 +189,9 @@ namespace StandUpTimer.Specs
                     loginDialog.TakeScreenshot("login.png");
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -220,9 +221,9 @@ namespace StandUpTimer.Specs
                     ? Resources.CreateNewUser
                     : "Could not create a new user account via the website";
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -236,9 +237,9 @@ namespace StandUpTimer.Specs
 
                 Host.Camera.TakeScreenshot("register.png");
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -268,9 +269,9 @@ namespace StandUpTimer.Specs
                                : "It was not possible to log you in.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -298,9 +299,9 @@ namespace StandUpTimer.Specs
                         : "Didn't get the second login dialog with the error message.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -325,9 +326,9 @@ namespace StandUpTimer.Specs
                     secondLoginDialog.TakeScreenshot("retry.png");
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -343,9 +344,9 @@ namespace StandUpTimer.Specs
 
                 Host.Camera.TakeScreenshot("statistics.png");
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -382,7 +383,7 @@ namespace StandUpTimer.Specs
             }
             catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -410,9 +411,9 @@ namespace StandUpTimer.Specs
                                : Resources.YouCanSeeTheRemainingTimeInProgressBar;
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -432,9 +433,9 @@ namespace StandUpTimer.Specs
                                : Resources.YouCanSeeTheRemainingTimeInTaskbar;
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -448,9 +449,9 @@ namespace StandUpTimer.Specs
                     standUpTimer.TakeScreenshot("start.png");
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -468,7 +469,7 @@ namespace StandUpTimer.Specs
                     Thread.Sleep(2 * sittingWaitTime);
 
                     var currentImageFileName = standUpTimer.CurrentImageFileName;
-                    System.IO.File.AppendAllText("error.txt", currentImageFileName);
+                    File.AppendAllText("error.txt", currentImageFileName);
                     if (currentImageFileName == null)
                         return "Cannot determine current image.";
 
@@ -477,9 +478,9 @@ namespace StandUpTimer.Specs
                                : "There was a wrong image after waiting the sitting time.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -507,9 +508,9 @@ namespace StandUpTimer.Specs
                                : "There was a wrong image after clicking the skip button.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -541,9 +542,9 @@ namespace StandUpTimer.Specs
                     return result;
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -570,9 +571,9 @@ namespace StandUpTimer.Specs
                                : "the OK button is not visible";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -601,9 +602,9 @@ namespace StandUpTimer.Specs
                                : "the time is not ticking correctly, " + progressBarText + " was shown.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -623,9 +624,9 @@ namespace StandUpTimer.Specs
                     standUpTimer.TakeScreenshot("nextPhase.png");
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -650,9 +651,9 @@ namespace StandUpTimer.Specs
                                : "the app is not on the previous position.";
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }
@@ -667,9 +668,9 @@ namespace StandUpTimer.Specs
                     standUpTimer.TakeScreenshot("attribution.png");
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                System.IO.File.AppendAllText("error.txt", e.ToString());
+                File.AppendAllText("error.txt", e.ToString());
                 throw;
             }
         }

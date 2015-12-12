@@ -1,10 +1,10 @@
-- c# 6 all the things!!!
-
 - translations
   - login dialog
 
-- maybe update squirrel code!?
-  - lock if necessary
+- look if more tests make sense (low coverage)
+
+- give some love to website
+  - look if it's possible to upgrade to ASP5
 
 - think about afk handling
 

@@ -85,7 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Concordion.config" />
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>

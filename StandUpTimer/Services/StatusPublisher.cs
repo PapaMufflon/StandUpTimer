@@ -18,10 +18,7 @@ namespace StandUpTimer.Services
 
             if (authenticationStatus.IsLoggedIn)
             {
-#pragma warning disable 4014
-                // fire and forget
-                SendDeskState();
-#pragma warning restore 4014
+                Task.Run(async () => await SendDeskState());
             }
         }
 
