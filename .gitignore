@@ -186,4 +186,5 @@ FakesAssemblies/
 
 azure.key
 .fake
+.paket
 nunit2
