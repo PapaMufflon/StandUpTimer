@@ -70,15 +70,6 @@ namespace StandUpTimer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Breu Bürotechnik.
-        /// </summary>
-        public static string Breu {
-            get {
-                return ResourceManager.GetString("Breu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -115,6 +106,15 @@ namespace StandUpTimer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jasmin Dittes  (◡‿◡✿).
+        /// </summary>
+        public static string Jasmin {
+            get {
+                return ResourceManager.GetString("Jasmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {
@@ -142,7 +142,7 @@ namespace StandUpTimer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standing up and sitting down images ©.
+        ///   Looks up a localized string similar to Standing up and sitting down images by.
         /// </summary>
         public static string MainImagesCopyright {
             get {

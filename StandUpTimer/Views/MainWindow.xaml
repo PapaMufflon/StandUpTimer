@@ -126,13 +126,17 @@
                         <TextBlock TextWrapping="Wrap"
                                    Margin="2 0">
                             <Run Text="{x:Static res:Resources.MainImagesCopyright}" />
-                            <Hyperlink NavigateUri="http://www.breu-buerotechnik.de/" RequestNavigate="Hyperlink_OnRequestNavigate"><Run Text="{x:Static res:Resources.Breu}" /></Hyperlink>.
+                            <Run Text="{x:Static res:Resources.Jasmin}" />.
+                        </TextBlock>
+
+                        <TextBlock TextWrapping="Wrap"
+                                   Margin="2 0">
                             <Run Text="{x:Static res:Resources.AllOtherItems}" />
                             <Hyperlink NavigateUri="http://www.thenounproject.com" RequestNavigate="Hyperlink_OnRequestNavigate">
                                 <Run Text="{x:Static res:Resources.NounProject}" />
                             </Hyperlink>:
                         </TextBlock>
-                        
+
                         <ListBox ItemsSource="{Binding Artists}"
                                  Margin="2 0"
                                  Background="Transparent"

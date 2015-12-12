@@ -120,9 +120,6 @@
   <data name="AllOtherItems" xml:space="preserve">
     <value>All other images are created by artists from the</value>
   </data>
-  <data name="Breu" xml:space="preserve">
-    <value>Breu Bürotechnik</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -145,7 +142,7 @@
     <value>Logout</value>
   </data>
   <data name="MainImagesCopyright" xml:space="preserve">
-    <value>Standing up and sitting down images ©</value>
+    <value>Standing up and sitting down images by</value>
   </data>
   <data name="NounProject" xml:space="preserve">
     <value>Noun Project</value>
@@ -170,5 +167,8 @@
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="Jasmin" xml:space="preserve">
+    <value>Jasmin Dittes  (◡‿◡✿)</value>
   </data>
 </root>
