@@ -15,6 +15,7 @@ namespace StandUpTimer
     public partial class App : IBringToForeground
     {
         private StatusPublisher statusPublisher;
+        private Task updateTask;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -91,7 +92,7 @@ namespace StandUpTimer
             MainWindow.Show();
 
             if (commandLineArguments.Update)
-                Task.Run(async () =>
+                updateTask = Task.Run(async () =>
                 {
                     using (var mgr = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer"))
                         await mgr.UpdateApp();
@@ -126,6 +127,8 @@ namespace StandUpTimer
         private async void App_OnExit(object sender, ExitEventArgs e)
         {
             await statusPublisher.PublishEndOfSession();
+
+            updateTask?.Wait();
         }
     }
 }
