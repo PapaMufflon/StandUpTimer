@@ -92,11 +92,15 @@ namespace StandUpTimer
             MainWindow.Show();
 
             if (commandLineArguments.Update)
+            {
                 updateTask = Task.Run(async () =>
                 {
-                    using (var mgr = new UpdateManager(@"http://mufflonosoft.blob.core.windows.net/standuptimer", "StandUpTimer"))
+                    using (var mgr = new UpdateManager(Settings.Default.UpdateUrl, "StandUpTimer"))
+                    {
                         await mgr.UpdateApp();
+                    }
                 });
+            }
         }
 
         private static Server BootstrapServer(string baseUrl)

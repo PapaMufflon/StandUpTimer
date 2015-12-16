@@ -55,5 +55,14 @@ namespace StandUpTimer.Properties {
                 return ((string)(this["BaseUrl"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://mufflonosoft.blob.core.windows.net/standuptimer")]
+        public string UpdateUrl {
+            get {
+                return ((string)(this["UpdateUrl"]));
+            }
+        }
     }
 }

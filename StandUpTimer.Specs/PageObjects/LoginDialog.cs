@@ -3,7 +3,7 @@ using TestStack.White.UIItems;
 using TestStack.White.UIItems.Finders;
 using TestStack.White.UIItems.WindowItems;
 
-namespace StandUpTimer.Specs
+namespace StandUpTimer.Specs.PageObjects
 {
     internal class LoginDialog
     {

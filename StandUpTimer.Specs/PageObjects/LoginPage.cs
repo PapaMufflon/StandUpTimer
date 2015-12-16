@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using TestStack.Seleno.PageObjects;
 
-namespace StandUpTimer.Specs
+namespace StandUpTimer.Specs.PageObjects
 {
     public class LoginPage : Page<LoginModel>
     {

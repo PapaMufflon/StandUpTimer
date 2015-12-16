@@ -1,4 +1,4 @@
-namespace StandUpTimer.Specs
+namespace StandUpTimer.Specs.PageObjects
 {
     public class LoginModel
     {

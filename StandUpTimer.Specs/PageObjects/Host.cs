@@ -6,7 +6,7 @@ using StandUpTimer.Web;
 using TestStack.Seleno.Configuration;
 using TestStack.Seleno.Configuration.Screenshots;
 
-namespace StandUpTimer.Specs
+namespace StandUpTimer.Specs.PageObjects
 {
     public static class Host
     {

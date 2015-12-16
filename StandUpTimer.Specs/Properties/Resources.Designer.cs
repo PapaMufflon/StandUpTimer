@@ -70,6 +70,15 @@ namespace StandUpTimer.Specs.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to After installation, the program starts immediately and updates itself..
+        /// </summary>
+        internal static string InstallationAndUpdate {
+            get {
+                return ResourceManager.GetString("InstallationAndUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It begins with the sitting phase..
         /// </summary>
         internal static string ItBeginsWithTheSittingPhase {

@@ -11,5 +11,8 @@
     <Setting Name="BaseUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://stand-uptimer.azurewebsites.net/</Value>
     </Setting>
+    <Setting Name="UpdateUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://mufflonosoft.blob.core.windows.net/standuptimer</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -2,7 +2,7 @@ using System.IO;
 using TestStack.White.UIItems.WindowItems;
 using TestStack.White.WindowsAPI;
 
-namespace StandUpTimer.Specs
+namespace StandUpTimer.Specs.PageObjects
 {
     internal static class ScreenshotHelper
     {

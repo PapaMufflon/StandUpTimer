@@ -161,7 +161,8 @@
                         </ListBox>
                         <TextBlock HorizontalAlignment="Right"
                                    VerticalAlignment="Bottom"
-                                   Text="{Binding VersionNumber}" />
+                                   Text="{Binding VersionNumber}" 
+                                   x:Name="VersionNumber" />
                     </StackPanel>
                 </Border>
             </Grid>

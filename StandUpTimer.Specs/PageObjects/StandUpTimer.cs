@@ -8,7 +8,7 @@ using TestStack.White.Factory;
 using TestStack.White.UIItems;
 using TestStack.White.UIItems.WindowItems;
 
-namespace StandUpTimer.Specs
+namespace StandUpTimer.Specs.PageObjects
 {
     internal class StandUpTimer : IDisposable
     {
@@ -28,12 +28,12 @@ namespace StandUpTimer.Specs
             }
         }
 
-        public static StandUpTimer Launch(int sittingWaitTime = 1200000, bool deleteCookies = true)
+        public static StandUpTimer Launch(string executable = "StandUpTimer.exe", int sittingWaitTime = 1200000, bool deleteCookies = true)
         {
             if (deleteCookies)
                 CookieContainerPersistance.DeleteCookiesFromDisk();
 
-            var processStartInfo = new ProcessStartInfo("StandUpTimer.exe",
+            var processStartInfo = new ProcessStartInfo(executable,
                 $"--sit {sittingWaitTime} --stand 3600000 --noUpdate --baseUrl http://localhost:12346/");
 
             return new StandUpTimer(Application.Launch(processStartInfo));
@@ -143,6 +143,16 @@ namespace StandUpTimer.Specs
         }
 
         public Point Location => Window.Location;
+
+        public string VersionNumber
+        {
+            get
+            {
+                var versionNumberTextBox = TryAction(() => Window.Get<Label>("VersionNumber"));
+
+                return versionNumberTextBox?.Text;
+            }
+        }
 
         public void WaitUntilProgressBarTextIs(string text)
         {

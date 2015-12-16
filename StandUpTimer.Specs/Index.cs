@@ -6,20 +6,58 @@ using System.Threading;
 using System.Windows;
 using Concordion.Runners.NUnit;
 using NUnit.Framework;
+using StandUpTimer.Specs.PageObjects;
 using StandUpTimer.Specs.Properties;
+using TestStack.White;
 
 namespace StandUpTimer.Specs
 {
     [TestFixture]
     public class Index : ExecutableSpecification
     {
+        public string InstallationAndUpdate(string locale)
+        {
+            try
+            {
+                Resources.Culture = new CultureInfo(locale);
+
+                var installer = new Installer();
+                installer.TryUninstall();
+                installer.Install();
+
+                var application = Application.Attach("StandUpTimer");
+                application.Kill();
+
+                installer.SetUpdateLocation(Path.Combine(Directory.GetCurrentDirectory(), "Releases"));
+
+                using (PageObjects.StandUpTimer.Launch(Installer.StandUpTimerExecutable))
+                {
+                    Thread.Sleep(2000);
+                }
+
+                Thread.Sleep(2000);
+
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch(Installer.StandUpTimerExecutable))
+                {
+                    return standUpTimer.VersionNumber.Contains("0.8.4")
+                        ? Resources.InstallationAndUpdate
+                        : "Update was not successfull";
+                }
+            }
+            catch (Exception e)
+            {
+                File.AppendAllText("error.txt", e.ToString());
+                throw;
+            }
+        }
+
         public string ItBeginsWithTheSittingPhase(string locale)
         {
             try
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     var currentImage = standUpTimer.CurrentImage;
 
@@ -49,7 +87,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     var closeButton = standUpTimer.CloseButton;
 
@@ -74,7 +112,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     var skipButton = standUpTimer.SkipButton;
 
@@ -99,7 +137,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     var attributionButton = standUpTimer.AttributionButton;
 
@@ -124,7 +162,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     var loginButton = standUpTimer.LoginButton;
 
@@ -149,7 +187,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
                     var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
@@ -178,7 +216,7 @@ namespace StandUpTimer.Specs
         {
             try
             {
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
                     var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
@@ -202,7 +240,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
                     var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
@@ -250,7 +288,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
                     var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
@@ -282,7 +320,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
                     var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
@@ -312,7 +350,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
                     var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
@@ -357,7 +395,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
                     var loginDialog = standUpTimer.OpenLoginDialog(out errorMessage);
@@ -370,7 +408,7 @@ namespace StandUpTimer.Specs
                     standUpTimer.WaitUntilLoggedIn();
                 }
 
-                using (var standUpTimer = StandUpTimer.Launch(deleteCookies: false))
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch(deleteCookies: false))
                 {
                     standUpTimer.WaitUntilLoggedIn();
 
@@ -394,7 +432,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     var progressBar = standUpTimer.ProgressBar;
 
@@ -424,7 +462,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     var title = standUpTimer.Title;
 
@@ -444,7 +482,7 @@ namespace StandUpTimer.Specs
         {
             try
             {
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     standUpTimer.TakeScreenshot("start.png");
                 }
@@ -464,7 +502,7 @@ namespace StandUpTimer.Specs
 
                 const int sittingWaitTime = 1000;
 
-                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch(sittingWaitTime: sittingWaitTime))
                 {
                     Thread.Sleep(2 * sittingWaitTime);
 
@@ -491,7 +529,7 @@ namespace StandUpTimer.Specs
             {
                 Resources.Culture = new CultureInfo(locale);
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
 
@@ -523,7 +561,7 @@ namespace StandUpTimer.Specs
 
                 const int sittingWaitTime = 1000;
 
-                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch(sittingWaitTime: sittingWaitTime))
                 {
                     var psi = new ProcessStartInfo("notepad.exe") { WindowStyle = ProcessWindowStyle.Maximized };
                     var process = Process.Start(psi);
@@ -557,7 +595,7 @@ namespace StandUpTimer.Specs
 
                 const int sittingWaitTime = 1000;
 
-                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch(sittingWaitTime: sittingWaitTime))
                 {
                     Thread.Sleep(sittingWaitTime);
 
@@ -586,7 +624,7 @@ namespace StandUpTimer.Specs
 
                 const int sittingWaitTime = 1000;
 
-                using (var standUpTimer = StandUpTimer.Launch(sittingWaitTime))
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch(sittingWaitTime: sittingWaitTime))
                 {
                     Thread.Sleep(sittingWaitTime);
 
@@ -613,7 +651,7 @@ namespace StandUpTimer.Specs
         {
             try
             {
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     string errorMessage;
 
@@ -639,12 +677,12 @@ namespace StandUpTimer.Specs
 
                 Point savedLocation;
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     savedLocation = standUpTimer.Location;
                 }
 
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     return savedLocation == standUpTimer.Location
                                ? Resources.OnTheNextStartupTheAppStartOnThatPositionAgain
@@ -662,7 +700,7 @@ namespace StandUpTimer.Specs
         {
             try
             {
-                using (var standUpTimer = StandUpTimer.Launch())
+                using (var standUpTimer = PageObjects.StandUpTimer.Launch())
                 {
                     standUpTimer.OpenAttributionBox();
                     standUpTimer.TakeScreenshot("attribution.png");

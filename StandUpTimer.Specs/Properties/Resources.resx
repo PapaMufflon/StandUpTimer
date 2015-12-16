@@ -120,6 +120,9 @@
   <data name="CreateNewUser" xml:space="preserve">
     <value>Click on the link and create a new user account</value>
   </data>
+  <data name="InstallationAndUpdate" xml:space="preserve">
+    <value>After installation, the program starts immediately and updates itself.</value>
+  </data>
   <data name="ItBeginsWithTheSittingPhase" xml:space="preserve">
     <value>It begins with the sitting phase.</value>
   </data>
