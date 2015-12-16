@@ -39,7 +39,7 @@ namespace StandUpTimer.Specs
 
                 using (var standUpTimer = PageObjects.StandUpTimer.Launch(Installer.StandUpTimerExecutable))
                 {
-                    return standUpTimer.VersionNumber.Contains("0.8.4")
+                    return standUpTimer.VersionNumber.Contains("0.8.5")
                         ? Resources.InstallationAndUpdate
                         : "Update was not successfull";
                 }

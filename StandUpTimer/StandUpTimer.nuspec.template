@@ -24,11 +24,13 @@
 	<file src="Newtonsoft.Json.dll" target="lib/net45" />
 	<file src="Newtonsoft.Json.xml" target="lib/net45" />
 	<file src="NuGet.Core.dll" target="lib/net45" />
+	<file src="NuGet.Squirrel.dll" target="lib/net45" />
 	<file src="Splat.dll" target="lib/net45" />
 	<file src="Squirrel.dll" target="lib/net45" />
 	<file src="StandUpTimer.Common.dll" target="lib/net45" />
 	<file src="StandUpTimer.exe" target="lib/net45" />
 	<file src="StandUpTimer.exe.config" target="lib/net45" />
+	<file src="de/StandUpTimer.resources.dll" target="lib/net45/de" />
 	<file src="StandUpTimer.Web.Contract.dll" target="lib/net45" />
 	<file src="System.Net.Http.Formatting.dll" target="lib/net45" />
   </files>
