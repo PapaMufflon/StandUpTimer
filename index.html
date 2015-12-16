@@ -1,5 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:concordion="http://www.concordion.org/2007/concordion">
   <head>
+    <script type="text/javascript">/* Stack Trace Toggling */
+
+function getElementById(id) {
+  var element;
+
+  if (document.getElementById) { // standard
+    return document.getElementById(id);
+  } else if (document.all) { // old IE versions
+    return document.all[id];
+  } else if (document.layers) { // nn4
+    return document.layers[id];
+  }
+  alert("Sorry, but your web browser is not supported by Concordion.");
+}
+
+function isVisible(element) {
+  return element.style.display;
+}
+
+function makeVisible(element) {
+  element.style.display = "block";
+}
+
+function makeInvisible(element) {
+  element.style.display = "";
+}
+
+function toggleStackTrace(stackTraceNumber) {
+  var stackTrace = getElementById("stackTrace" + stackTraceNumber);
+  var stackTraceButton = getElementById("stackTraceButton" + stackTraceNumber);
+  if (isVisible(stackTrace)) {
+    makeInvisible(stackTrace);
+    stackTraceButton.value = "View Stack";
+  } else {
+    makeVisible(stackTrace);
+    stackTraceButton.value = "Hide Stack";
+  }
+}
+</script>
+    <script type="text/javascript">/* Stack Trace Toggling */
+
+function getElementById(id) {
+  var element;
+
+  if (document.getElementById) { // standard
+    return document.getElementById(id);
+  } else if (document.all) { // old IE versions
+    return document.all[id];
+  } else if (document.layers) { // nn4
+    return document.layers[id];
+  }
+  alert("Sorry, but your web browser is not supported by Concordion.");
+}
+
+function isVisible(element) {
+  return element.style.display;
+}
+
+function makeVisible(element) {
+  element.style.display = "block";
+}
+
+function makeInvisible(element) {
+  element.style.display = "";
+}
+
+function toggleStackTrace(stackTraceNumber) {
+  var stackTrace = getElementById("stackTrace" + stackTraceNumber);
+  var stackTraceButton = getElementById("stackTraceButton" + stackTraceNumber);
+  if (isVisible(stackTrace)) {
+    makeInvisible(stackTrace);
+    stackTraceButton.value = "View Stack";
+  } else {
+    makeVisible(stackTrace);
+    stackTraceButton.value = "Hide Stack";
+  }
+}
+</script>
     <style>* {
   font-family: Arial;
 }
@@ -237,8 +315,50 @@ ins {
                     </h3>
           <h4 lang="en">Overview</h4>
           <h4 lang="de">Überblick</h4>
-          <p lang="en">After installation, the program starts immediately.</p>
-          <p lang="de">Nach der Installation startet das Programm sofort.</p>
+          <p lang="en" concordion:assertEquals="InstallationAndUpdate(#en)">
+            <span class="failure">
+              <del class="expected">After installation, the program starts immediately and updates itself.</del>
+            </span>
+            <span class="exceptionMessage">Method "InstallationAndUpdate" failed for object StandUpTimer.Specs.Index</span>
+            <input class="stackTraceButton" id="stackTraceButton1" type="button" onclick="javascript:toggleStackTrace('1')" value="View Stack" />
+            <span class="stackTrace" id="stackTrace1">
+              <p>While evaluating expression: <code>InstallationAndUpdate(#en)</code></p>
+              <span class="stackTraceEntry">ognl.MethodFailedException: Method "InstallationAndUpdate" failed for object StandUpTimer.Specs.Index</span>
+              <span class="stackTraceEntry">   at ognl.OgnlRuntime.callAppropriateMethod(OgnlContext context, Object source, Object target, String methodName, String propertyName, IList methods, Object[] args)</span>
+              <span class="stackTraceEntry">   at ognl.ObjectMethodAccessor.callMethod(IDictionary context, Object target, String methodName, Object[] args)</span>
+              <span class="stackTraceEntry">   at ognl.OgnlRuntime.callMethod(OgnlContext context, Object target, String methodName, String propertyName, Object[] args)</span>
+              <span class="stackTraceEntry">   at ognl.ASTMethod.getValueBody(OgnlContext context, Object source)</span>
+              <span class="stackTraceEntry">   at ognl.Ognl.getValue(Object tree, IDictionary context, Object root, Type resultType)</span>
+              <span class="stackTraceEntry">   at ognl.Ognl.getValue(String expression, IDictionary context, Object root)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.OgnlEvaluator.Evaluate(String expression)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.SimpleEvaluator.Evaluate(String expression)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.Commands.AssertEqualsCommand.Verify(CommandCall commandCall, IEvaluator evaluator, IResultRecorder resultRecorder)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.Commands.LocalTextDecorator.Verify(CommandCall commandCall, IEvaluator evaluator, IResultRecorder resultRecorder)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.Commands.ExceptionCatchingDecorator.Verify(CommandCall commandCall, IEvaluator evaluator, IResultRecorder resultRecorder)</span>
+            </span>
+          </p>
+          <p lang="de" concordion:assertEquals="InstallationAndUpdate(#de)">
+            <span class="failure">
+              <del class="expected">Nach der Installation startet das Programm sofort und aktualisiert sich selbstständig.</del>
+            </span>
+            <span class="exceptionMessage">Method "InstallationAndUpdate" failed for object StandUpTimer.Specs.Index</span>
+            <input class="stackTraceButton" id="stackTraceButton2" type="button" onclick="javascript:toggleStackTrace('2')" value="View Stack" />
+            <span class="stackTrace" id="stackTrace2">
+              <p>While evaluating expression: <code>InstallationAndUpdate(#de)</code></p>
+              <span class="stackTraceEntry">ognl.MethodFailedException: Method "InstallationAndUpdate" failed for object StandUpTimer.Specs.Index</span>
+              <span class="stackTraceEntry">   at ognl.OgnlRuntime.callAppropriateMethod(OgnlContext context, Object source, Object target, String methodName, String propertyName, IList methods, Object[] args)</span>
+              <span class="stackTraceEntry">   at ognl.ObjectMethodAccessor.callMethod(IDictionary context, Object target, String methodName, Object[] args)</span>
+              <span class="stackTraceEntry">   at ognl.OgnlRuntime.callMethod(OgnlContext context, Object target, String methodName, String propertyName, Object[] args)</span>
+              <span class="stackTraceEntry">   at ognl.ASTMethod.getValueBody(OgnlContext context, Object source)</span>
+              <span class="stackTraceEntry">   at ognl.Ognl.getValue(Object tree, IDictionary context, Object root, Type resultType)</span>
+              <span class="stackTraceEntry">   at ognl.Ognl.getValue(String expression, IDictionary context, Object root)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.OgnlEvaluator.Evaluate(String expression)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.SimpleEvaluator.Evaluate(String expression)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.Commands.AssertEqualsCommand.Verify(CommandCall commandCall, IEvaluator evaluator, IResultRecorder resultRecorder)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.Commands.LocalTextDecorator.Verify(CommandCall commandCall, IEvaluator evaluator, IResultRecorder resultRecorder)</span>
+              <span class="stackTraceEntry">   at Concordion.Internal.Commands.ExceptionCatchingDecorator.Verify(CommandCall commandCall, IEvaluator evaluator, IResultRecorder resultRecorder)</span>
+            </span>
+          </p>
           <p lang="en" concordion:assertEquals="ItBeginsWithTheSittingPhase(#en)" class="success">It begins with the sitting phase.</p>
           <p lang="de" concordion:assertEquals="ItBeginsWithTheSittingPhase(#de)" class="success">Es fängt mit der Sitzen-Phase an.</p>
           <img concordion:execute="TakeStartScreenshot()" src="start.png" />
