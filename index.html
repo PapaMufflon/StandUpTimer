@@ -237,8 +237,12 @@ ins {
                     </h3>
           <h4 lang="en">Overview</h4>
           <h4 lang="de">Überblick</h4>
-          <p lang="en" concordion:assertEquals="InstallationAndUpdate(#en)" class="success">After installation, the program starts immediately and updates itself.</p>
-          <p lang="de" concordion:assertEquals="InstallationAndUpdate(#de)" class="success">Nach der Installation startet das Programm sofort und aktualisiert sich selbstständig.</p>
+          <p lang="en" concordion:assertEquals="InstallationAndUpdate(#en)" class="failure">
+            <del class="expected">After installation, the program starts immediately and updates itself.</del>
+<ins class="actual">Update was not successfull</ins></p>
+          <p lang="de" concordion:assertEquals="InstallationAndUpdate(#de)" class="failure">
+            <del class="expected">Nach der Installation startet das Programm sofort und aktualisiert sich selbstständig.</del>
+<ins class="actual">Update was not successfull</ins></p>
           <p lang="en" concordion:assertEquals="ItBeginsWithTheSittingPhase(#en)" class="success">It begins with the sitting phase.</p>
           <p lang="de" concordion:assertEquals="ItBeginsWithTheSittingPhase(#de)" class="success">Es fängt mit der Sitzen-Phase an.</p>
           <img concordion:execute="TakeStartScreenshot()" src="start.png" />
