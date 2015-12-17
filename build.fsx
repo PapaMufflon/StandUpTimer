@@ -1,6 +1,8 @@
 ﻿#r @"packages/FAKE/tools/FakeLib.dll"
 open System
+open System.IO
 open Fake
+open Fake.Git
 open Fake.ReportGeneratorHelper
 open Fake.OpenCoverHelper
 
@@ -9,6 +11,13 @@ open NUnit3
 
 let buildDir = "./build"
 let specsDir = "./build/specs"
+let repoDir = "."
+
+let replaceInsideFile file (stringToReplace:string) (stringToReplaceWith:string) =
+    let content = File.ReadAllText file
+    let modifiedContent = content.Replace(stringToReplace, stringToReplaceWith)
+
+    File.WriteAllText(file, modifiedContent)
 
 Target "Clean" (fun _ ->
     CleanDir buildDir
@@ -24,6 +33,33 @@ Target "BuildSpecs" (fun _ ->
     !! "./**/*.Specs.csproj"
       |> MSBuildRelease specsDir "Build"
       |> Log "AppBuild-Output: "
+)
+
+Target "BuildInstaller" (fun _ ->
+    let version = (GetAssemblyVersion "build\\StandUpTimer.exe").ToString()
+    let lastVersion = getLastTag()
+
+    if ("v" + version).StartsWith(lastVersion) then failwith "this version and the last version is the same!"
+
+    CopyFile "./StandUpTimer/StandUpTimer.nuspec" "./StandUpTimer/StandUpTimer.nuspec.template"
+    replaceInsideFile "StandUpTimer\\StandUpTimer.nuspec" "$version$" version
+
+    MoveFile buildDir "./StandUpTimer/StandUpTimer.nuspec"
+
+    NuGetPackDirectly (fun p ->
+        {p with
+           WorkingDir = repoDir
+           Version = version
+           OutputPath = ".\\build"}) "./build/StandUpTimer.nuspec"
+
+    let result =
+        ExecProcess (fun info ->
+            info.FileName <- "./packages/squirrel.windows/tools/squirrel.exe"
+            info.Arguments <- "-releasify StandUpTimer." + version + ".nupkg"
+            info.WorkingDirectory <- buildDir
+        ) (TimeSpan.FromMinutes 1.)
+
+    if result <> 0 then failwith "squirrel returned with a non-zero exit code"
 )
 
 Target "Test" (fun _ ->
@@ -75,6 +111,7 @@ Target "Default" (fun _ ->
   ==> "Test"
   ==> "Coverage"
   ==> "BuildSpecs"
+  ==> "BuildInstaller"
   ==> "Spec"
   ==> "Default"
 

@@ -28,7 +28,7 @@ namespace StandUpTimer.Specs
                 var application = Application.Attach("StandUpTimer");
                 application.Kill();
 
-                installer.SetUpdateLocation(Path.Combine(Directory.GetCurrentDirectory(), "Releases"));
+                installer.SetUpdateLocation(Path.Combine(Directory.GetCurrentDirectory(), "..", "Releases"));
 
                 using (PageObjects.StandUpTimer.Launch(Installer.StandUpTimerExecutable))
                 {
@@ -39,7 +39,7 @@ namespace StandUpTimer.Specs
 
                 using (var standUpTimer = PageObjects.StandUpTimer.Launch(Installer.StandUpTimerExecutable))
                 {
-                    return standUpTimer.VersionNumber.Contains("0.8.5")
+                    return standUpTimer.VersionNumber.Contains("0.8.7")
                         ? Resources.InstallationAndUpdate
                         : "Update was not successfull";
                 }
